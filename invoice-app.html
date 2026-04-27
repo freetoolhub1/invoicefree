@@ -237,6 +237,8 @@ body{font-family:'Cabinet Grotesk',sans-serif;background:#f4f3ef;color:var(--ink
   .items-head{display:none}
   .item-row{grid-template-columns:1fr 1fr;row-gap:8px}
 }
+
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.hero-eyebrow,.hero-h1,.hero-sub,.hero-btns,.hero-preview,.stats-bar{animation:none;opacity:1;transform:none}}
 </style>
 </head>
 <body>
@@ -1188,6 +1190,11 @@ document.addEventListener('keydown', e => {
   if ((e.metaKey || e.ctrlKey) && e.key === 's') { e.preventDefault(); saveInvoiceToHistory(); showToast('✓ Invoice saved', 'success'); }
   if ((e.metaKey || e.ctrlKey) && e.key === 'p') { e.preventDefault(); downloadPDF(); }
 });
+
+// Fallback: show all content if IntersectionObserver fails
+setTimeout(function(){
+  document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('visible');});
+}, 800);
 </script>
 </body>
 </html>

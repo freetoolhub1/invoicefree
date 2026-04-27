@@ -62,6 +62,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .btl-btn.active{background:#fff;color:var(--ink)}
 .save-pill{background:rgba(29,233,182,.2);color:var(--mint);font-size:.62rem;font-weight:800;padding:2px 8px;border-radius:50px;margin-left:4px;letter-spacing:.06em}
 @media(max-width:800px){.checkout-grid{grid-template-columns:1fr}}
+
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.hero-eyebrow,.hero-h1,.hero-sub,.hero-btns,.hero-preview,.stats-bar{animation:none;opacity:1;transform:none}}
 </style>
 </head>
 <body>
@@ -305,6 +307,11 @@ window.onload = function() {
     document.getElementById('cardholder').value = user.name || '';
   }
 };
+
+// Fallback: show all content if IntersectionObserver fails
+setTimeout(function(){
+  document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('visible');});
+}, 800);
 </script>
 </body>
 </html>

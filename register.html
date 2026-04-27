@@ -44,6 +44,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .auth-switch a{color:var(--gold);text-decoration:none;font-weight:700}
 .terms-note{text-align:center;font-size:.74rem;color:#9ca3af;margin-top:10px;line-height:1.5}
 .terms-note a{color:var(--slate)}
+
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.hero-eyebrow,.hero-h1,.hero-sub,.hero-btns,.hero-preview,.stats-bar{animation:none;opacity:1;transform:none}}
 </style>
 </head>
 <body>
@@ -136,6 +138,11 @@ function socialRegister(provider){
   localStorage.setItem('if_current_user',JSON.stringify(user));
   location.href='dashboard.html';
 }
+
+// Fallback: show all content if IntersectionObserver fails
+setTimeout(function(){
+  document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('visible');});
+}, 800);
 </script>
 </body>
 </html>

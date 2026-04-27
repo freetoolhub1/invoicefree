@@ -51,6 +51,8 @@ tbody tr:last-child td{border:none}
 .watermark a{color:var(--gold);text-decoration:none;font-weight:700}
 @media print{.top-bar,.watermark{display:none}.view-wrap{margin:0;padding:0}.view-card{box-shadow:none;border-radius:0}}
 @media(max-width:600px){.inv-from-to{grid-template-columns:1fr}.inv-header{flex-direction:column;gap:16px}}
+
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.hero-eyebrow,.hero-h1,.hero-sub,.hero-btns,.hero-preview,.stats-bar{animation:none;opacity:1;transform:none}}
 </style>
 </head>
 <body>
@@ -155,6 +157,11 @@ window.onload = function() {
     ${draft.notes ? `<div class="notes-box"><strong>Notes:</strong> ${draft.notes}</div>` : ''}
   `;
 };
+
+// Fallback: show all content if IntersectionObserver fails
+setTimeout(function(){
+  document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('visible');});
+}, 800);
 </script>
 </body>
 </html>

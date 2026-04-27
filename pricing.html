@@ -106,6 +106,8 @@ body{font-family:var(--ff);background:var(--ink);color:white;min-height:100vh}
 .footer-links a:hover{color:rgba(255,255,255,0.6)}
 
 @media(max-width:700px){.nav{padding:0 20px}.nav-links{display:none}.pricing-hero,.plans-container,.comparison-section,.faq-section,.cta-section{padding-left:20px;padding-right:20px}.plan-card{width:100%;max-width:400px}.comp-table th:nth-child(3),.comp-table td:nth-child(3){display:none}}
+
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.hero-eyebrow,.hero-h1,.hero-sub,.hero-btns,.hero-preview,.stats-bar{animation:none;opacity:1;transform:none}}
 </style>
 </head>
 <body>
@@ -289,6 +291,11 @@ function setBilling(type,btn){
   if(type==='yearly'){price.innerHTML='$6<span>/mo</span>';period.textContent='Billed $76/year · Save $32 · 7-day trial';}
   else{price.innerHTML='$9<span>/mo</span>';period.textContent='7-day free trial · Cancel anytime';}
 }
+
+// Fallback: show all content if IntersectionObserver fails
+setTimeout(function(){
+  document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('visible');});
+}, 800);
 </script>
 </body>
 </html>

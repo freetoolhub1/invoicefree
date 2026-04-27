@@ -52,6 +52,8 @@ body{font-family:var(--ff);background:#f4f3ef;min-height:100vh}
 .tab-btn.active{background:var(--ink);color:white}
 .empty-row td{text-align:center;color:var(--slate);padding:40px!important}
 @media(max-width:800px){.layout{grid-template-columns:1fr}.sidebar{display:none}.stats-row{grid-template-columns:1fr 1fr}}
+
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.hero-eyebrow,.hero-h1,.hero-sub,.hero-btns,.hero-preview,.stats-bar{animation:none;opacity:1;transform:none}}
 </style>
 </head>
 <body>
@@ -220,6 +222,11 @@ function deleteUser(id){
   saveUsers(users);
   showSection(currentSection);
 }
+
+// Fallback: show all content if IntersectionObserver fails
+setTimeout(function(){
+  document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('visible');});
+}, 800);
 </script>
 </body>
 </html>

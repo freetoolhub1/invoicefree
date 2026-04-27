@@ -46,6 +46,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .auth-switch a{color:var(--gold);text-decoration:none;font-weight:700}
 .demo-box{background:#f8f7f3;border-radius:10px;padding:12px 16px;font-size:.8rem;color:var(--slate);margin-bottom:20px;border:1px solid #e5e7eb}
 .demo-box strong{color:var(--ink);display:block;margin-bottom:3px}
+
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.hero-eyebrow,.hero-h1,.hero-sub,.hero-btns,.hero-preview,.stats-bar{animation:none;opacity:1;transform:none}}
 </style>
 </head>
 <body>
@@ -129,6 +131,11 @@ function socialLogin(provider){
   setCurrentUser(user);
   location.href='dashboard.html';
 }
+
+// Fallback: show all content if IntersectionObserver fails
+setTimeout(function(){
+  document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('visible');});
+}, 800);
 </script>
 </body>
 </html>

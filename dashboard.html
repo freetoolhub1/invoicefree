@@ -52,6 +52,8 @@ body{font-family:var(--ff);background:#f4f3ef;min-height:100vh}
 .empty-state{text-align:center;padding:48px;color:var(--slate)}
 .empty-state a{color:var(--gold);text-decoration:none;font-weight:700}
 @media(max-width:800px){.layout{grid-template-columns:1fr}.sidebar{display:none}.stats-row{grid-template-columns:1fr 1fr}}
+
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.hero-eyebrow,.hero-h1,.hero-sub,.hero-btns,.hero-preview,.stats-bar{animation:none;opacity:1;transform:none}}
 </style>
 </head>
 <body>
@@ -148,6 +150,11 @@ function markPaid(id){
   if(i>-1){inv[i].status='paid';localStorage.setItem('if_v2_invoices',JSON.stringify(inv));}
   location.reload();
 }
+
+// Fallback: show all content if IntersectionObserver fails
+setTimeout(function(){
+  document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('visible');});
+}, 800);
 </script>
 </body>
 </html>
