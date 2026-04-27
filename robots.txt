@@ -2,7 +2,11 @@ User-agent: *
 Allow: /
 Disallow: /admin.html
 Disallow: /dashboard.html
-Disallow: /login.html
-Disallow: /register.html
+
+User-agent: Googlebot
+Allow: /
+Disallow: /admin.html
+Disallow: /dashboard.html
+Crawl-delay: 1
 
 Sitemap: https://invoicefree.info/sitemap.xml

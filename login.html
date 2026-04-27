@@ -1,53 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<title>Login — InvoiceFree.info | Free Invoice Generator</title>
+<meta name="description" content="Sign in to your InvoiceFree account to manage invoices, track payments and access your dashboard.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="canonical" href="https://invoicefree.info/login.html">
+<meta name="theme-color" content="#0a0a0f">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://invoicefree.info/login.html">
+<meta property="og:title" content="Login | Free Invoice Generator">
+<meta property="og:description" content="Sign in to your InvoiceFree account to manage invoices, track payments and access your dashboard.">
+<meta property="og:image" content="https://invoicefree.info/og-image.png">
+<meta property="og:site_name" content="InvoiceFree.info">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Login | Free Invoice Generator">
+<meta name="twitter:description" content="Sign in to your InvoiceFree account to manage invoices, track payments and access your dashboard.">
+<meta name="twitter:image" content="https://invoicefree.info/og-image.png">
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login — InvoiceFree.info</title>
-<meta name="robots" content="noindex">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230a0a0f'/><rect x='16' y='10' width='32' height='44' rx='5' fill='%23c9a84c'/><rect x='22' y='19' width='20' height='3' rx='1.5' fill='%230a0a0f'/><rect x='22' y='39' width='20' height='4' rx='2' fill='%230a0a0f' opacity='.8'/></svg>">
+
+
+
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0a0f'/%3E%3Crect x='16' y='10' width='32' height='44' rx='4' fill='%23c9a84c'/%3E%3Crect x='22' y='19' width='20' height='3' rx='1' fill='%230a0a0f'/%3E%3Crect x='22' y='38' width='20' height='5' rx='2' fill='%230a0a0f'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#0a0a0f;--ink2:#1c1c2e;--gold:#c9a84c;--gold2:#e8c97a;--mint:#1de9b6;--slate:#8892a4;--border:#e5e7eb;--ff:'Cabinet Grotesk',sans-serif}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:var(--ff);min-height:100vh;display:flex;flex-direction:column;background:var(--ink)}
-body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 30% 20%,rgba(201,168,76,.08) 0%,transparent 60%),radial-gradient(ellipse at 80% 80%,rgba(79,70,229,.06) 0%,transparent 60%);pointer-events:none}
-.nav{background:rgba(10,10,15,.8);backdrop-filter:blur(20px);padding:0 28px;display:flex;align-items:center;justify-content:space-between;height:58px;border-bottom:1px solid rgba(255,255,255,.06);position:relative;z-index:10}
+html{background:#0a0a0f}
+body{font-family:'Cabinet Grotesk',system-ui,sans-serif;min-height:100vh;display:flex;flex-direction:column;background:#0a0a0f}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 30% 20%,rgba(201,168,76,.07) 0%,transparent 60%),radial-gradient(ellipse at 80% 80%,rgba(79,70,229,.05) 0%,transparent 60%);pointer-events:none}
+.nav{background:rgba(10,10,15,.85);backdrop-filter:blur(20px);padding:0 28px;display:flex;align-items:center;justify-content:space-between;height:58px;border-bottom:1px solid rgba(255,255,255,.06);position:relative;z-index:10}
 .nav-logo{font-weight:900;font-size:1.2rem;color:white;text-decoration:none;display:flex;align-items:center;gap:8px}
-.nav-logo span{color:var(--gold)}
+.nav-logo span{color:#c9a84c}
 .nav-right a{color:rgba(255,255,255,.5);text-decoration:none;font-size:.88rem;font-weight:600;transition:color .2s}
-.nav-right a:hover{color:var(--gold)}
+.nav-right a:hover{color:#c9a84c}
 .auth-wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 20px;position:relative;z-index:1}
-.auth-card{background:rgba(255,255,255,.97);border-radius:24px;padding:48px 44px;width:100%;max-width:440px;box-shadow:0 24px 80px rgba(0,0,0,.4)}
-.auth-eyebrow{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--slate);margin-bottom:20px}
-.auth-h1{font-size:1.9rem;font-weight:900;letter-spacing:-.04em;margin-bottom:6px;color:var(--ink)}
-.auth-sub{font-size:.9rem;color:var(--slate);margin-bottom:28px}
-/* SOCIAL LOGIN BUTTONS */
+.auth-card{background:#fff;border-radius:20px;padding:44px 40px;width:100%;max-width:420px;box-shadow:0 24px 80px rgba(0,0,0,.4)}
+.auth-title{font-size:1.8rem;font-weight:900;letter-spacing:-.04em;margin-bottom:6px;color:#0a0a0f}
+.auth-sub{font-size:.88rem;color:#9ca3af;margin-bottom:28px}
 .social-btns{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
-.btn-social{display:flex;align-items:center;gap:12px;padding:12px 20px;border-radius:12px;border:1.5px solid var(--border);background:white;font-family:var(--ff);font-size:.9rem;font-weight:600;color:var(--ink);cursor:pointer;transition:all .2s;text-decoration:none;justify-content:center}
+.btn-social{display:flex;align-items:center;gap:12px;padding:12px 20px;border-radius:12px;border:1.5px solid #e5e7eb;background:#fff;font-family:inherit;font-size:.9rem;font-weight:600;color:#111;cursor:pointer;transition:all .2s;justify-content:center;width:100%;text-decoration:none}
 .btn-social:hover{border-color:#9ca3af;background:#fafafa;transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.08)}
 .btn-social svg{width:20px;height:20px;flex-shrink:0}
-/* DIVIDER */
-.divider{display:flex;align-items:center;gap:12px;margin:20px 0;font-size:.8rem;color:#9ca3af}
-.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
-/* FORM */
+.divider{display:flex;align-items:center;gap:12px;margin:20px 0;font-size:.78rem;color:#9ca3af}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:#e5e7eb}
 .fg{margin-bottom:16px}
-.fg label{display:block;font-size:.78rem;font-weight:700;color:#6b7280;margin-bottom:6px}
-.fg input{width:100%;padding:12px 14px;border:2px solid var(--border);border-radius:10px;font-family:var(--ff);font-size:.95rem;color:var(--ink);transition:border-color .2s,box-shadow .2s}
-.fg input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.12)}
+.fg label{display:block;font-size:.76rem;font-weight:700;color:#6b7280;margin-bottom:6px}
+.fg input{width:100%;padding:12px 14px;border:2px solid #e5e7eb;border-radius:10px;font-family:inherit;font-size:.95rem;color:#111;transition:border-color .2s;outline:none}
+.fg input:focus{border-color:#c9a84c;box-shadow:0 0 0 3px rgba(201,168,76,.1)}
 .fg-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
 .fg-row label{margin-bottom:0}
-.fg-row a{font-size:.78rem;color:var(--gold);text-decoration:none;font-weight:600}
-.alert{padding:12px 16px;border-radius:10px;font-size:.85rem;margin-bottom:16px;display:none}
-.ale{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5}
-.btn-submit{width:100%;background:linear-gradient(135deg,var(--ink),var(--ink2));color:white;border:none;padding:14px;border-radius:50px;font-family:var(--ff);font-size:1rem;font-weight:800;cursor:pointer;transition:all .25s;letter-spacing:-.02em;margin-top:4px}
-.btn-submit:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(10,10,15,.35)}
-.auth-switch{text-align:center;margin-top:20px;font-size:.88rem;color:var(--slate)}
-.auth-switch a{color:var(--gold);text-decoration:none;font-weight:700}
-.demo-box{background:#f8f7f3;border-radius:10px;padding:12px 16px;font-size:.8rem;color:var(--slate);margin-bottom:20px;border:1px solid #e5e7eb}
-.demo-box strong{color:var(--ink);display:block;margin-bottom:3px}
-
-@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.hero-eyebrow,.hero-h1,.hero-sub,.hero-btns,.hero-preview,.stats-bar{animation:none;opacity:1;transform:none}}
+.fg-row a{font-size:.76rem;color:#c9a84c;text-decoration:none;font-weight:600}
+.alert{padding:11px 15px;border-radius:9px;font-size:.83rem;margin-bottom:14px;display:none}
+.alert.err{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5}
+.alert.ok{background:#d1fae5;color:#065f46;border:1px solid #6ee7b7}
+.btn-submit{width:100%;background:#0a0a0f;color:#fff;border:none;padding:14px;border-radius:50px;font-family:inherit;font-size:1rem;font-weight:800;cursor:pointer;transition:all .2s;letter-spacing:-.02em;margin-top:4px}
+.btn-submit:hover{background:#1c1c2e;transform:translateY(-1px)}
+.auth-switch{text-align:center;margin-top:18px;font-size:.86rem;color:#9ca3af}
+.auth-switch a{color:#c9a84c;text-decoration:none;font-weight:700}
 </style>
 </head>
 <body>
@@ -56,86 +66,91 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <svg width="22" height="22" viewBox="0 0 32 32" fill="none"><rect x="8" y="6" width="16" height="20" rx="3" fill="#c9a84c"/><rect x="11" y="10" width="10" height="2" rx="1" fill="#0a0a0f"/><rect x="11" y="18" width="10" height="2.5" rx="1.25" fill="#0a0a0f" opacity=".85"/></svg>
     Invoice<span>Free</span>
   </a>
-  <div class="nav-right"><a href="register.html">No account? Register free &rarr;</a></div>
+  <div class="nav-right"><a href="register.html">No account? Sign up free &rarr;</a></div>
 </nav>
 <div class="auth-wrap">
   <div class="auth-card">
-    <div class="auth-eyebrow">Welcome back</div>
-    <div class="auth-h1">Login to InvoiceFree</div>
-    <div class="auth-sub">Sign in to access your invoices and dashboard</div>
+    <div class="auth-title">Welcome back</div>
+    <div class="auth-sub">Sign in to your InvoiceFree account</div>
 
-    <!-- SOCIAL LOGIN BUTTONS -->
     <div class="social-btns">
       <button class="btn-social" onclick="socialLogin('google')">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
         Continue with Google
       </button>
       <button class="btn-social" onclick="socialLogin('microsoft')">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#f25022" d="M1 1h10v10H1z"/><path fill="#00a4ef" d="M13 1h10v10H13z"/><path fill="#7fba00" d="M1 13h10v10H1z"/><path fill="#ffb900" d="M13 13h10v10H13z"/></svg>
+        <svg viewBox="0 0 24 24"><path fill="#f25022" d="M1 1h10v10H1z"/><path fill="#00a4ef" d="M13 1h10v10H13z"/><path fill="#7fba00" d="M1 13h10v10H1z"/><path fill="#ffb900" d="M13 13h10v10H13z"/></svg>
         Continue with Hotmail / Microsoft
       </button>
       <button class="btn-social" onclick="socialLogin('apple')">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.4c1.29.07 2.18.74 2.94.8 1.12-.22 2.19-.91 3.39-.84 1.44.12 2.53.66 3.24 1.67-2.98 1.78-2.27 5.7.42 6.82-.51 1.35-1.2 2.68-2 3.43zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" fill="#000"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.4c1.29.07 2.18.74 2.94.8 1.12-.22 2.19-.91 3.39-.84 1.44.12 2.53.66 3.24 1.67-2.98 1.78-2.27 5.7.42 6.82-.51 1.35-1.2 2.68-2 3.43zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" fill="#000"/></svg>
         Continue with Apple
       </button>
     </div>
 
     <div class="divider">or sign in with email</div>
 
-    <div class="demo-box">
-      <strong>Admin Demo Login</strong>
-      admin@invoicefree.info &nbsp;&middot;&nbsp; password: admin123
-    </div>
-
-    <div class="alert ale" id="login-err"></div>
-    <div class="fg"><label>Email Address</label><input type="email" id="le" placeholder="you@example.com"></div>
+    <div class="alert err" id="err"></div>
+    <div class="alert ok" id="ok"></div>
+    <div class="fg"><label>Email Address</label><input type="email" id="email" placeholder="you@example.com" autocomplete="email"></div>
     <div class="fg">
       <div class="fg-row"><label>Password</label><a href="#">Forgot password?</a></div>
-      <input type="password" id="lp" placeholder="Your password" onkeydown="if(event.key==='Enter')doLogin()">
+      <input type="password" id="pass" placeholder="Your password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
     </div>
     <button class="btn-submit" onclick="doLogin()">Sign In &rarr;</button>
     <div class="auth-switch">No account? <a href="register.html">Create free account</a></div>
   </div>
 </div>
 <script>
-function getUsers(){return JSON.parse(localStorage.getItem('if_users')||'[]')}
-function setCurrentUser(u){localStorage.setItem('if_current_user',JSON.stringify(u))}
-;(function(){
-  let u=getUsers();
-  if(!u.find(x=>x.role==='admin')){
-    u.push({id:'admin_001',name:'Admin',email:'admin@invoicefree.info',password:'admin123',role:'admin',plan:'pro',joined:new Date().toISOString().split('T')[0],invoiceCount:0});
+function users(){return JSON.parse(localStorage.getItem('if_users')||'[]')}
+function setUser(u){localStorage.setItem('if_current_user',JSON.stringify(u))}
+// Ensure admin exists (hidden — not shown on screen)
+(function(){
+  var u=users();
+  if(!u.find(function(x){return x.role==='admin';})){
+    u.push({id:'admin_001',name:'Admin',email:'admin@invoicefree.info',password:'Adm!n#IF2025',role:'admin',plan:'pro',joined:new Date().toISOString().split('T')[0],invoiceCount:0});
     localStorage.setItem('if_users',JSON.stringify(u));
   }
 })();
 function doLogin(){
-  const e=document.getElementById('le').value.trim().toLowerCase();
-  const p=document.getElementById('lp').value;
-  const u=getUsers().find(x=>x.email===e&&x.password===p);
-  if(!u){showErr('Wrong email or password. Try: admin@invoicefree.info / admin123');return}
-  setCurrentUser(u);
-  location.href=u.role==='admin'?'admin.html':'dashboard.html';
+  var e=document.getElementById('email').value.trim().toLowerCase();
+  var p=document.getElementById('pass').value;
+  if(!e||!p){showErr('Please enter your email and password.');return;}
+  var u=users().find(function(x){return x.email===e&&x.password===p;});
+  if(!u){showErr('Incorrect email or password. Please try again.');return;}
+  setUser(u);
+  showOk('Signing you in...');
+  setTimeout(function(){location.href=u.role==='admin'?'admin.html':'dashboard.html';},600);
 }
-function showErr(m){const el=document.getElementById('login-err');el.textContent=m;el.style.display='block'}
+function showErr(m){var e=document.getElementById('err');e.textContent=m;e.style.display='block';document.getElementById('ok').style.display='none';}
+function showOk(m){var e=document.getElementById('ok');e.textContent=m;e.style.display='block';document.getElementById('err').style.display='none';}
 function socialLogin(provider){
-  // In production: integrate OAuth (Google/Microsoft/Apple SDK)
-  // For demo: create a demo social user
-  const names={google:'Google User',microsoft:'Microsoft User',apple:'Apple User'};
-  const emails={google:'demo.google@gmail.com',microsoft:'demo.hotmail@hotmail.com',apple:'demo.apple@icloud.com'};
-  let users=getUsers();
-  let user=users.find(u=>u.email===emails[provider]);
-  if(!user){
-    user={id:'social_'+provider+'_'+Date.now(),name:names[provider],email:emails[provider],password:'',role:'user',plan:'free',joined:new Date().toISOString().split('T')[0],invoiceCount:0,provider:provider};
-    users.push(user);
-    localStorage.setItem('if_users',JSON.stringify(users));
+  // Real OAuth requires a backend. For now, create account and log in with provider identity.
+  // To enable real Google/Microsoft/Apple OAuth: connect Firebase Auth or Auth0 to this site.
+  var names={google:'Google User',microsoft:'Microsoft User',apple:'Apple User'};
+  var domains={google:'gmail.com',microsoft:'hotmail.com',apple:'icloud.com'};
+  // Prompt for email since we can't get it from OAuth without a backend
+  var email=prompt('Enter your '+provider.charAt(0).toUpperCase()+provider.slice(1)+' email address:');
+  if(!email||!email.includes('@')){return;}
+  email=email.trim().toLowerCase();
+  var all=users();
+  var existing=all.find(function(u){return u.email===email;});
+  if(existing){
+    setUser(existing);
+    showOk('Signing you in...');
+    setTimeout(function(){location.href='dashboard.html';},600);
+  } else {
+    var exp=new Date();exp.setMonth(exp.getMonth()+3);
+    var nu={id:'u_'+Date.now(),name:names[provider],email:email,password:'',
+      role:'user',plan:'pro',promoExpiry:exp.toISOString(),
+      joined:new Date().toISOString().split('T')[0],invoiceCount:0,provider:provider};
+    all.push(nu);
+    localStorage.setItem('if_users',JSON.stringify(all));
+    setUser(nu);
+    showOk('Account created! Redirecting...');
+    setTimeout(function(){location.href='dashboard.html';},600);
   }
-  setCurrentUser(user);
-  location.href='dashboard.html';
 }
-
-// Fallback: show all content if IntersectionObserver fails
-setTimeout(function(){
-  document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('visible');});
-}, 800);
 </script>
 </body>
 </html>

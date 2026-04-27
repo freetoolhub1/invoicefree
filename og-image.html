@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{width:1200px;height:630px;background:#0a0a0f;font-family:'Cabinet Grotesk',system-ui,sans-serif;overflow:hidden;display:flex;align-items:center;justify-content:space-between;padding:60px 80px}
+@import url('https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;700;800;900&display=swap');
+.left{flex:1;padding-right:60px}
+.badge{display:inline-block;background:rgba(29,233,182,.15);border:1px solid rgba(29,233,182,.3);color:#1de9b6;font-size:14px;font-weight:700;padding:6px 16px;border-radius:50px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:24px}
+h1{font-size:64px;font-weight:900;color:#fff;line-height:1.05;letter-spacing:-3px;margin-bottom:20px}
+h1 span{color:#c9a84c}
+p{font-size:20px;color:rgba(255,255,255,.5);line-height:1.6;max-width:500px;margin-bottom:32px}
+.features{display:flex;gap:20px;flex-wrap:wrap}
+.feat{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px 16px;font-size:14px;font-weight:600;color:rgba(255,255,255,.6)}
+.right{width:420px;flex-shrink:0}
+.card{background:#f8f7f4;border-radius:14px;overflow:hidden}
+.card-head{background:linear-gradient(135deg,#0a0a0f,#1c1c2e);color:#fff;padding:16px 20px;display:flex;justify-content:space-between}
+.card-logo{font-weight:900;font-size:.9rem}.card-logo span{color:#c9a84c}
+.card-body{padding:16px 20px}
+.card-row{display:flex;justify-content:space-between;padding:4px 0;font-size:12px;color:#6b7280;border-bottom:1px solid #f3f4f6}
+.card-total{display:flex;justify-content:space-between;padding:8px 0 0;font-weight:900;font-size:14px;color:#0a0a0f;border-top:2px solid #0a0a0f;margin-top:6px}
+.card-foot{background:#f0efe9;padding:10px 20px;display:flex;justify-content:space-between;font-size:11px;color:#9ca3af}
+.sent{background:#c9a84c;color:#0a0a0f;font-weight:800;font-size:.55rem;padding:3px 10px;border-radius:50px}
+.price-tag{display:inline-block;background:linear-gradient(135deg,#c9a84c,#e8c97a);color:#0a0a0f;font-size:28px;font-weight:900;padding:12px 28px;border-radius:50px;margin-top:12px}
+</style>
+</head>
+<body>
+<div class="left">
+  <div class="badge">&#127873; 3 Months Free</div>
+  <h1>Create <span>Beautiful</span><br>Invoices Free</h1>
+  <p>Professional invoicing for freelancers. 5 templates, PDF export, auto-save, multi-currency.</p>
+  <div class="features">
+    <div class="feat">&#128196; 5 Templates</div>
+    <div class="feat">&#128442; PDF Export</div>
+    <div class="feat">&#128190; Auto-Save</div>
+    <div class="feat">&#127758; Multi-Currency</div>
+  </div>
+  <div class="price-tag">Free + Pro from $4.99/mo</div>
+</div>
+<div class="right">
+  <div class="card">
+    <div class="card-head">
+      <div class="card-logo">Invoice<span>Free</span><br><small style="font-weight:400;opacity:.4;font-size:.6rem">Acme Studio</small></div>
+      <div style="text-align:right;font-size:.65rem;color:rgba(255,255,255,.4)">Invoice #<div style="color:#c9a84c;font-size:.85rem;font-weight:900">INV-0089</div></div>
+    </div>
+    <div class="card-body">
+      <div class="card-row"><span>Brand Design</span><span>$2,400</span></div>
+      <div class="card-row"><span>UI/UX Design</span><span>$2,550</span></div>
+      <div class="card-row"><span>Motion Graphics</span><span>$1,600</span></div>
+      <div class="card-row"><span>Tax (10%)</span><span>$655</span></div>
+      <div class="card-total"><span>TOTAL DUE</span><span>$6,877.50</span></div>
+    </div>
+    <div class="card-foot"><span>InvoiceFree.info</span><span class="sent">SENT ✓</span></div>
+  </div>
+</div>
+</body>
+</html>

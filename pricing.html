@@ -1,11 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pricing — Free & Pro Invoice Plans | InvoiceFree.info</title>
-<meta name="description" content="InvoiceFree.info pricing plans. Free forever with 5 invoices/month. Pro plan $9/month for unlimited invoices, custom branding, email sending, all templates.">
+<title>Pricing — Free & Pro Plans | InvoiceFree.info</title>
+<meta name="description" content="InvoiceFree.info pricing: Free forever plan with 5 invoices/month. Pro plan from $4.99/month with unlimited invoices, all templates, custom branding. 3 months free trial.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://invoicefree.info/pricing.html">
+<meta name="theme-color" content="#0a0a0f">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://invoicefree.info/pricing.html">
+<meta property="og:title" content="Pricing — Free & Pro Plans">
+<meta property="og:description" content="InvoiceFree.info pricing: Free forever plan with 5 invoices/month. Pro plan from $4.99/month with unlimited invoices, all templates, custom branding. 3 months free trial.">
+<meta property="og:image" content="https://invoicefree.info/og-image.png">
+<meta property="og:site_name" content="InvoiceFree.info">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Pricing — Free & Pro Plans">
+<meta name="twitter:description" content="InvoiceFree.info pricing: Free forever plan with 5 invoices/month. Pro plan from $4.99/month with unlimited invoices, all templates, custom branding. 3 months free trial.">
+<meta name="twitter:image" content="https://invoicefree.info/og-image.png">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
@@ -167,7 +182,7 @@ body{font-family:var(--ff);background:var(--ink);color:white;min-height:100vh}
     <div class="popular-badge">⭐ MOST POPULAR</div>
     <div class="plan-tier">Pro Plan</div>
     <div class="plan-price-wrap">
-      <div class="plan-price" id="pro-price">$9<span>/mo</span></div>
+      <div class="plan-price" id="pro-price">$4.99<span>/mo</span></div>
     </div>
     <div class="plan-period" id="pro-period">7-day free trial · Cancel anytime</div>
     <div class="divider"></div>
@@ -288,8 +303,8 @@ function setBilling(type,btn){
   btn.classList.add('active');
   const price=document.getElementById('pro-price');
   const period=document.getElementById('pro-period');
-  if(type==='yearly'){price.innerHTML='$6<span>/mo</span>';period.textContent='Billed $76/year · Save $32 · 7-day trial';}
-  else{price.innerHTML='$9<span>/mo</span>';period.textContent='7-day free trial · Cancel anytime';}
+  if(type==='yearly'){price.innerHTML='$3.50<span>/mo</span>';period.textContent='Billed $42/year · Save $18 · 7-day trial';}
+  else{price.innerHTML='$4.99<span>/mo</span>';period.textContent='7-day free trial · Cancel anytime';}
 }
 
 // Fallback: show all content if IntersectionObserver fails

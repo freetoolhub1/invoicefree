@@ -92,7 +92,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       </div>
 
       <div class="pd-price">
-        <div class="pd-amount" id="price-display">$9</div>
+        <div class="pd-amount" id="price-display">$4.99</div>
         <div class="pd-period" id="period-display">/month</div>
       </div>
 
@@ -216,9 +216,9 @@ function setBilling(cycle, btn) {
   btn.classList.add('active');
   if (cycle === 'yearly') {
     document.getElementById('price-display').textContent = '$6';
-    document.getElementById('period-display').textContent = '/month (billed $76/yr)';
+    document.getElementById('period-display').textContent = '/month (billed $42/yr)';
   } else {
-    document.getElementById('price-display').textContent = '$9';
+    document.getElementById('price-display').textContent = '$4.99';
     document.getElementById('period-display').textContent = '/month';
   }
 }

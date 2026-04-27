@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;700;800;900');
+    </style>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a0a0f"/>
+      <stop offset="100%" stop-color="#1c1c2e"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#c9a84c"/>
+      <stop offset="100%" stop-color="#e8c97a"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <!-- Accent circles -->
+  <circle cx="900" cy="100" r="300" fill="#c9a84c" opacity="0.04"/>
+  <circle cx="200" cy="500" r="200" fill="#4f46e5" opacity="0.05"/>
+  <!-- Left content -->
+  <!-- Badge -->
+  <rect x="60" y="60" width="200" height="36" rx="18" fill="rgba(29,233,182,0.12)" stroke="rgba(29,233,182,0.3)" stroke-width="1"/>
+  <text x="160" y="83" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" font-weight="700" fill="#1de9b6" letter-spacing="1">3 MONTHS FREE</text>
+  <!-- Heading -->
+  <text x="60" y="170" font-family="system-ui,sans-serif" font-size="72" font-weight="900" fill="white" letter-spacing="-3">Create</text>
+  <text x="60" y="258" font-family="Georgia,serif" font-size="72" font-weight="400" font-style="italic" fill="#c9a84c" letter-spacing="-2">Beautiful</text>
+  <text x="60" y="346" font-family="system-ui,sans-serif" font-size="72" font-weight="900" fill="white" letter-spacing="-3">Invoices Free</text>
+  <!-- Subtitle -->
+  <text x="60" y="400" font-family="system-ui,sans-serif" font-size="20" fill="rgba(255,255,255,0.5)">Professional invoicing for freelancers &amp; small businesses</text>
+  <!-- Feature pills -->
+  <rect x="60" y="430" width="120" height="34" rx="17" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <text x="120" y="452" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="rgba(255,255,255,0.6)">5 Templates</text>
+  <rect x="196" y="430" width="120" height="34" rx="17" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <text x="256" y="452" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="rgba(255,255,255,0.6)">PDF Export</text>
+  <rect x="332" y="430" width="130" height="34" rx="17" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <text x="397" y="452" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="rgba(255,255,255,0.6)">Multi-Currency</text>
+  <!-- Price tag -->
+  <rect x="60" y="490" width="280" height="52" rx="26" fill="url(#gold)"/>
+  <text x="200" y="521" text-anchor="middle" font-family="system-ui,sans-serif" font-size="20" font-weight="900" fill="#0a0a0f">Free + Pro $4.99/mo</text>
+  <!-- Domain -->
+  <text x="60" y="590" font-family="system-ui,sans-serif" font-size="18" font-weight="700" fill="rgba(255,255,255,0.25)">invoicefree.info</text>
+  <!-- Invoice card -->
+  <rect x="720" y="80" width="420" height="470" rx="14" fill="#f8f7f4"/>
+  <rect x="720" y="80" width="420" height="60" rx="14" fill="#0a0a0f"/>
+  <rect x="720" y="120" width="420" height="20" fill="#0a0a0f"/>
+  <text x="745" y="118" font-family="system-ui,sans-serif" font-size="14" font-weight="900" fill="white">InvoiceFree</text>
+  <text x="760" y="133" font-family="system-ui,sans-serif" font-size="10" fill="#c9a84c" opacity=".5">Acme Studio</text>
+  <text x="1110" y="112" text-anchor="end" font-family="system-ui,sans-serif" font-size="11" fill="rgba(255,255,255,0.4)">Invoice #</text>
+  <text x="1110" y="128" text-anchor="end" font-family="system-ui,sans-serif" font-size="14" font-weight="900" fill="#c9a84c">INV-0089</text>
+  <!-- From/To labels -->
+  <text x="745" y="175" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#9ca3af" letter-spacing="1">FROM</text>
+  <text x="745" y="190" font-family="system-ui,sans-serif" font-size="13" font-weight="800" fill="#0a0a0f">Acme Design Studio</text>
+  <text x="930" y="175" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#9ca3af" letter-spacing="1">BILL TO</text>
+  <text x="930" y="190" font-family="system-ui,sans-serif" font-size="13" font-weight="800" fill="#0a0a0f">TechCorp International</text>
+  <!-- Table header -->
+  <rect x="720" y="210" width="420" height="26" fill="#f0efe9"/>
+  <text x="745" y="228" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#9ca3af" letter-spacing="1">DESCRIPTION</text>
+  <text x="1110" y="228" text-anchor="end" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#9ca3af" letter-spacing="1">AMOUNT</text>
+  <!-- Table rows -->
+  <text x="745" y="256" font-family="system-ui,sans-serif" font-size="12" fill="#374151">Brand Identity Design</text>
+  <text x="1110" y="256" text-anchor="end" font-family="system-ui,sans-serif" font-size="12" fill="#374151">$2,400.00</text>
+  <line x1="720" y1="264" x2="1140" y2="264" stroke="#f3f4f6" stroke-width="1"/>
+  <text x="745" y="285" font-family="system-ui,sans-serif" font-size="12" fill="#374151">Website UI/UX Design</text>
+  <text x="1110" y="285" text-anchor="end" font-family="system-ui,sans-serif" font-size="12" fill="#374151">$2,550.00</text>
+  <line x1="720" y1="293" x2="1140" y2="293" stroke="#f3f4f6" stroke-width="1"/>
+  <text x="745" y="314" font-family="system-ui,sans-serif" font-size="12" fill="#374151">Motion Graphics</text>
+  <text x="1110" y="314" text-anchor="end" font-family="system-ui,sans-serif" font-size="12" fill="#374151">$1,600.00</text>
+  <!-- Totals -->
+  <text x="940" y="355" font-family="system-ui,sans-serif" font-size="11" fill="#6b7280">Subtotal</text>
+  <text x="1110" y="355" text-anchor="end" font-family="system-ui,sans-serif" font-size="11" fill="#6b7280">$6,550.00</text>
+  <text x="940" y="375" font-family="system-ui,sans-serif" font-size="11" fill="#6b7280">Tax (10%)</text>
+  <text x="1110" y="375" text-anchor="end" font-family="system-ui,sans-serif" font-size="11" fill="#6b7280">$655.00</text>
+  <line x1="930" y1="388" x2="1120" y2="388" stroke="#0a0a0f" stroke-width="2"/>
+  <text x="940" y="406" font-family="system-ui,sans-serif" font-size="14" font-weight="900" fill="#0a0a0f">TOTAL DUE</text>
+  <text x="1110" y="406" text-anchor="end" font-family="system-ui,sans-serif" font-size="14" font-weight="900" fill="#0a0a0f">$6,877.50</text>
+  <!-- Footer -->
+  <rect x="720" y="500" width="420" height="50" rx="0" fill="#f0efe9"/>
+  <rect x="720" y="500" width="420" height="50" fill="#f0efe9"/>
+  <rect x="720" y="536" width="420" height="14" rx="7" fill="#f0efe9"/>
+  <text x="745" y="530" font-family="system-ui,sans-serif" font-size="11" fill="#9ca3af">Thank you for your business!</text>
+  <rect x="1020" y="513" width="100" height="24" rx="12" fill="#c9a84c"/>
+  <text x="1070" y="530" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" font-weight="800" fill="#0a0a0f">SENT ✓</text>
+</svg>

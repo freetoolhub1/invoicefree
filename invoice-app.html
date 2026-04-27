@@ -1,12 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Invoice Generator — Create Professional Invoice | InvoiceFree.info</title>
-<meta name="description" content="Create professional invoices for free. Add items, tax, discounts, choose templates, download PDF.">
+<title>Create Invoice Free — Professional Invoice Generator | InvoiceFree.info</title>
+<meta name="description" content="Create a professional invoice online in seconds. Free PDF export, auto-calculations, multiple templates, multi-currency. No signup required.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://invoicefree.info/invoice-app.html">
+<meta name="theme-color" content="#0a0a0f">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://invoicefree.info/invoice-app.html">
+<meta property="og:title" content="Create Invoice Free — Professional Invoice Generator">
+<meta property="og:description" content="Create a professional invoice online in seconds. Free PDF export, auto-calculations, multiple templates, multi-currency. No signup required.">
+<meta property="og:image" content="https://invoicefree.info/og-image.png">
+<meta property="og:site_name" content="InvoiceFree.info">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Create Invoice Free — Professional Invoice Generator">
+<meta name="twitter:description" content="Create a professional invoice online in seconds. Free PDF export, auto-calculations, multiple templates, multi-currency. No signup required.">
+<meta name="twitter:image" content="https://invoicefree.info/og-image.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -480,7 +495,7 @@ body{font-family:'Cabinet Grotesk',sans-serif;background:#f4f3ef;color:var(--ink
     <div class="modal-h2">Upgrade to Pro</div>
     <div class="modal-sub">Unlock unlimited invoices, all templates, custom branding, PDF export, email sending, and invoice history.</div>
     <div class="modal-price">
-      <div class="modal-amount">$9<span>/month</span></div>
+      <div class="modal-amount">$4.99<span>/month</span></div>
       <div style="font-size:0.78rem;opacity:0.5;margin-top:4px">7-day free trial · Cancel anytime</div>
     </div>
     <a href="register.html" class="btn-go-pro">Start Free Trial →</a>
@@ -1033,7 +1048,7 @@ function downloadPDF() {
   const inv = document.getElementById('invoice-render');
   if (!inv) { showToast('Nothing to export yet!', 'error'); return; }
   const w = window.open('', '_blank');
-  w.document.write(`<!DOCTYPE html><html><head><title>Invoice</title>
+  w.document.write(`<!DOCTYPE html><html><head>
     <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
       body{margin:0;padding:0;font-family:'Cabinet Grotesk',Arial,sans-serif}
