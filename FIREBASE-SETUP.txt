@@ -1,0 +1,106 @@
+╔══════════════════════════════════════════════════════════════╗
+║   FIREBASE SETUP — Enable Real Google/Microsoft/Apple Login ║
+║   Takes 15 minutes. FREE for up to 10,000 users/month       ║
+╚══════════════════════════════════════════════════════════════╝
+
+STEP 1 — CREATE FIREBASE PROJECT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. Go to: https://console.firebase.google.com
+2. Click "Add project"
+3. Name it: invoicefree
+4. Disable Google Analytics (not needed)
+5. Click "Create project"
+
+STEP 2 — GET YOUR CONFIG KEYS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. Click the gear icon (⚙️) → Project Settings
+2. Scroll to "Your apps" section
+3. Click the </> (Web) icon
+4. App nickname: invoicefree-web
+5. Click "Register app"
+6. Copy the firebaseConfig object — it looks like:
+   {
+     apiKey: "AIzaSy...",
+     authDomain: "invoicefree-xxxxx.firebaseapp.com",
+     projectId: "invoicefree-xxxxx",
+     ...
+   }
+
+STEP 3 — ENABLE AUTHENTICATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. In Firebase console → left menu → "Authentication"
+2. Click "Get started"
+3. Go to "Sign-in method" tab
+4. Enable these providers:
+   ✓ Email/Password → Enable → Save
+   ✓ Google → Enable → add your email → Save
+   ✓ Microsoft (for Hotmail) → Enable → Save
+   ✓ Apple → Enable (requires Apple Dev account $99/yr)
+
+STEP 4 — ENABLE FIRESTORE DATABASE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. Left menu → "Firestore Database"
+2. Click "Create database"
+3. Choose "Start in production mode"
+4. Select your region (us-central1 recommended)
+5. Click "Enable"
+6. Go to "Rules" tab, replace rules with:
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    match /invoices/{invoiceId} {
+      allow read, write: if request.auth != null && request.auth.uid == resource.data.userId;
+      allow create: if request.auth != null;
+    }
+  }
+}
+
+7. Click "Publish"
+
+STEP 5 — ADD AUTHORIZED DOMAINS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. Firebase Console → Authentication → Settings
+2. "Authorized domains" section
+3. Add: invoicefree.info
+4. Add: invoicefree.vercel.app (your Vercel URL)
+5. Add: www.invoicefree.info
+
+STEP 6 — UPDATE YOUR HTML FILES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Open BOTH login.html AND register.html in Notepad.
+Find this section (near the bottom):
+
+const FIREBASE_CONFIG = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  ...
+};
+
+Replace with your actual values from Step 2.
+Do this in BOTH files.
+
+STEP 7 — UPLOAD & DEPLOY
+━━━━━━━━━━━━━━━━━━━━━━━━
+Upload updated login.html and register.html to GitHub.
+Vercel auto-deploys in 30 seconds.
+Social login now works — users click button → Google/Microsoft popup → auto logged in!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+WHAT WORKS WITHOUT FIREBASE (right now)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ Email + Password registration and login
+✓ 3-month free Pro trial on signup
+✓ Dashboard, invoices, admin panel
+✗ Google/Microsoft/Apple login (needs Firebase)
+✗ User data syncs across devices (needs Firebase)
+
+COST: Firebase is FREE for:
+- 10,000 signups/month
+- 50,000 reads/day
+- 20,000 writes/day
+- 1GB storage
+This covers your first 5,000+ users for free.
