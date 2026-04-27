@@ -1,202 +1,167 @@
+
 ╔══════════════════════════════════════════════════════════════╗
-║   INVOICEFREE.INFO — COMPLETE BEGINNER DEPLOYMENT GUIDE     ║
+║   INVOICEFREE.INFO — DEPLOY WITH GITHUB + VERCEL            ║
 ║   Written for someone with ZERO coding experience           ║
 ╚══════════════════════════════════════════════════════════════╝
 
-YOUR WEBSITE FILES:
-═══════════════════
-📄 index.html          ← Home / Landing Page (with SEO)
-📄 invoice-app.html    ← The Main Invoice Creator Tool
-📄 pricing.html        ← Pricing Page
-📄 register.html       ← User Registration
-📄 login.html          ← Login Page
-📄 dashboard.html      ← User Dashboard
-📄 admin.html          ← Admin Control Panel
-📄 invoice-view.html   ← Shareable Invoice View
-📄 privacy.html        ← Privacy Policy
-📄 terms.html          ← Terms of Service
-📄 sitemap.xml         ← SEO Sitemap
-📄 robots.txt          ← SEO Robot Rules
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 1 — CREATE GITHUB ACCOUNT (if not have)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. Go to https://github.com
+2. Click "Sign up"
+3. Enter email, password, username
+4. Verify email
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-STEP 1 — DOWNLOAD YOUR ZIP FILE
+STEP 2 — CREATE GITHUB REPOSITORY
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-1. Download the ZIP file Claude gave you
-2. Find it in your Downloads folder
-3. RIGHT-CLICK the ZIP file
-4. Click "Extract All" (Windows) OR double-click (Mac)
-5. You now have a folder called "invoicefree-v2"
-6. Open that folder — you should see all the .html files
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-STEP 2 — SIGN UP FOR NETLIFY (FREE HOSTING)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-1. Open browser → go to: https://www.netlify.com
-2. Click "Sign up" button (top right corner)
-3. Choose "Sign up with Email"
-4. Enter your email and create a password
-5. Check your email inbox
-6. Click the confirmation link in the email
-7. You are now inside Netlify!
+1. Log in to GitHub
+2. Click the "+" button (top right)
+3. Click "New repository"
+4. Name it: invoicefree (or any name)
+5. Set to PUBLIC
+6. DO NOT check "Add README"
+7. Click "Create repository"
+8. GitHub shows you a page — LEAVE IT OPEN
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-STEP 3 — UPLOAD YOUR WEBSITE (DRAG & DROP!)
+STEP 3 — UPLOAD YOUR FILES TO GITHUB
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-1. Inside Netlify, look for the section that says:
-   "Want to deploy a new site without connecting to Git?"
-   You will see a big box that says "Drag and drop"
-
-2. Open your File Explorer (Windows) or Finder (Mac)
-   Navigate to your "invoicefree-v2" folder
-
-3. HOLD left mouse button on the folder
-   DRAG it into the big Netlify box
-   RELEASE mouse button
-
-4. Wait 10-30 seconds while it uploads...
-
-5. SUCCESS! Netlify gives you a random address like:
-   https://wonderful-taffy-abc123.netlify.app
-
-   COPY this address — this is your live website!
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-STEP 4 — CONNECT YOUR DOMAIN (invoicefree.info)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-You already own invoicefree.info. To use it with Netlify:
-
-IN NETLIFY:
-1. Click on your new site
-2. Click "Domain settings" or "Set up a custom domain"
-3. Type: invoicefree.info
-4. Click "Verify" then "Add domain"
-5. Netlify will show you NAMESERVER addresses like:
-   dns1.p01.nsone.net
-   dns2.p01.nsone.net
-   (yours will be slightly different — note them down!)
-
-WHERE YOU BOUGHT YOUR DOMAIN (GoDaddy / Namecheap / etc.):
-1. Log in to your domain registrar
-2. Find your domain: invoicefree.info
-3. Find "DNS" or "Nameservers" settings
-4. Change nameservers to the ones Netlify gave you
-5. Save / Update
-
-⏰ Wait 24-48 hours for the internet to update.
-   After that, your website is live at invoicefree.info!
+EASY METHOD (no coding needed):
+1. On the empty repo page, click "uploading an existing file"
+   (small link in the middle of the page)
+2. Drag ALL files from your invoicefree-v2 folder into the page
+   (select all files — NOT the folder itself, the FILES inside it)
+   Files to upload:
+   - index.html
+   - invoice-app.html
+   - login.html
+   - register.html
+   - dashboard.html
+   - admin.html
+   - upgrade.html
+   - pricing.html
+   - invoice-view.html
+   - privacy.html
+   - terms.html
+   - sitemap.xml
+   - robots.txt
+   - vercel.json
+   - .gitignore
+3. Scroll down, click "Commit changes" (green button)
+4. Wait 10 seconds — files are now on GitHub!
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-STEP 5 — ACCESSING ADMIN PANEL
+STEP 4 — CONNECT VERCEL TO GITHUB
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-URL: https://invoicefree.info/admin.html
-
-Default Login:
-   Email:    admin@invoicefree.info
-   Password: admin123
-
-⚠️  IMPORTANT — CHANGE YOUR ADMIN PASSWORD!
-   1. Open login.html in a text editor (Notepad)
-   2. Find: password: 'admin123'
-   3. Change 'admin123' to a hard password
-   4. Save and re-upload the folder to Netlify
-
-What Admin Can Do:
-   ✓ See ALL users (free and paid)
-   ✓ See all invoices created
-   ✓ Upgrade users from Free → Pro
-   ✓ Downgrade Pro users → Free
-   ✓ Delete users
-   ✓ Search users by name or email
+1. Go to https://vercel.com
+2. Click "Sign Up" → choose "Continue with GitHub"
+   (this links your GitHub to Vercel — very important!)
+3. Authorize Vercel to access your GitHub
+4. You are now inside Vercel dashboard
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-STEP 6 — UPDATING YOUR WEBSITE LATER
+STEP 5 — DEPLOY YOUR SITE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-When you want to make changes:
-1. Open the file you want to change in Notepad/TextEdit
-2. Make your changes
-3. Save the file
-4. Go to Netlify → your site → "Deploys"
-5. Drag the whole "invoicefree-v2" folder again
-6. It automatically updates! Takes 30 seconds.
+1. In Vercel, click "Add New Project" (or "New Project")
+2. You see a list of your GitHub repos
+3. Find "invoicefree" and click "Import"
+4. On the next screen:
+   - Framework Preset: OTHER (not Next.js or anything else)
+   - Root Directory: ./ (leave as default)
+   - Build Command: LEAVE EMPTY
+   - Output Directory: LEAVE EMPTY
+5. Click "Deploy"
+6. Wait 30-60 seconds...
+7. SUCCESS! Vercel gives you a URL like:
+   https://invoicefree-abc123.vercel.app
+
+VISIT THAT URL — your website is live!
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-YOUR WEBSITE PAGES
+STEP 6 — CONNECT invoicefree.info DOMAIN
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-yourdomain.com/                  ← Home page
-yourdomain.com/invoice-app.html  ← Invoice Creator
-yourdomain.com/pricing.html      ← Pricing
-yourdomain.com/register.html     ← Sign Up
-yourdomain.com/login.html        ← Login
-yourdomain.com/dashboard.html    ← User Dashboard
-yourdomain.com/admin.html        ← Admin Panel
+1. Inside your Vercel project, click "Settings"
+2. Click "Domains" in the left sidebar
+3. Type: invoicefree.info → click "Add"
+4. Also add: www.invoicefree.info
+5. Vercel shows you DNS records to add. Two options:
+
+   OPTION A — Change nameservers (easier):
+   Vercel gives you nameservers like:
+     ns1.vercel-dns.com
+     ns2.vercel-dns.com
+   Go to your domain registrar (GoDaddy/Namecheap/etc)
+   Find "Nameservers" for invoicefree.info
+   Replace them with Vercel's nameservers
+
+   OPTION B — Add DNS records (if you want to keep registrar DNS):
+   Vercel gives you an A record and CNAME:
+     A record:     @    →  76.76.21.21
+     CNAME record: www  →  cname.vercel-dns.com
+   Add these in your domain registrar's DNS settings
+
+6. Wait 24-48 hours for DNS to update worldwide
+7. Vercel auto-adds FREE SSL certificate (https://)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-IMPORTANT NOTES ABOUT DATA
+STEP 7 — UPDATE YOUR SITE (FUTURE CHANGES)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚠️  User accounts and invoice data is saved in the
-    browser's localStorage. This means:
-    
-    - Each browser on each device has its own data
-    - Clearing browser history will erase data
-    - Data is NOT shared across devices
-    
-    This is perfect for getting started!
-    
-    For a REAL shared database (multiple devices,
-    admin sees all users etc.) you need Firebase.
-    
-    Ask Claude: "Help me connect my InvoiceFree 
-    website to Firebase Firestore database"
-    
-    Firebase has a free tier for small websites!
+Every time you update a file:
+1. Go to your GitHub repo
+2. Click the file you want to edit
+3. Click the pencil icon (Edit)
+4. Make changes
+5. Click "Commit changes"
+6. Vercel AUTOMATICALLY detects the change
+7. Auto-deploys in 30 seconds — live instantly!
+
+OR upload new files same way as Step 3.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 COST BREAKDOWN
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Netlify hosting:    FREE ✓ (forever free tier)
-Domain name:        ~$10-15/year (you already have it)
-Firebase (optional): FREE tier available
+GitHub:         FREE forever
+Vercel hosting: FREE (Hobby plan — perfect for this)
+SSL certificate: FREE (auto by Vercel)
+Domain:         ~$10-15/year (you already have it)
 
-TOTAL MONTHLY COST: $0
-(vs $30/month on Replit — you save $360/year!)
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-FEATURES BUILT INTO YOUR WEBSITE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-✓ Premium animated landing page
-✓ 5 invoice templates (2 free, 3 pro)
-✓ Live invoice preview as you type
-✓ PDF export (print to PDF)
-✓ Logo upload
-✓ Custom brand colors (6 presets + custom picker)
-✓ Auto-calculations (tax, discount, total)
-✓ Surcharges and extra fees
-✓ Multi-currency (USD, EUR, GBP, INR, PKR, AED, JPY, CAD)
-✓ Smart autofill (remembers clients and items)
-✓ Auto-save (every keystroke saved automatically)
-✓ Payment terms dropdown (Net 7/15/30 etc.)
-✓ Invoice history tab
-✓ Share invoice link (generates unique URL)
-✓ Email invoice modal (needs EmailJS setup)
-✓ User registration + login system
-✓ User dashboard with stats
-✓ Admin panel (see free/pro users, manage them)
-✓ Free vs Pro plan system
-✓ Full SEO (meta tags, schema, sitemap, robots.txt)
-✓ Mobile responsive design
-✓ Privacy Policy and Terms of Service pages
-✓ Pricing page with toggle (monthly/yearly)
-✓ Custom cursor animation
-✓ Scroll reveal animations
-✓ Floating invoice hero preview
+TOTAL: $0/month (save $30/month vs Replit)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-NEED HELP? ASK CLAUDE!
+ADMIN PANEL
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-"How do I change the red color to green?"
-"How do I add my logo to all pages?"
-"Help me set up Firebase database"
-"Help me connect Stripe payments"
-"Help me set up EmailJS for sending invoices"
-"How do I add a new page?"
-"How do I change the admin password?"
+URL: https://invoicefree.info/admin.html
+Login: admin@invoicefree.info / admin123
+
+CHANGE PASSWORD:
+1. Open admin.html in a text editor (Notepad)
+2. Find: password:'admin123'
+3. Replace with your new password
+4. Upload the updated file to GitHub
+5. Vercel auto-deploys in 30 seconds
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STRIPE SETUP (when ready)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. Go to https://dashboard.stripe.com/apikeys
+2. Open upgrade.html in Notepad
+3. Find: pk_live_YOUR_STRIPE_PUBLISHABLE_KEY
+4. Replace with your real Stripe key
+5. Upload to GitHub — auto-deploys!
+Tell Claude your Stripe keys and Claude will wire it fully.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PROBLEMS? COMMON FIXES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Site shows blank page:
+  → Check that index.html is in ROOT of repo (not inside a folder)
+
+Styles not loading:
+  → Make sure ALL html files are uploaded, not just index.html
+
+Domain not working:
+  → DNS takes 24-48 hours — wait and try again
+
+Admin not working:
+  → Clear browser cache (Ctrl+Shift+R)
