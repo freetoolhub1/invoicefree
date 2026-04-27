@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invoice — InvoiceFree.info</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0a0a0f;--gold:#c9a84c;--gold2:#e8c97a;--mint:#1de9b6;--slate:#8892a4;--border:#e5e7eb;--ff:'Cabinet Grotesk',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--ff);background:#f4f3ef;min-height:100vh}
+.top-bar{background:var(--ink);padding:12px 28px;display:flex;align-items:center;justify-content:space-between}
+.tb-logo{font-weight:900;font-size:1rem;color:white;text-decoration:none}.tb-logo span{color:var(--gold)}
+.tb-note{font-size:0.78rem;color:rgba(255,255,255,0.4)}
+.tb-actions{display:flex;gap:10px}
+.btn-print-view{background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--ink);border:none;padding:8px 20px;border-radius:50px;font-family:var(--ff);font-weight:800;font-size:0.82rem;cursor:pointer;transition:all 0.2s}
+.btn-print-view:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(201,168,76,0.4)}
+.view-wrap{max-width:860px;margin:40px auto;padding:0 20px 60px}
+.view-card{background:white;border-radius:16px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.12)}
+.view-card-inner{padding:48px}
+/* Invoice styles */
+.inv-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:40px;padding-bottom:24px;border-bottom:3px solid #0a0a0f}
+.inv-company{font-size:1.2rem;font-weight:900;color:#0a0a0f}
+.inv-title-big{font-size:2.5rem;font-weight:900;letter-spacing:-0.05em;text-align:right}
+.inv-num-small{font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:#9ca3af;text-align:right}
+.inv-from-to{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:28px}
+.inv-party-label{font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#9ca3af;margin-bottom:5px}
+.inv-party-name{font-weight:800;font-size:1rem;margin-bottom:4px}
+.inv-party-detail{font-size:0.82rem;color:#6b7280;line-height:1.6}
+.inv-meta-row{display:flex;gap:28px;margin-bottom:28px;background:#f8f7f4;padding:16px 20px;border-radius:10px;flex-wrap:wrap}
+.inv-meta-item .label{font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#9ca3af;margin-bottom:3px}
+.inv-meta-item .value{font-weight:700;font-size:0.9rem}
+table{width:100%;border-collapse:collapse;margin-bottom:24px}
+thead th{background:#0a0a0f;color:white;padding:10px 14px;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;text-align:left}
+thead th:last-child{text-align:right}
+tbody td{padding:12px 14px;border-bottom:1px solid #f3f4f6;font-size:0.88rem;color:#374151}
+tbody td:last-child{text-align:right;font-weight:700}
+tbody tr:last-child td{border:none}
+.totals-wrap{display:flex;justify-content:flex-end;margin-bottom:32px}
+.totals-box{width:260px}
+.tr-row{display:flex;justify-content:space-between;padding:5px 0;font-size:0.85rem;color:#6b7280}
+.tr-row span:last-child{font-family:'JetBrains Mono',monospace}
+.tr-grand{display:flex;justify-content:space-between;padding:10px 0 0;border-top:2px solid #0a0a0f;font-weight:800;font-size:1.05rem;color:#0a0a0f;margin-top:8px}
+.tr-grand span:last-child{font-family:'JetBrains Mono',monospace}
+.notes-box{border-top:1px solid #e5e7eb;padding-top:18px;font-size:0.82rem;color:#6b7280;line-height:1.7}
+.view-footer{background:#0a0a0f;padding:20px 48px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.vf-brand{font-weight:900;font-size:0.88rem;color:rgba(255,255,255,0.5)}.vf-brand span{color:var(--gold)}
+.vf-status{background:rgba(29,233,182,0.15);color:var(--mint);font-size:0.72rem;font-weight:800;padding:5px 14px;border-radius:50px}
+.watermark{text-align:center;padding:24px;font-size:0.78rem;color:#9ca3af}
+.watermark a{color:var(--gold);text-decoration:none;font-weight:700}
+@media print{.top-bar,.watermark{display:none}.view-wrap{margin:0;padding:0}.view-card{box-shadow:none;border-radius:0}}
+@media(max-width:600px){.inv-from-to{grid-template-columns:1fr}.inv-header{flex-direction:column;gap:16px}}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <a href="index.html" class="tb-logo">Invoice<span>Free</span></a>
+  <span class="tb-note">📄 Read-only view · Shared invoice</span>
+  <div class="tb-actions">
+    <button class="btn-print-view" onclick="window.print()">🖨️ Print / Save PDF</button>
+  </div>
+</div>
+
+<div class="view-wrap">
+  <div class="view-card">
+    <div class="view-card-inner" id="invoice-view-content">
+      <!-- Rendered from localStorage draft -->
+    </div>
+    <div class="view-footer">
+      <div class="vf-brand">Powered by Invoice<span>Free</span>.info</div>
+      <div class="vf-status">INVOICE SENT ✓</div>
+    </div>
+  </div>
+  <div class="watermark">
+    Create your own professional invoices free at <a href="index.html">InvoiceFree.info</a>
+  </div>
+</div>
+
+<script>
+window.onload = function() {
+  // Load invoice from localStorage draft (in a full backend this would be fetched by ID)
+  const draft = JSON.parse(localStorage.getItem('if_v2_draft') || 'null');
+  const container = document.getElementById('invoice-view-content');
+
+  if (!draft) {
+    container.innerHTML = '<div style="text-align:center;padding:60px;color:#9ca3af"><div style="font-size:3rem;margin-bottom:16px">📄</div><p style="font-size:1rem">No invoice found.<br><a href="invoice-app.html" style="color:var(--gold)">Create an invoice →</a></p></div>';
+    return;
+  }
+
+  const sym = draft.currency || '$';
+  const logoHTML = draft.logoData ? `<img src="${draft.logoData}" style="max-height:52px;max-width:160px;object-fit:contain;display:block;margin-bottom:6px">` : '';
+
+  const items = draft.items || [];
+  let subtotal = 0, taxTotal = 0;
+  const rows = items.filter(it => it.desc || it.rate > 0).map(it => {
+    const lt = it.qty * it.rate;
+    const tx = lt * (it.tax / 100);
+    subtotal += lt; taxTotal += tx;
+    return `<tr><td>${it.desc||'—'}</td><td style="text-align:center">${it.qty}</td><td style="text-align:right">${sym}${parseFloat(it.rate).toFixed(2)}</td><td style="text-align:center">${it.tax||0}%</td><td>${sym}${lt.toFixed(2)}</td></tr>`;
+  }).join('');
+
+  const discType = draft.discountType || 'none';
+  const discVal = parseFloat(draft.discountValue) || 0;
+  let discAmt = 0;
+  if (discType === 'pct') discAmt = subtotal * (discVal / 100);
+  else if (discType === 'fixed') discAmt = discVal;
+
+  const surcharges = draft.surcharges || [];
+  const afterDisc = subtotal - discAmt;
+  let surchargeTotal = 0;
+  surcharges.forEach(s => { surchargeTotal += s.type === 'pct' ? afterDisc * (s.value/100) : s.value; });
+  const total = afterDisc + taxTotal + surchargeTotal;
+
+  const fmtDate = d => {
+    if (!d) return '—';
+    const [y,m,day] = d.split('-');
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return `${months[parseInt(m)-1]} ${parseInt(day)}, ${y}`;
+  };
+
+  const color = draft.primaryColor || '#0a0a0f';
+
+  container.innerHTML = `
+    <div class="inv-header" style="border-color:${color}">
+      <div>${logoHTML}<div class="inv-company" style="color:${color}">${draft.fromName||'Your Company'}</div></div>
+      <div><div class="inv-title-big" style="color:${color}">INVOICE</div><div class="inv-num-small">${draft.invNumber||'INV-0001'}</div></div>
+    </div>
+    <div class="inv-meta-row">
+      <div class="inv-meta-item"><div class="label">Invoice #</div><div class="value">${draft.invNumber||'—'}</div></div>
+      <div class="inv-meta-item"><div class="label">Issue Date</div><div class="value">${fmtDate(draft.invDate)}</div></div>
+      <div class="inv-meta-item"><div class="label">Due Date</div><div class="value" style="color:${color}">${fmtDate(draft.invDue)}</div></div>
+    </div>
+    <div class="inv-from-to">
+      <div><div class="inv-party-label">From</div><div class="inv-party-name">${draft.fromName||'—'}</div><div class="inv-party-detail">${[draft.fromEmail,draft.fromPhone,draft.fromWebsite,(draft.fromAddress||'').replace(/\n/g,'<br>')].filter(Boolean).join('<br>')}</div></div>
+      <div><div class="inv-party-label">Bill To</div><div class="inv-party-name">${draft.toName||'—'}</div><div class="inv-party-detail">${[draft.toCompany,draft.toEmail,draft.toPhone,(draft.toAddress||'').replace(/\n/g,'<br>')].filter(Boolean).join('<br>')}</div></div>
+    </div>
+    <table>
+      <thead><tr><th style="background:${color}">Description</th><th style="background:${color};text-align:center">Qty</th><th style="background:${color};text-align:right">Rate</th><th style="background:${color};text-align:center">Tax</th><th style="background:${color};text-align:right">Amount</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <div class="totals-wrap">
+      <div class="totals-box">
+        <div class="tr-row"><span>Subtotal</span><span>${sym}${subtotal.toFixed(2)}</span></div>
+        ${discAmt > 0 ? `<div class="tr-row"><span>Discount</span><span>-${sym}${discAmt.toFixed(2)}</span></div>` : ''}
+        ${taxTotal > 0 ? `<div class="tr-row"><span>Tax</span><span>${sym}${taxTotal.toFixed(2)}</span></div>` : ''}
+        ${surcharges.map(s => {
+          const amt = s.type === 'pct' ? afterDisc * (s.value/100) : s.value;
+          return `<div class="tr-row"><span>${s.name||'Surcharge'}</span><span>${sym}${amt.toFixed(2)}</span></div>`;
+        }).join('')}
+        <div class="tr-grand"><span>TOTAL DUE</span><span>${sym}${total.toFixed(2)}</span></div>
+      </div>
+    </div>
+    ${draft.notes ? `<div class="notes-box"><strong>Notes:</strong> ${draft.notes}</div>` : ''}
+  `;
+};
+</script>
+</body>
+</html>

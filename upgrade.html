@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Upgrade to Pro — InvoiceFree.info</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230a0a0f'/><rect x='16' y='10' width='32' height='44' rx='5' fill='%23c9a84c'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- Stripe.js v3 -->
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+:root{--ink:#0a0a0f;--ink2:#1c1c2e;--gold:#c9a84c;--gold2:#e8c97a;--mint:#1de9b6;--ember:#e85d26;--slate:#8892a4;--border:#e5e7eb;--surface:#f8f7f4;--ff:'Cabinet Grotesk',sans-serif;--mono:'JetBrains Mono',monospace}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--ff);background:var(--ink);min-height:100vh;color:#fff}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(201,168,76,.1) 0%,transparent 60%);pointer-events:none}
+.nav{background:rgba(10,10,15,.85);backdrop-filter:blur(20px);padding:0 28px;display:flex;align-items:center;justify-content:space-between;height:58px;border-bottom:1px solid rgba(255,255,255,.06);position:sticky;top:0;z-index:100}
+.nav-logo{font-weight:900;font-size:1.2rem;color:white;text-decoration:none;display:flex;align-items:center;gap:8px}
+.nav-logo span{color:var(--gold)}
+.page-wrap{max-width:960px;margin:0 auto;padding:60px 24px}
+.checkout-grid{display:grid;grid-template-columns:1fr 440px;gap:40px;align-items:start}
+/* LEFT: PLAN DETAILS */
+.plan-details{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:20px;padding:36px;position:relative;overflow:hidden}
+.plan-details::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold2))}
+.pd-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.25);padding:5px 14px;border-radius:50px;font-size:.72rem;font-weight:700;color:var(--gold2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:20px}
+.pd-h1{font-size:2rem;font-weight:900;letter-spacing:-.04em;margin-bottom:6px}
+.pd-sub{font-size:.92rem;color:rgba(255,255,255,.45);margin-bottom:28px}
+.pd-price{display:flex;align-items:baseline;gap:4px;margin-bottom:28px;padding:20px;background:rgba(255,255,255,.04);border-radius:12px;border:1px solid rgba(255,255,255,.06)}
+.pd-amount{font-size:3rem;font-weight:900;letter-spacing:-.05em}
+.pd-period{font-size:.95rem;color:rgba(255,255,255,.4);margin-left:4px}
+.pd-promo{background:rgba(29,233,182,.1);border:1px solid rgba(29,233,182,.2);border-radius:8px;padding:10px 14px;font-size:.82rem;color:var(--mint);margin-bottom:24px;display:flex;align-items:center;gap:8px}
+.pd-feats{list-style:none}
+.pd-feats li{display:flex;align-items:center;gap:10px;padding:9px 0;font-size:.9rem;color:rgba(255,255,255,.7);border-bottom:1px solid rgba(255,255,255,.05)}
+.pd-feats li:last-child{border:none}
+.feat-check{width:20px;height:20px;border-radius:50%;background:rgba(29,233,182,.15);color:var(--mint);display:flex;align-items:center;justify-content:center;font-size:.65rem;flex-shrink:0}
+/* RIGHT: PAYMENT FORM */
+.payment-card{background:rgba(255,255,255,.97);border-radius:20px;padding:36px;color:var(--ink)}
+.payment-card h2{font-size:1.3rem;font-weight:900;letter-spacing:-.03em;margin-bottom:6px}
+.payment-card p{font-size:.85rem;color:var(--slate);margin-bottom:24px}
+.fg{margin-bottom:16px}
+.fg label{display:block;font-size:.78rem;font-weight:700;color:#6b7280;margin-bottom:6px}
+.fg input{width:100%;padding:12px 14px;border:2px solid var(--border);border-radius:10px;font-family:var(--ff);font-size:.95rem;color:var(--ink);transition:border-color .2s}
+.fg input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.1)}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+/* Stripe Element container */
+.stripe-element-wrap{padding:12px 14px;border:2px solid var(--border);border-radius:10px;transition:border-color .2s;min-height:48px}
+.stripe-element-wrap.StripeElement--focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.1)}
+.stripe-element-wrap.StripeElement--invalid{border-color:#dc2626}
+.stripe-setup-note{background:#f8f7f4;border-radius:10px;padding:16px;font-size:.82rem;color:var(--slate);margin-bottom:16px;border:1px solid var(--border)}
+.stripe-setup-note strong{color:var(--ink);display:block;margin-bottom:4px}
+.stripe-setup-note code{font-family:var(--mono);background:#e5e7eb;padding:1px 6px;border-radius:4px;font-size:.78rem}
+.btn-pay{width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--ink);border:none;padding:16px;border-radius:50px;font-family:var(--ff);font-size:1rem;font-weight:800;cursor:pointer;transition:all .25s;letter-spacing:-.02em;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-pay:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(201,168,76,.4)}
+.btn-pay:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.security-row{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:14px;font-size:.75rem;color:#9ca3af}
+.security-row svg{width:14px;height:14px;opacity:.5}
+.payment-error{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;border-radius:8px;padding:10px 14px;font-size:.84rem;margin-top:12px;display:none}
+.payment-success{background:#d1fae5;color:#065f46;border:1px solid #6ee7b7;border-radius:8px;padding:14px 16px;font-size:.9rem;margin-top:12px;display:none;font-weight:600}
+/* TOGGLE BILLING */
+.billing-toggle{display:flex;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:50px;padding:4px;margin-bottom:24px;width:fit-content}
+.btl-btn{padding:8px 22px;border-radius:50px;border:none;background:none;font-family:var(--ff);font-size:.85rem;font-weight:700;cursor:pointer;color:rgba(255,255,255,.5);transition:all .25s}
+.btl-btn.active{background:#fff;color:var(--ink)}
+.save-pill{background:rgba(29,233,182,.2);color:var(--mint);font-size:.62rem;font-weight:800;padding:2px 8px;border-radius:50px;margin-left:4px;letter-spacing:.06em}
+@media(max-width:800px){.checkout-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="index.html" class="nav-logo">
+    <svg width="22" height="22" viewBox="0 0 32 32" fill="none"><rect x="8" y="6" width="16" height="20" rx="3" fill="#c9a84c"/><rect x="11" y="18" width="10" height="2.5" rx="1.25" fill="#0a0a0f" opacity=".85"/></svg>
+    Invoice<span>Free</span>
+  </a>
+  <div style="font-size:.82rem;color:rgba(255,255,255,.4);display:flex;align-items:center;gap:6px">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    Secure checkout powered by Stripe
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <div class="checkout-grid">
+    <!-- LEFT: PLAN -->
+    <div class="plan-details">
+      <div class="pd-badge">&#11088; Pro Plan</div>
+      <h1 class="pd-h1">Upgrade to Pro</h1>
+      <p class="pd-sub">Unlock all premium features and grow your invoicing business.</p>
+
+      <div class="billing-toggle">
+        <button class="btl-btn active" onclick="setBilling('monthly',this)">Monthly</button>
+        <button class="btl-btn" onclick="setBilling('yearly',this)">Yearly <span class="save-pill">SAVE 30%</span></button>
+      </div>
+
+      <div class="pd-price">
+        <div class="pd-amount" id="price-display">$9</div>
+        <div class="pd-period" id="period-display">/month</div>
+      </div>
+
+      <div class="pd-promo">&#127873; <strong>First 3 months FREE for new users</strong> &mdash; No card charged today</div>
+
+      <ul class="pd-feats">
+        <li><span class="feat-check">&#10003;</span><strong>Unlimited invoices</strong></li>
+        <li><span class="feat-check">&#10003;</span>All 5 premium templates</li>
+        <li><span class="feat-check">&#10003;</span>Custom branding + logo upload</li>
+        <li><span class="feat-check">&#10003;</span>Email invoice directly to clients</li>
+        <li><span class="feat-check">&#10003;</span>Shareable online invoice links</li>
+        <li><span class="feat-check">&#10003;</span>Invoice history &amp; records</li>
+        <li><span class="feat-check">&#10003;</span>Client database (unlimited)</li>
+        <li><span class="feat-check">&#10003;</span>Payment tracking</li>
+        <li><span class="feat-check">&#10003;</span>Priority email support</li>
+        <li><span class="feat-check">&#10003;</span>Cancel anytime</li>
+      </ul>
+    </div>
+
+    <!-- RIGHT: PAYMENT FORM -->
+    <div class="payment-card">
+      <h2>&#128274; Secure Payment</h2>
+      <p>Your card details are encrypted and processed by Stripe. We never store card numbers.</p>
+
+      <!-- STRIPE SETUP INSTRUCTIONS (shown until API key is configured) -->
+      <div class="stripe-setup-note" id="stripe-setup-note">
+        <strong>&#9888;&#65039; Stripe API Key Required</strong>
+        To enable real payments, replace the placeholder key below with your Stripe Publishable Key.<br>
+        Open <code>upgrade.html</code> and find: <code>pk_live_YOUR_KEY_HERE</code><br>
+        Then add your <strong>Price ID</strong> from Stripe Dashboard.
+        <br><br>
+        <a href="https://dashboard.stripe.com/apikeys" target="_blank" style="color:var(--gold)">Get your Stripe keys &rarr;</a>
+      </div>
+
+      <div class="fg">
+        <label>Full Name on Card</label>
+        <input type="text" id="cardholder" placeholder="John Smith">
+      </div>
+      <div class="fg">
+        <label>Email Address</label>
+        <input type="email" id="pay-email" placeholder="you@example.com">
+      </div>
+
+      <!-- Stripe Card Element mounts here -->
+      <div class="fg">
+        <label>Card Details</label>
+        <div id="card-element" class="stripe-element-wrap">
+          <!-- Stripe injects card form here when key is set -->
+          <div style="font-size:.85rem;color:#9ca3af;padding:4px 0">Card input loads after Stripe key is configured</div>
+        </div>
+      </div>
+
+      <div class="payment-error" id="pay-error"></div>
+      <div class="payment-success" id="pay-success">
+        &#127881; Payment successful! Your Pro plan is now active.<br>
+        <a href="dashboard.html" style="color:#065f46;font-weight:800">Go to Dashboard &rarr;</a>
+      </div>
+
+      <button class="btn-pay" id="pay-btn" onclick="handlePayment()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        <span id="pay-btn-text">Start 3-Month Free Trial</span>
+      </button>
+
+      <div class="security-row">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        256-bit SSL encrypted &middot; Powered by Stripe
+      </div>
+      <p style="text-align:center;font-size:.75rem;color:#9ca3af;margin-top:10px">You won't be charged for 3 months. Cancel anytime.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════
+// STRIPE INTEGRATION — InvoiceFree.info
+//
+// SETUP INSTRUCTIONS FOR OWNER:
+// 1. Go to https://dashboard.stripe.com/apikeys
+// 2. Copy your PUBLISHABLE key (starts with pk_live_...)
+// 3. Replace 'pk_live_YOUR_STRIPE_PUBLISHABLE_KEY' below
+// 4. Create a Product + Price in Stripe Dashboard
+// 5. Replace 'price_YOUR_PRICE_ID' with your Price ID
+// 6. Set up webhook on your server for subscription events
+//
+// For the server side (Stripe requires a backend to
+// create PaymentIntents), deploy a simple Node.js or
+// Python server on Render.com (free tier) or Vercel.
+// ═══════════════════════════════════════════════════
+
+const STRIPE_PUBLISHABLE_KEY = 'pk_live_YOUR_STRIPE_PUBLISHABLE_KEY';
+const PRICE_ID_MONTHLY = 'price_YOUR_MONTHLY_PRICE_ID';
+const PRICE_ID_YEARLY  = 'price_YOUR_YEARLY_PRICE_ID';
+// Your backend endpoint (deploy on Render/Vercel)
+const BACKEND_URL = 'https://your-backend.onrender.com';
+
+let billingCycle = 'monthly';
+let stripe = null;
+let cardElement = null;
+
+// Initialize Stripe only if real key is set
+if (!STRIPE_PUBLISHABLE_KEY.includes('YOUR')) {
+  stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+  const elements = stripe.elements();
+  cardElement = elements.create('card', {
+    style: {
+      base: {
+        fontFamily: "'Cabinet Grotesk', sans-serif",
+        fontSize: '16px',
+        color: '#0a0a0f',
+        '::placeholder': { color: '#9ca3af' }
+      }
+    }
+  });
+  cardElement.mount('#card-element');
+  document.getElementById('stripe-setup-note').style.display = 'none';
+}
+
+function setBilling(cycle, btn) {
+  billingCycle = cycle;
+  document.querySelectorAll('.btl-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  if (cycle === 'yearly') {
+    document.getElementById('price-display').textContent = '$6';
+    document.getElementById('period-display').textContent = '/month (billed $76/yr)';
+  } else {
+    document.getElementById('price-display').textContent = '$9';
+    document.getElementById('period-display').textContent = '/month';
+  }
+}
+
+async function handlePayment() {
+  const name = document.getElementById('cardholder').value.trim();
+  const email = document.getElementById('pay-email').value.trim();
+
+  if (!name || !email) {
+    showPayError('Please fill in your name and email.');
+    return;
+  }
+
+  if (!stripe || !cardElement) {
+    // Demo mode — no Stripe key yet
+    showPayError('Stripe is not configured yet. See setup instructions above. When ready, replace pk_live_YOUR_STRIPE_PUBLISHABLE_KEY with your real key.');
+    return;
+  }
+
+  const btn = document.getElementById('pay-btn');
+  btn.disabled = true;
+  document.getElementById('pay-btn-text').textContent = 'Processing...';
+
+  try {
+    // Step 1: Create subscription on your backend
+    const res = await fetch(BACKEND_URL + '/create-subscription', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email,
+        name,
+        priceId: billingCycle === 'yearly' ? PRICE_ID_YEARLY : PRICE_ID_MONTHLY,
+        trialDays: 90  // 3 months free
+      })
+    });
+    const { clientSecret, error: backendError } = await res.json();
+    if (backendError) { showPayError(backendError); btn.disabled = false; return; }
+
+    // Step 2: Confirm card with Stripe
+    const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: cardElement,
+        billing_details: { name, email }
+      }
+    });
+
+    if (error) {
+      showPayError(error.message);
+      btn.disabled = false;
+      document.getElementById('pay-btn-text').textContent = 'Start 3-Month Free Trial';
+    } else if (paymentIntent.status === 'succeeded' || paymentIntent.status === 'trialing') {
+      // Upgrade user in localStorage
+      const user = JSON.parse(localStorage.getItem('if_current_user') || 'null');
+      if (user) {
+        user.plan = 'pro';
+        const exp = new Date(); exp.setMonth(exp.getMonth() + 3);
+        user.promoExpiry = exp.toISOString();
+        localStorage.setItem('if_current_user', JSON.stringify(user));
+        // Also update in users array
+        let users = JSON.parse(localStorage.getItem('if_users') || '[]');
+        const idx = users.findIndex(u => u.id === user.id);
+        if (idx > -1) { users[idx] = user; localStorage.setItem('if_users', JSON.stringify(users)); }
+      }
+      localStorage.setItem('if_pro', 'true');
+      document.getElementById('pay-success').style.display = 'block';
+      document.getElementById('pay-error').style.display = 'none';
+    }
+  } catch (err) {
+    showPayError('Network error. Please check your connection and try again.');
+    btn.disabled = false;
+    document.getElementById('pay-btn-text').textContent = 'Start 3-Month Free Trial';
+  }
+}
+
+function showPayError(msg) {
+  const el = document.getElementById('pay-error');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+// Pre-fill email if user is logged in
+window.onload = function() {
+  const user = JSON.parse(localStorage.getItem('if_current_user') || 'null');
+  if (user) {
+    document.getElementById('pay-email').value = user.email || '';
+    document.getElementById('cardholder').value = user.name || '';
+  }
+};
+</script>
+</body>
+</html>

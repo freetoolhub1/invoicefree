@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invoice Generator — Create Professional Invoice | InvoiceFree.info</title>
+<meta name="description" content="Create professional invoices for free. Add items, tax, discounts, choose templates, download PDF.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://invoicefree.info/invoice-app.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+:root{
+  --ink:#0a0a0f;--ink2:#1c1c2e;--white:#fff;--cream:#faf9f5;
+  --gold:#c9a84c;--gold2:#e8c97a;--mint:#1de9b6;--ember:#e85d26;
+  --slate:#8892a4;--border:#e5e7eb;--surface:#f8f7f4;
+  --ff:#'Cabinet Grotesk',sans-serif;--ff-mono:'JetBrains Mono',monospace;
+  --r:12px;--r2:8px;--shadow:0 4px 24px rgba(0,0,0,0.08);
+  --shadow-lg:0 12px 48px rgba(0,0,0,0.14);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Cabinet Grotesk',sans-serif;background:#f4f3ef;color:var(--ink);min-height:100vh}
+
+/* NAV */
+.nav{background:var(--ink);padding:0 28px;display:flex;align-items:center;justify-content:space-between;height:58px;position:sticky;top:0;z-index:100}
+.nav-logo{font-weight:900;font-size:1.2rem;color:white;text-decoration:none}
+.nav-logo span{color:var(--gold)}
+.nav-right{display:flex;align-items:center;gap:12px}
+.nav-btn{padding:7px 18px;border-radius:50px;font-family:'Cabinet Grotesk',sans-serif;font-weight:700;font-size:0.82rem;cursor:pointer;transition:all 0.2s;border:none;text-decoration:none}
+.nb-ghost{background:rgba(255,255,255,0.08);color:white;border:1px solid rgba(255,255,255,0.15)}
+.nb-ghost:hover{background:rgba(255,255,255,0.14)}
+.nb-gold{background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--ink)}
+.nb-gold:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(201,168,76,0.4)}
+.nb-mint{background:rgba(29,233,182,0.15);color:var(--mint);border:1px solid rgba(29,233,182,0.3)}
+.nb-mint:hover{background:rgba(29,233,182,0.25)}
+
+/* TABS */
+.app-tabs{background:white;border-bottom:1px solid var(--border);display:flex;padding:0 28px}
+.tab{padding:14px 20px;font-weight:700;font-size:0.85rem;color:var(--slate);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;user-select:none}
+.tab.active{color:var(--ink);border-color:var(--gold)}
+.tab:hover:not(.active){color:var(--ink)}
+
+/* MAIN LAYOUT */
+.app-layout{display:grid;grid-template-columns:1fr 520px;gap:0;height:calc(100vh - 97px);overflow:hidden}
+.form-panel{overflow-y:auto;padding:28px;background:#f4f3ef}
+.preview-panel{background:white;border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+.preview-header{padding:16px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.preview-header-title{font-weight:800;font-size:0.9rem}
+.preview-scroll{flex:1;overflow-y:auto;padding:24px}
+.preview-actions{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:10px;flex-shrink:0}
+
+/* TEMPLATE PICKER */
+.tpl-picker{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+.tpl-btn{padding:7px 14px;border-radius:50px;font-weight:700;font-size:0.75rem;cursor:pointer;border:2px solid var(--border);background:white;transition:all 0.2s;position:relative}
+.tpl-btn.active{border-color:var(--gold);background:rgba(201,168,76,0.08);color:var(--gold)}
+.tpl-btn .pro-lock{position:absolute;top:-5px;right:-5px;background:var(--gold);color:var(--ink);font-size:0.55rem;font-weight:800;padding:1px 5px;border-radius:4px}
+
+/* FORM SECTIONS */
+.form-section{background:white;border-radius:var(--r);padding:24px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.04)}
+.fs-title{font-weight:800;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--slate);margin-bottom:18px;display:flex;align-items:center;gap:8px}
+.fs-title .icon{background:var(--surface);border-radius:6px;padding:4px 8px;font-size:0.85rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.fg{display:flex;flex-direction:column;gap:5px;position:relative}
+.fg label{font-size:0.78rem;font-weight:700;color:#6b7280;letter-spacing:0.02em}
+.fg input,.fg select,.fg textarea{
+  width:100%;padding:10px 12px;
+  border:1.5px solid var(--border);border-radius:var(--r2);
+  font-family:'Cabinet Grotesk',sans-serif;font-size:0.9rem;color:var(--ink);
+  transition:border-color 0.2s,box-shadow 0.2s;background:white;
+}
+.fg input:focus,.fg select:focus,.fg textarea:focus{
+  outline:none;border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(201,168,76,0.12);
+}
+.fg textarea{resize:vertical;min-height:72px}
+
+/* LOGO UPLOAD */
+.logo-upload{border:2px dashed var(--border);border-radius:var(--r2);padding:20px;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden}
+.logo-upload:hover{border-color:var(--gold);background:rgba(201,168,76,0.03)}
+.logo-upload input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.logo-upload-text{font-size:0.82rem;color:var(--slate)}
+.logo-preview{max-height:60px;max-width:180px;object-fit:contain;margin:0 auto;display:block}
+
+/* LINE ITEMS */
+.items-area{overflow-x:auto}
+.items-grid{width:100%;min-width:580px}
+.items-head{display:grid;grid-template-columns:2.5fr 0.8fr 1fr 0.5fr 1fr 40px;gap:8px;padding:8px 10px;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--slate);background:var(--surface);border-radius:var(--r2) var(--r2) 0 0;border:1px solid var(--border)}
+.item-row{display:grid;grid-template-columns:2.5fr 0.8fr 1fr 0.5fr 1fr 40px;gap:8px;padding:6px 10px;border:1px solid var(--border);border-top:none;align-items:center;transition:background 0.2s}
+.item-row:hover{background:#faf9f7}
+.item-row:last-child{border-radius:0 0 var(--r2) var(--r2)}
+.item-row input,.item-row select{width:100%;padding:7px 8px;border:1.5px solid transparent;border-radius:6px;font-family:'Cabinet Grotesk',sans-serif;font-size:0.85rem;background:transparent;transition:all 0.2s}
+.item-row input:focus,.item-row select:focus{outline:none;border-color:var(--gold);background:white;box-shadow:0 0 0 2px rgba(201,168,76,0.1)}
+.item-total{font-family:'JetBrains Mono',monospace;font-size:0.82rem;font-weight:500;color:var(--ink)}
+.btn-remove-item{background:none;border:none;cursor:pointer;color:#d1d5db;font-size:1.1rem;transition:color 0.2s;border-radius:6px;padding:4px 8px}
+.btn-remove-item:hover{color:var(--ember);background:rgba(232,93,38,0.08)}
+
+/* TOTALS SECTION */
+.totals-section{background:var(--surface);border-radius:var(--r);padding:20px;margin-top:16px;border:1px solid var(--border)}
+.totals-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:0.88rem}
+.totals-row .label{color:var(--slate)}
+.totals-row .value{font-family:'JetBrains Mono',monospace;font-weight:500}
+.totals-grand{display:flex;justify-content:space-between;align-items:center;padding:14px 0 0;border-top:2px solid var(--ink);margin-top:6px}
+.totals-grand .label{font-weight:800;font-size:1rem}
+.totals-grand .value{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:1.2rem;color:var(--ink)}
+
+/* AUTOSAVE BADGE */
+.autosave{display:inline-flex;align-items:center;gap:6px;font-size:0.75rem;color:var(--mint);background:rgba(29,233,182,0.1);padding:4px 12px;border-radius:50px;transition:opacity 0.5s}
+.autosave-dot{width:6px;height:6px;border-radius:50%;background:var(--mint);animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+
+/* SUGGESTIONS DROPDOWN */
+.suggestions{position:absolute;top:100%;left:0;right:0;background:white;border:1.5px solid var(--gold);border-radius:var(--r2);box-shadow:var(--shadow-lg);z-index:50;max-height:200px;overflow-y:auto;display:none}
+.suggestions.open{display:block}
+.suggestion-item{padding:10px 14px;font-size:0.88rem;cursor:pointer;transition:background 0.15s}
+.suggestion-item:hover{background:rgba(201,168,76,0.08)}
+.suggestion-item strong{color:var(--gold)}
+
+/* COLOR PICKER */
+.color-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px}
+.color-swatch{width:28px;height:28px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:transform 0.2s,border-color 0.2s}
+.color-swatch.active{transform:scale(1.25);border-color:var(--ink)}
+.custom-color{width:28px;height:28px;border-radius:50%;border:2px solid var(--border);cursor:pointer;overflow:hidden;padding:0}
+.custom-color input{width:100%;height:100%;opacity:0;cursor:pointer;position:absolute}
+
+/* CURRENCY SELECTOR */
+.currency-flag{display:flex;align-items:center;gap:6px}
+
+/* ADD ITEM BUTTON */
+.btn-add-item{width:100%;margin-top:10px;padding:10px;border:2px dashed var(--border);border-radius:var(--r2);background:none;font-family:'Cabinet Grotesk',sans-serif;font-size:0.85rem;font-weight:600;color:var(--slate);cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:6px}
+.btn-add-item:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,0.04)}
+
+/* ACTION BUTTONS */
+.btn-action{flex:1;padding:12px 16px;border-radius:50px;font-family:'Cabinet Grotesk',sans-serif;font-weight:700;font-size:0.88rem;cursor:pointer;border:none;transition:all 0.25s;display:flex;align-items:center;justify-content:center;gap:6px}
+.btn-pdf{background:var(--ink);color:white}
+.btn-pdf:hover{background:#2d2d45;transform:translateY(-1px)}
+.btn-print{background:var(--surface);color:var(--ink);border:1.5px solid var(--border)}
+.btn-print:hover{background:var(--border)}
+.btn-share{background:rgba(201,168,76,0.12);color:var(--gold);border:1.5px solid rgba(201,168,76,0.3)}
+.btn-share:hover{background:rgba(201,168,76,0.2)}
+.btn-email{background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--ink)}
+.btn-email:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(201,168,76,0.4)}
+
+/* ── INVOICE TEMPLATES ── */
+/* Template 1: Classic Professional (white) */
+.inv-wrap{font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.5;background:white;padding:40px}
+.tpl-classic .inv-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:40px;padding-bottom:24px;border-bottom:3px solid var(--tpl-primary,#0a0a0f)}
+.tpl-classic .inv-logo-area{display:flex;align-items:center;gap:12px}
+.tpl-classic .inv-company{font-size:1.2rem;font-weight:900;color:var(--tpl-primary,#0a0a0f);letter-spacing:-0.03em}
+.tpl-classic .inv-invoice-title{font-size:2rem;font-weight:900;color:var(--tpl-primary,#0a0a0f);letter-spacing:-0.05em;text-align:right}
+.tpl-classic .inv-num{font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:#6b7280;text-align:right}
+.inv-from-to{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:32px}
+.inv-party-label{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#9ca3af;margin-bottom:6px}
+.inv-party-name{font-size:1rem;font-weight:800;color:var(--tpl-primary,#0a0a0f);margin-bottom:4px}
+.inv-party-detail{font-size:0.8rem;color:#6b7280;line-height:1.6}
+.inv-meta-row{display:flex;gap:32px;margin-bottom:32px;flex-wrap:wrap}
+.inv-meta-item{display:flex;flex-direction:column;gap:3px}
+.inv-meta-label{font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#9ca3af}
+.inv-meta-value{font-size:0.9rem;font-weight:700;color:var(--tpl-primary,#0a0a0f)}
+.inv-table{width:100%;border-collapse:collapse;margin-bottom:24px}
+.inv-table thead th{background:var(--tpl-primary,#0a0a0f);color:white;padding:10px 14px;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;text-align:left}
+.inv-table thead th:last-child{text-align:right}
+.inv-table tbody td{padding:11px 14px;border-bottom:1px solid #f3f4f6;font-size:0.85rem;color:#374151}
+.inv-table tbody td:last-child{text-align:right;font-weight:600;color:var(--tpl-primary,#0a0a0f)}
+.inv-table tbody tr:last-child td{border-bottom:none}
+.inv-totals-wrap{display:flex;justify-content:flex-end;margin-bottom:32px}
+.inv-totals-box{width:260px}
+.itr{display:flex;justify-content:space-between;padding:5px 0;font-size:0.85rem;color:#6b7280}
+.itr.grand{border-top:2px solid var(--tpl-primary,#0a0a0f);margin-top:8px;padding-top:10px;font-weight:800;font-size:1rem;color:var(--tpl-primary,#0a0a0f)}
+.itr span:last-child{font-family:'JetBrains Mono',monospace}
+.inv-notes-section{border-top:1px solid #e5e7eb;padding-top:16px;font-size:0.8rem;color:#6b7280;line-height:1.7}
+.inv-notes-section strong{color:#374151}
+.inv-footer{margin-top:32px;text-align:center;font-size:0.75rem;color:#9ca3af;border-top:1px solid #f3f4f6;padding-top:16px}
+
+/* Template 2: Modern Minimal (dark) */
+.tpl-modern{background:#0f172a;color:white;padding:40px}
+.tpl-modern .inv-company{color:var(--gold2);font-size:1.1rem;font-weight:900}
+.tpl-modern .inv-invoice-title{font-size:3rem;font-weight:900;letter-spacing:-0.06em;color:white;line-height:1}
+.tpl-modern .inv-num{font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:rgba(255,255,255,0.35)}
+.tpl-modern .inv-party-name{color:white}
+.tpl-modern .inv-party-detail{color:rgba(255,255,255,0.5)}
+.tpl-modern .inv-meta-value{color:var(--gold2)}
+.tpl-modern .inv-meta-label{color:rgba(255,255,255,0.3)}
+.tpl-modern .inv-party-label{color:rgba(255,255,255,0.3)}
+.tpl-modern .inv-table thead th{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.5)}
+.tpl-modern .inv-table tbody td{border-color:rgba(255,255,255,0.06);color:rgba(255,255,255,0.75)}
+.tpl-modern .inv-table tbody td:last-child{color:var(--gold2)}
+.tpl-modern .itr{color:rgba(255,255,255,0.4)}
+.tpl-modern .itr.grand{color:white;border-color:rgba(255,255,255,0.3)}
+.tpl-modern .inv-notes-section{border-color:rgba(255,255,255,0.08);color:rgba(255,255,255,0.4)}
+.tpl-modern .inv-footer{color:rgba(255,255,255,0.2);border-color:rgba(255,255,255,0.06)}
+.tpl-modern .tpl-classic.inv-header{border-color:rgba(255,255,255,0.1)}
+
+/* Preview scale container */
+.preview-scale-wrap{transform-origin:top center;transition:transform 0.3s}
+#invoice-render{box-shadow:0 8px 40px rgba(0,0,0,0.15);border-radius:8px;overflow:hidden}
+
+/* PRO MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:999;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.3s;backdrop-filter:blur(8px)}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal-card{background:white;border-radius:20px;padding:40px;max-width:440px;width:90%;position:relative;transform:translateY(20px) scale(0.97);transition:transform 0.3s}
+.modal-overlay.open .modal-card{transform:none}
+.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;font-size:1.4rem;cursor:pointer;color:#9ca3af}
+.modal-icon{font-size:3rem;margin-bottom:16px}
+.modal-h2{font-family:'Cabinet Grotesk',sans-serif;font-size:1.5rem;font-weight:900;margin-bottom:8px;letter-spacing:-0.03em}
+.modal-sub{font-size:0.9rem;color:#6b7280;margin-bottom:24px;line-height:1.6}
+.modal-price{background:linear-gradient(135deg,#0a0a0f,#1c1c2e);border-radius:12px;padding:20px;margin-bottom:24px;text-align:center;color:white}
+.modal-amount{font-size:2.2rem;font-weight:900;letter-spacing:-0.04em}
+.modal-amount span{font-size:0.9rem;font-weight:400;opacity:0.6}
+.btn-go-pro{display:block;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--ink);padding:14px;border-radius:50px;text-align:center;font-family:'Cabinet Grotesk',sans-serif;font-weight:800;font-size:1rem;text-decoration:none;cursor:pointer;border:none;width:100%;transition:all 0.25s}
+.btn-go-pro:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(201,168,76,0.4)}
+
+/* EMAIL MODAL */
+.email-form .fg{margin-bottom:14px}
+
+/* SHARE LINK */
+.share-link-box{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r2);padding:12px 16px;font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--slate);display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px}
+.copy-btn{background:var(--ink);color:white;border:none;padding:6px 14px;border-radius:6px;font-size:0.75rem;font-weight:700;cursor:pointer;font-family:'Cabinet Grotesk',sans-serif;transition:background 0.2s}
+.copy-btn:hover{background:#2d2d45}
+
+/* ALERTS */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--ink);color:white;padding:14px 20px;border-radius:12px;font-size:0.88rem;font-weight:600;box-shadow:0 8px 30px rgba(0,0,0,0.3);z-index:9999;transform:translateY(100px);opacity:0;transition:all 0.4s cubic-bezier(0.16,1,0.3,1)}
+.toast.show{transform:none;opacity:1}
+.toast.success{border-left:3px solid var(--mint)}
+.toast.error{border-left:3px solid var(--ember)}
+
+/* PRO BADGE */
+.pro-badge{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--ink);font-size:0.7rem;font-weight:800;padding:4px 10px;border-radius:50px;letter-spacing:0.04em}
+
+/* MOBILE */
+@media(max-width:900px){
+  .app-layout{grid-template-columns:1fr;height:auto}
+  .preview-panel{display:none}
+  .form-row{grid-template-columns:1fr}
+  .form-row-3{grid-template-columns:1fr}
+  .items-head{display:none}
+  .item-row{grid-template-columns:1fr 1fr;row-gap:8px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="nav">
+  <a href="index.html" class="nav-logo">Invoice<span>Free</span></a>
+  <div style="display:flex;align-items:center;gap:12px">
+    <span class="autosave" id="autosave-badge"><span class="autosave-dot"></span>Auto-saved</span>
+  </div>
+  <div class="nav-right">
+    <span id="pro-badge-nav" style="display:none" class="pro-badge">⭐ PRO</span>
+    <button class="nav-btn nb-ghost" onclick="window.location.href='dashboard.html'">Dashboard</button>
+    <button class="nav-btn nb-gold" onclick="openProModal()">✦ Go Pro</button>
+  </div>
+</nav>
+
+<!-- TABS -->
+<div class="app-tabs">
+  <div class="tab active" onclick="switchTab('editor')">✏️ Editor</div>
+  <div class="tab" onclick="switchTab('settings')">⚙️ Settings</div>
+  <div class="tab" onclick="switchTab('history')">📁 History</div>
+</div>
+
+<!-- MAIN -->
+<div class="app-layout">
+
+  <!-- FORM PANEL -->
+  <div class="form-panel" id="editor-panel">
+
+    <!-- TEMPLATE PICKER -->
+    <div class="form-section">
+      <div class="fs-title"><span class="icon">🎨</span> Template & Style</div>
+      <div class="tpl-picker">
+        <button class="tpl-btn active" onclick="setTemplate(1,this)">Classic Pro</button>
+        <button class="tpl-btn" onclick="setTemplate(2,this)">Modern Dark</button>
+        <button class="tpl-btn" onclick="needsPro(this)">Corporate Blue<span class="pro-lock">PRO</span></button>
+        <button class="tpl-btn" onclick="needsPro(this)">Elegant Dark<span class="pro-lock">PRO</span></button>
+        <button class="tpl-btn" onclick="needsPro(this)">Creative<span class="pro-lock">PRO</span></button>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+        <span style="font-size:0.78rem;font-weight:700;color:var(--slate)">Primary Color:</span>
+        <div class="color-row">
+          <div class="color-swatch active" style="background:#0a0a0f" onclick="setColor('#0a0a0f',this)" title="Ink Black"></div>
+          <div class="color-swatch" style="background:#c9a84c" onclick="setColor('#c9a84c',this)" title="Gold"></div>
+          <div class="color-swatch" style="background:#1e3a5f" onclick="setColor('#1e3a5f',this)" title="Navy"></div>
+          <div class="color-swatch" style="background:#16a34a" onclick="setColor('#16a34a',this)" title="Forest"></div>
+          <div class="color-swatch" style="background:#dc2626" onclick="setColor('#dc2626',this)" title="Red"></div>
+          <div class="color-swatch" style="background:#7c3aed" onclick="setColor('#7c3aed',this)" title="Purple"></div>
+          <label style="position:relative;cursor:pointer;width:28px;height:28px" title="Custom">
+            <div class="color-swatch" style="background:conic-gradient(red,yellow,green,blue,purple,red)"></div>
+            <input type="color" id="custom-color" style="position:absolute;inset:0;opacity:0;cursor:pointer" onchange="setColor(this.value,null)">
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- YOUR INFO -->
+    <div class="form-section">
+      <div class="fs-title"><span class="icon">🏢</span> Your Business Info</div>
+      <div style="margin-bottom:16px">
+        <label class="fg" style="gap:6px">
+          <span style="font-size:0.78rem;font-weight:700;color:#6b7280">Company Logo</span>
+          <div class="logo-upload" id="logo-drop" onclick="document.getElementById('logo-input').click()">
+            <input type="file" id="logo-input" accept="image/*" onchange="handleLogo(event)" style="display:none">
+            <img id="logo-preview-img" style="display:none" class="logo-preview">
+            <div id="logo-placeholder">
+              <div style="font-size:1.5rem;margin-bottom:4px">📷</div>
+              <div class="logo-upload-text">Click to upload logo (PNG, JPG, SVG)</div>
+            </div>
+          </div>
+        </label>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Company / Your Name *</label><input type="text" id="from-name" placeholder="Acme Design Studio" oninput="onInput()"></div>
+        <div class="fg"><label>Email</label><input type="email" id="from-email" placeholder="hello@acme.studio" oninput="onInput()"></div>
+      </div>
+      <div class="form-row" style="margin-top:12px">
+        <div class="fg"><label>Phone</label><input type="text" id="from-phone" placeholder="+1 (555) 000-0000" oninput="onInput()"></div>
+        <div class="fg"><label>Website</label><input type="text" id="from-website" placeholder="www.acme.studio" oninput="onInput()"></div>
+      </div>
+      <div class="fg" style="margin-top:12px"><label>Address</label><textarea id="from-address" placeholder="123 Creative St&#10;New York, NY 10001" rows="2" oninput="onInput()"></textarea></div>
+    </div>
+
+    <!-- CLIENT INFO -->
+    <div class="form-section">
+      <div class="fs-title"><span class="icon">👤</span> Client / Bill To</div>
+      <div class="form-row">
+        <div class="fg" style="position:relative">
+          <label>Client Name *</label>
+          <input type="text" id="to-name" placeholder="TechCorp International" oninput="onInput();showClientSuggestions(this.value)" autocomplete="off">
+          <div class="suggestions" id="client-suggestions"></div>
+        </div>
+        <div class="fg"><label>Client Email</label><input type="email" id="to-email" placeholder="billing@techcorp.io" oninput="onInput()"></div>
+      </div>
+      <div class="form-row" style="margin-top:12px">
+        <div class="fg"><label>Company Name</label><input type="text" id="to-company" placeholder="TechCorp Inc." oninput="onInput()"></div>
+        <div class="fg"><label>Phone</label><input type="text" id="to-phone" placeholder="+44 20 0000 0000" oninput="onInput()"></div>
+      </div>
+      <div class="fg" style="margin-top:12px"><label>Address</label><textarea id="to-address" placeholder="456 Business Ave&#10;London, EC1A 1BB" rows="2" oninput="onInput()"></textarea></div>
+    </div>
+
+    <!-- INVOICE META -->
+    <div class="form-section">
+      <div class="fs-title"><span class="icon">📋</span> Invoice Details</div>
+      <div class="form-row">
+        <div class="fg"><label>Invoice Number</label><input type="text" id="inv-number" placeholder="INV-0001" oninput="onInput()"></div>
+        <div class="fg">
+          <label>Currency</label>
+          <select id="currency" onchange="onInput()">
+            <option value="$">USD — $ Dollar</option>
+            <option value="€">EUR — € Euro</option>
+            <option value="£">GBP — £ Pound</option>
+            <option value="₹">INR — ₹ Rupee</option>
+            <option value="₨">PKR — ₨ Rupee</option>
+            <option value="د.إ">AED — د.إ Dirham</option>
+            <option value="¥">JPY — ¥ Yen</option>
+            <option value="CAD $">CAD — CA$ Dollar</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row" style="margin-top:12px">
+        <div class="fg"><label>Issue Date</label><input type="date" id="inv-date" oninput="onInput()"></div>
+        <div class="fg"><label>Due Date</label><input type="date" id="inv-due" oninput="onInput()"></div>
+      </div>
+      <div class="fg" style="margin-top:12px">
+        <label>Payment Terms</label>
+        <select id="pay-terms" onchange="applyTerms()">
+          <option value="">Select terms</option>
+          <option value="receipt">Due on Receipt</option>
+          <option value="7">Net 7</option>
+          <option value="15">Net 15</option>
+          <option value="30">Net 30</option>
+          <option value="60">Net 60</option>
+          <option value="custom">Custom</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- LINE ITEMS -->
+    <div class="form-section">
+      <div class="fs-title"><span class="icon">📦</span> Items & Services</div>
+      <div class="items-area">
+        <div class="items-head">
+          <span>Description</span><span>Qty</span><span>Unit Price</span><span>Tax%</span><span>Amount</span><span></span>
+        </div>
+        <div id="items-container"></div>
+      </div>
+      <button class="btn-add-item" onclick="addItem()">+ Add Line Item</button>
+      <div class="totals-section">
+        <div class="totals-row"><span class="label">Subtotal</span><span class="value" id="t-subtotal">$0.00</span></div>
+        <div class="totals-row" id="discount-row" style="display:none"><span class="label" id="discount-label">Discount</span><span class="value" id="t-discount">-$0.00</span></div>
+        <div class="totals-row"><span class="label">Tax Total</span><span class="value" id="t-tax">$0.00</span></div>
+        <div id="surcharges-display"></div>
+        <div class="totals-grand"><span class="label">Total Due</span><span class="value" id="t-total">$0.00</span></div>
+      </div>
+    </div>
+
+    <!-- EXTRAS: DISCOUNT + SURCHARGES + NOTES -->
+    <div class="form-section">
+      <div class="fs-title"><span class="icon">➕</span> Extras & Notes</div>
+      <div class="form-row">
+        <div class="fg"><label>Global Discount</label>
+          <select id="discount-type" onchange="onInput()">
+            <option value="none">No Discount</option>
+            <option value="pct">Percentage (%)</option>
+            <option value="fixed">Fixed Amount</option>
+          </select>
+        </div>
+        <div class="fg"><label>Discount Value</label><input type="number" id="discount-value" placeholder="0" min="0" oninput="onInput()"></div>
+      </div>
+      <div id="surcharges-container" style="margin-top:12px">
+        <div style="font-size:0.78rem;font-weight:700;color:#6b7280;margin-bottom:8px">Surcharges / Extra Fees</div>
+        <div id="surcharge-list"></div>
+        <button class="btn-add-item" style="margin-top:6px" onclick="addSurcharge()">+ Add Surcharge / Fee</button>
+      </div>
+      <div class="fg" style="margin-top:16px"><label>Notes / Terms</label><textarea id="inv-notes" rows="3" placeholder="Payment terms, bank details, thank you message..." oninput="onInput()"></textarea></div>
+    </div>
+
+  </div><!-- /form panel -->
+
+  <!-- SETTINGS PANEL (hidden) -->
+  <div class="form-panel" id="settings-panel" style="display:none">
+    <div class="form-section">
+      <div class="fs-title"><span class="icon">⚙️</span> Preferences</div>
+      <div class="fg"><label>Default Currency</label>
+        <select id="pref-currency">
+          <option>USD ($)</option><option>EUR (€)</option><option>GBP (£)</option><option>PKR (₨)</option>
+        </select>
+      </div>
+      <div class="fg" style="margin-top:12px"><label>Default Payment Terms</label>
+        <select><option>Net 30</option><option>Net 15</option><option>Due on Receipt</option></select>
+      </div>
+      <div class="fg" style="margin-top:12px"><label>Invoice Number Prefix</label>
+        <input type="text" id="inv-prefix" placeholder="INV-" value="INV-">
+      </div>
+    </div>
+    <div class="form-section">
+      <div class="fs-title"><span class="icon">🗃️</span> Saved Data</div>
+      <p style="font-size:0.85rem;color:var(--slate);margin-bottom:16px">All data is saved locally in your browser.</p>
+      <button class="btn-action btn-print" style="max-width:200px" onclick="clearAllData()">🗑️ Clear All Data</button>
+    </div>
+  </div>
+
+  <!-- HISTORY PANEL (hidden) -->
+  <div class="form-panel" id="history-panel" style="display:none">
+    <div class="form-section">
+      <div class="fs-title"><span class="icon">📁</span> Invoice History</div>
+      <div id="history-list"></div>
+    </div>
+  </div>
+
+  <!-- RIGHT: PREVIEW PANEL -->
+  <div class="preview-panel">
+    <div class="preview-header">
+      <span class="preview-header-title">Live Preview</span>
+      <span id="preview-status" style="font-size:0.75rem;color:var(--mint)">✓ Up to date</span>
+    </div>
+    <div class="preview-scroll">
+      <div class="preview-scale-wrap" id="preview-scale">
+        <div id="invoice-render"></div>
+      </div>
+    </div>
+    <div class="preview-actions">
+      <button class="btn-action btn-pdf" onclick="downloadPDF()">📥 PDF</button>
+      <button class="btn-action btn-print" onclick="printInvoice()">🖨️ Print</button>
+      <button class="btn-action btn-share" onclick="openShareModal()">🔗 Share</button>
+      <button class="btn-action btn-email" onclick="openEmailModal()">📧 Email</button>
+    </div>
+  </div>
+
+</div><!-- /app-layout -->
+
+<!-- PRO MODAL -->
+<div class="modal-overlay" id="pro-modal">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal('pro-modal')">✕</button>
+    <div class="modal-icon">⭐</div>
+    <div class="modal-h2">Upgrade to Pro</div>
+    <div class="modal-sub">Unlock unlimited invoices, all templates, custom branding, PDF export, email sending, and invoice history.</div>
+    <div class="modal-price">
+      <div class="modal-amount">$9<span>/month</span></div>
+      <div style="font-size:0.78rem;opacity:0.5;margin-top:4px">7-day free trial · Cancel anytime</div>
+    </div>
+    <a href="register.html" class="btn-go-pro">Start Free Trial →</a>
+    <p style="text-align:center;font-size:0.75rem;color:#9ca3af;margin-top:12px">No credit card required for trial</p>
+  </div>
+</div>
+
+<!-- EMAIL MODAL -->
+<div class="modal-overlay" id="email-modal">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal('email-modal')">✕</button>
+    <div class="modal-icon">📧</div>
+    <div class="modal-h2">Email Invoice</div>
+    <div class="modal-sub">Send this invoice directly to your client. A PDF will be attached automatically.</div>
+    <div class="email-form">
+      <div class="fg"><label>Recipient Email</label><input type="email" id="email-to" placeholder="client@example.com"></div>
+      <div class="fg" style="margin-top:12px"><label>Subject</label><input type="text" id="email-subject" placeholder="Invoice INV-0001 from Acme Studio"></div>
+      <div class="fg" style="margin-top:12px"><label>Message</label><textarea id="email-body" rows="4" placeholder="Hi [Name],&#10;&#10;Please find attached your invoice. Let me know if you have any questions.&#10;&#10;Thank you!"></textarea></div>
+    </div>
+    <button class="btn-go-pro" style="margin-top:20px" onclick="sendEmail()">Send Invoice →</button>
+  </div>
+</div>
+
+<!-- SHARE MODAL -->
+<div class="modal-overlay" id="share-modal">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal('share-modal')">✕</button>
+    <div class="modal-icon">🔗</div>
+    <div class="modal-h2">Share Invoice Link</div>
+    <div class="modal-sub">Generate a unique shareable link your client can view online. Mobile-friendly, read-only, print-ready.</div>
+    <div id="share-link-container">
+      <button class="btn-go-pro" onclick="generateShareLink()">Generate Link →</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════
+//  INVOICEFREE APP CORE — v2.0
+// ═══════════════════════════════════════════
+
+// ── STATE ──
+let state = {
+  template: 1,
+  primaryColor: '#0a0a0f',
+  currency: '$',
+  logoData: null,
+  items: [],
+  surcharges: [],
+  autosaveTimer: null,
+  isPro: false
+};
+
+// ── INIT ──
+window.onload = function() {
+  setDefaultDates();
+  generateInvoiceNumber();
+  loadFromStorage();
+  addItem();
+  renderPreview();
+  scalePreview();
+  renderHistory();
+  checkProStatus();
+};
+
+function checkProStatus() {
+  const isPro = localStorage.getItem('if_pro') === 'true';
+  state.isPro = isPro;
+  if (isPro) {
+    document.getElementById('pro-badge-nav').style.display = 'flex';
+  }
+}
+
+// ── DATES ──
+function setDefaultDates() {
+  const today = new Date();
+  document.getElementById('inv-date').value = today.toISOString().split('T')[0];
+  const due = new Date(today);
+  due.setDate(due.getDate() + 30);
+  document.getElementById('inv-due').value = due.toISOString().split('T')[0];
+}
+
+function applyTerms() {
+  const t = document.getElementById('pay-terms').value;
+  if (!t || t === 'custom') return;
+  const date = new Date();
+  if (t === 'receipt') { document.getElementById('inv-due').value = document.getElementById('inv-date').value; }
+  else { date.setDate(date.getDate() + parseInt(t)); document.getElementById('inv-due').value = date.toISOString().split('T')[0]; }
+  onInput();
+}
+
+// ── INVOICE NUMBER ──
+function generateInvoiceNumber() {
+  const invoices = JSON.parse(localStorage.getItem('if_v2_invoices') || '[]');
+  const prefix = localStorage.getItem('if_prefix') || 'INV-';
+  const num = String(invoices.length + 1).padStart(4, '0');
+  document.getElementById('inv-number').value = prefix + num;
+}
+
+// ── TEMPLATE ──
+function setTemplate(n, btn) {
+  state.template = n;
+  document.querySelectorAll('.tpl-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  renderPreview();
+}
+
+// ── COLOR ──
+function setColor(hex, swatch) {
+  state.primaryColor = hex;
+  document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+  if (swatch) swatch.classList.add('active');
+  renderPreview();
+}
+
+// ── LOGO ──
+function handleLogo(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    state.logoData = ev.target.result;
+    document.getElementById('logo-preview-img').src = state.logoData;
+    document.getElementById('logo-preview-img').style.display = 'block';
+    document.getElementById('logo-placeholder').style.display = 'none';
+    saveToStorage();
+    renderPreview();
+  };
+  reader.readAsDataURL(file);
+}
+
+// ── TABS ──
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('editor-panel').style.display = tab === 'editor' ? 'block' : 'none';
+  document.getElementById('settings-panel').style.display = tab === 'settings' ? 'block' : 'none';
+  document.getElementById('history-panel').style.display = tab === 'history' ? 'block' : 'none';
+  if (tab === 'history') renderHistory();
+}
+
+// ── LINE ITEMS ──
+function addItem(desc='', qty=1, rate=0, tax=0) {
+  state.items.push({ desc, qty, rate, tax });
+  renderItems();
+}
+
+function removeItem(i) {
+  if (state.items.length <= 1) return;
+  state.items.splice(i, 1);
+  renderItems();
+  renderPreview();
+}
+
+function renderItems() {
+  const c = document.getElementById('items-container');
+  c.innerHTML = state.items.map((it, i) => `
+    <div class="item-row">
+      <input type="text" placeholder="Description of service/product" value="${it.desc}"
+        oninput="state.items[${i}].desc=this.value;onInput();showItemSuggestions(this.value,${i})"
+        autocomplete="off" id="item-desc-${i}">
+      <input type="number" placeholder="1" value="${it.qty}" min="0.01" step="0.01"
+        oninput="state.items[${i}].qty=parseFloat(this.value)||0;onInput()">
+      <input type="number" placeholder="0.00" value="${it.rate}" min="0" step="0.01"
+        oninput="state.items[${i}].rate=parseFloat(this.value)||0;onInput()">
+      <input type="number" placeholder="0" value="${it.tax}" min="0" max="100"
+        oninput="state.items[${i}].tax=parseFloat(this.value)||0;onInput()">
+      <span class="item-total" id="item-total-${i}">${fmtMoney(it.qty * it.rate)}</span>
+      <button class="btn-remove-item" onclick="removeItem(${i})">✕</button>
+    </div>
+  `).join('');
+}
+
+// ── SURCHARGES ──
+function addSurcharge(name='', type='pct', value=0) {
+  state.surcharges.push({ name, type, value });
+  renderSurcharges();
+}
+
+function renderSurcharges() {
+  const c = document.getElementById('surcharge-list');
+  c.innerHTML = state.surcharges.map((s, i) => `
+    <div style="display:grid;grid-template-columns:2fr 1fr 1fr 32px;gap:8px;margin-bottom:8px;align-items:center">
+      <input type="text" placeholder="e.g. VAT, Delivery Fee" value="${s.name}"
+        style="padding:8px 10px;border:1.5px solid var(--border);border-radius:6px;font-family:'Cabinet Grotesk',sans-serif;font-size:0.85rem"
+        oninput="state.surcharges[${i}].name=this.value;onInput()">
+      <select style="padding:8px;border:1.5px solid var(--border);border-radius:6px;font-family:'Cabinet Grotesk',sans-serif;font-size:0.85rem"
+        onchange="state.surcharges[${i}].type=this.value;onInput()">
+        <option value="pct" ${s.type==='pct'?'selected':''}>%</option>
+        <option value="fixed" ${s.type==='fixed'?'selected':''}>Fixed</option>
+      </select>
+      <input type="number" placeholder="0" value="${s.value}" min="0" step="0.01"
+        style="padding:8px 10px;border:1.5px solid var(--border);border-radius:6px;font-family:'Cabinet Grotesk',sans-serif;font-size:0.85rem"
+        oninput="state.surcharges[${i}].value=parseFloat(this.value)||0;onInput()">
+      <button style="background:none;border:none;color:#d1d5db;cursor:pointer;font-size:1rem;border-radius:6px;padding:4px"
+        onclick="state.surcharges.splice(${i},1);renderSurcharges();onInput()">✕</button>
+    </div>
+  `).join('');
+}
+
+// ── CALCULATIONS ──
+function getCalc() {
+  const sym = document.getElementById('currency').value;
+  let subtotal = 0, taxTotal = 0;
+  state.items.forEach((it, i) => {
+    const lineTotal = it.qty * it.rate;
+    const lineTax = lineTotal * (it.tax / 100);
+    subtotal += lineTotal;
+    taxTotal += lineTax;
+    const el = document.getElementById('item-total-' + i);
+    if (el) el.textContent = sym + lineTotal.toFixed(2);
+  });
+
+  // Discount
+  const discType = document.getElementById('discount-type').value;
+  const discVal = parseFloat(document.getElementById('discount-value').value) || 0;
+  let discAmt = 0;
+  if (discType === 'pct') discAmt = subtotal * (discVal / 100);
+  else if (discType === 'fixed') discAmt = discVal;
+
+  // Surcharges
+  const afterDiscount = subtotal - discAmt;
+  let surchargeTotal = 0;
+  state.surcharges.forEach(s => {
+    if (s.type === 'pct') surchargeTotal += afterDiscount * (s.value / 100);
+    else surchargeTotal += s.value;
+  });
+
+  const total = afterDiscount + taxTotal + surchargeTotal;
+
+  // Update UI
+  document.getElementById('t-subtotal').textContent = sym + subtotal.toFixed(2);
+  document.getElementById('t-tax').textContent = sym + taxTotal.toFixed(2);
+  document.getElementById('t-total').textContent = sym + total.toFixed(2);
+
+  const discRow = document.getElementById('discount-row');
+  if (discAmt > 0) {
+    discRow.style.display = 'flex';
+    document.getElementById('t-discount').textContent = '-' + sym + discAmt.toFixed(2);
+    document.getElementById('discount-label').textContent = discType === 'pct' ? `Discount (${discVal}%)` : 'Discount';
+  } else { discRow.style.display = 'none'; }
+
+  // Surcharges display
+  const sd = document.getElementById('surcharges-display');
+  sd.innerHTML = state.surcharges.map(s => `
+    <div class="totals-row"><span class="label">${s.name || 'Surcharge'}</span><span class="value">${sym}${(s.type==='pct'?afterDiscount*(s.value/100):s.value).toFixed(2)}</span></div>
+  `).join('');
+
+  return { subtotal, taxTotal, discAmt, surchargeTotal, total, sym };
+}
+
+// ── FORMAT MONEY ──
+function fmtMoney(n) {
+  const sym = (document.getElementById('currency') || {}).value || '$';
+  return sym + parseFloat(n || 0).toFixed(2);
+}
+
+// ── ON INPUT ──
+function onInput() {
+  getCalc();
+  renderPreview();
+  scheduleAutosave();
+}
+
+// ── AUTOSAVE ──
+function scheduleAutosave() {
+  clearTimeout(state.autosaveTimer);
+  document.getElementById('autosave-badge').style.opacity = '0.5';
+  state.autosaveTimer = setTimeout(() => {
+    saveToStorage();
+    document.getElementById('autosave-badge').style.opacity = '1';
+  }, 800);
+}
+
+function saveToStorage() {
+  const data = {
+    fromName: v('from-name'), fromEmail: v('from-email'), fromPhone: v('from-phone'),
+    fromWebsite: v('from-website'), fromAddress: v('from-address'),
+    toName: v('to-name'), toEmail: v('to-email'), toCompany: v('to-company'),
+    toPhone: v('to-phone'), toAddress: v('to-address'),
+    invNumber: v('inv-number'), invDate: v('inv-date'), invDue: v('inv-due'),
+    currency: v('currency'), payTerms: v('pay-terms'), notes: v('inv-notes'),
+    discountType: v('discount-type'), discountValue: v('discount-value'),
+    items: state.items, surcharges: state.surcharges,
+    template: state.template, primaryColor: state.primaryColor, logoData: state.logoData
+  };
+  localStorage.setItem('if_v2_draft', JSON.stringify(data));
+
+  // Save client to memory
+  if (data.toName) {
+    let clients = JSON.parse(localStorage.getItem('if_v2_clients') || '[]');
+    if (!clients.find(c => c.name === data.toName)) {
+      clients.unshift({ name: data.toName, email: data.toEmail, company: data.toCompany });
+      if (clients.length > 20) clients = clients.slice(0, 20);
+      localStorage.setItem('if_v2_clients', JSON.stringify(clients));
+    }
+  }
+
+  // Save items to memory
+  state.items.forEach(it => {
+    if (it.desc && it.rate > 0) {
+      let saved = JSON.parse(localStorage.getItem('if_v2_items') || '[]');
+      if (!saved.find(s => s.desc === it.desc)) {
+        saved.unshift({ desc: it.desc, rate: it.rate });
+        if (saved.length > 30) saved = saved.slice(0, 30);
+        localStorage.setItem('if_v2_items', JSON.stringify(saved));
+      }
+    }
+  });
+}
+
+function loadFromStorage() {
+  const raw = localStorage.getItem('if_v2_draft');
+  if (!raw) return;
+  try {
+    const d = JSON.parse(raw);
+    const set = (id, val) => { const el = document.getElementById(id); if (el && val !== undefined) el.value = val; };
+    set('from-name', d.fromName); set('from-email', d.fromEmail); set('from-phone', d.fromPhone);
+    set('from-website', d.fromWebsite); set('from-address', d.fromAddress);
+    set('to-name', d.toName); set('to-email', d.toEmail); set('to-company', d.toCompany);
+    set('to-phone', d.toPhone); set('to-address', d.toAddress);
+    set('inv-number', d.invNumber); set('currency', d.currency); set('inv-notes', d.notes);
+    set('discount-type', d.discountType); set('discount-value', d.discountValue);
+    if (d.invDate) set('inv-date', d.invDate);
+    if (d.invDue) set('inv-due', d.invDue);
+    if (d.items && d.items.length) { state.items = d.items; renderItems(); }
+    if (d.surcharges && d.surcharges.length) { state.surcharges = d.surcharges; renderSurcharges(); }
+    if (d.template) { state.template = d.template; document.querySelectorAll('.tpl-btn')[d.template-1]?.classList.add('active'); }
+    if (d.primaryColor) { state.primaryColor = d.primaryColor; }
+    if (d.logoData) {
+      state.logoData = d.logoData;
+      document.getElementById('logo-preview-img').src = d.logoData;
+      document.getElementById('logo-preview-img').style.display = 'block';
+      document.getElementById('logo-placeholder').style.display = 'none';
+    }
+  } catch(e) {}
+}
+
+function v(id) { return (document.getElementById(id) || {}).value || ''; }
+
+// ── AUTOFILL SUGGESTIONS ──
+function showClientSuggestions(q) {
+  if (!q || q.length < 1) { closeSugg('client-suggestions'); return; }
+  const clients = JSON.parse(localStorage.getItem('if_v2_clients') || '[]');
+  const matches = clients.filter(c => c.name.toLowerCase().includes(q.toLowerCase())).slice(0, 5);
+  const el = document.getElementById('client-suggestions');
+  if (!matches.length) { closeSugg('client-suggestions'); return; }
+  el.innerHTML = matches.map(c => `
+    <div class="suggestion-item" onclick="selectClient(${JSON.stringify(c).replace(/"/g,'&quot;')})">
+      <strong>${c.name}</strong>${c.company ? ' · '+c.company : ''}${c.email ? ' · '+c.email : ''}
+    </div>
+  `).join('');
+  el.classList.add('open');
+}
+
+function selectClient(c) {
+  document.getElementById('to-name').value = c.name || '';
+  document.getElementById('to-email').value = c.email || '';
+  document.getElementById('to-company').value = c.company || '';
+  closeSugg('client-suggestions');
+  onInput();
+}
+
+function showItemSuggestions(q, i) {
+  // For simplicity, suggestions shown next to row
+}
+
+function closeSugg(id) { const el = document.getElementById(id); if (el) el.classList.remove('open'); }
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.fg')) {
+    document.querySelectorAll('.suggestions').forEach(s => s.classList.remove('open'));
+  }
+});
+
+// ── RENDER PREVIEW ──
+function renderPreview() {
+  const sym = v('currency') || '$';
+  const calc = getCalc();
+  const fromName = v('from-name') || 'Your Company';
+  const fromEmail = v('from-email');
+  const fromPhone = v('from-phone');
+  const fromWeb = v('from-website');
+  const fromAddr = (v('from-address') || '').replace(/\n/g, '<br>');
+  const toName = v('to-name') || 'Client Name';
+  const toCompany = v('to-company');
+  const toEmail = v('to-email');
+  const toPhone = v('to-phone');
+  const toAddr = (v('to-address') || '').replace(/\n/g, '<br>');
+  const invNum = v('inv-number') || 'INV-0001';
+  const invDate = formatDate(v('inv-date'));
+  const invDue = formatDate(v('inv-due'));
+  const notes = v('inv-notes');
+  const color = state.primaryColor;
+
+  const logoHTML = state.logoData ? `<img src="${state.logoData}" style="max-height:52px;max-width:160px;object-fit:contain;margin-bottom:6px">` : '';
+
+  const itemRows = state.items.filter(it => it.desc || it.rate > 0).map(it => {
+    const lineTotal = it.qty * it.rate;
+    const lineTax = lineTotal * (it.tax / 100);
+    return `<tr>
+      <td>${it.desc || '—'}</td>
+      <td style="text-align:center">${it.qty}</td>
+      <td style="text-align:right">${sym}${parseFloat(it.rate).toFixed(2)}</td>
+      ${it.tax > 0 ? `<td style="text-align:center">${it.tax}%</td>` : `<td style="text-align:center">—</td>`}
+      <td style="text-align:right;font-weight:700">${sym}${lineTotal.toFixed(2)}</td>
+    </tr>`;
+  }).join('');
+
+  const totalsHTML = `
+    <div class="itr"><span>Subtotal</span><span>${sym}${calc.subtotal.toFixed(2)}</span></div>
+    ${calc.discAmt > 0 ? `<div class="itr"><span>Discount</span><span>-${sym}${calc.discAmt.toFixed(2)}</span></div>` : ''}
+    ${calc.taxTotal > 0 ? `<div class="itr"><span>Tax</span><span>${sym}${calc.taxTotal.toFixed(2)}</span></div>` : ''}
+    ${state.surcharges.map(s => {
+      const afterDisc = calc.subtotal - calc.discAmt;
+      const amt = s.type === 'pct' ? afterDisc * (s.value/100) : s.value;
+      return `<div class="itr"><span>${s.name || 'Surcharge'}</span><span>${sym}${amt.toFixed(2)}</span></div>`;
+    }).join('')}
+    <div class="itr grand"><span>TOTAL DUE</span><span>${sym}${calc.total.toFixed(2)}</span></div>
+  `;
+
+  const metaHTML = `
+    <div class="inv-meta-row">
+      <div class="inv-meta-item"><div class="inv-meta-label">Invoice No.</div><div class="inv-meta-value">${invNum}</div></div>
+      <div class="inv-meta-item"><div class="inv-meta-label">Issue Date</div><div class="inv-meta-value">${invDate}</div></div>
+      <div class="inv-meta-item"><div class="inv-meta-label">Due Date</div><div class="inv-meta-value">${invDue}</div></div>
+    </div>
+  `;
+
+  const partiesHTML = `
+    <div class="inv-from-to">
+      <div>
+        <div class="inv-party-label">From</div>
+        <div class="inv-party-name">${fromName}</div>
+        <div class="inv-party-detail">${[fromEmail, fromPhone, fromWeb, fromAddr].filter(Boolean).join('<br>')}</div>
+      </div>
+      <div>
+        <div class="inv-party-label">Bill To</div>
+        <div class="inv-party-name">${toName}</div>
+        <div class="inv-party-detail">${[toCompany, toEmail, toPhone, toAddr].filter(Boolean).join('<br>')}</div>
+      </div>
+    </div>
+  `;
+
+  const tableHTML = `
+    <table class="inv-table">
+      <thead><tr>
+        <th style="background:${color}">Description</th>
+        <th style="background:${color};text-align:center">Qty</th>
+        <th style="background:${color};text-align:right">Rate</th>
+        <th style="background:${color};text-align:center">Tax</th>
+        <th style="background:${color};text-align:right">Amount</th>
+      </tr></thead>
+      <tbody>${itemRows}</tbody>
+    </table>
+  `;
+
+  const notesHTML = notes ? `<div class="inv-notes-section"><strong>Notes:</strong> ${notes}</div>` : '';
+
+  let html = '';
+  if (state.template === 1) {
+    html = `
+      <div class="inv-wrap tpl-classic" style="--tpl-primary:${color}">
+        <div class="inv-header tpl-classic">
+          <div class="inv-logo-area">
+            ${logoHTML}
+            <div class="inv-company">${fromName}</div>
+          </div>
+          <div>
+            <div class="inv-invoice-title" style="color:${color}">INVOICE</div>
+            <div class="inv-num">${invNum}</div>
+          </div>
+        </div>
+        ${metaHTML}
+        ${partiesHTML}
+        ${tableHTML}
+        <div class="inv-totals-wrap"><div class="inv-totals-box">${totalsHTML}</div></div>
+        ${notesHTML}
+        <div class="inv-footer">Thank you for your business! · ${fromEmail || fromName}</div>
+      </div>
+    `;
+  } else if (state.template === 2) {
+    html = `
+      <div class="inv-wrap tpl-modern" style="background:#0f172a;color:white">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,0.08)">
+          <div>
+            ${logoHTML}
+            <div class="inv-company" style="color:${color}">${fromName}</div>
+            <div style="font-size:0.75rem;margin-top:6px;opacity:0.4;line-height:1.5">${[fromEmail,fromPhone].filter(Boolean).join(' · ')}</div>
+          </div>
+          <div style="text-align:right">
+            <div class="inv-invoice-title" style="font-size:3rem;font-weight:900;letter-spacing:-0.06em;color:white;line-height:1">INV</div>
+            <div style="font-size:1.2rem;font-weight:700;color:${color};margin-top:4px">${invNum}</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:32px;margin-bottom:28px;flex-wrap:wrap">
+          <div><div class="inv-party-label" style="color:rgba(255,255,255,0.3)">Issue Date</div><div style="font-weight:700;color:${color}">${invDate}</div></div>
+          <div><div class="inv-party-label" style="color:rgba(255,255,255,0.3)">Due Date</div><div style="font-weight:700;color:${color}">${invDue}</div></div>
+        </div>
+        <div class="inv-from-to">
+          <div><div class="inv-party-label" style="color:rgba(255,255,255,0.3)">From</div><div class="inv-party-name" style="color:white">${fromName}</div><div class="inv-party-detail" style="color:rgba(255,255,255,0.4)">${[fromEmail,fromAddr].filter(Boolean).join('<br>')}</div></div>
+          <div><div class="inv-party-label" style="color:rgba(255,255,255,0.3)">Bill To</div><div class="inv-party-name" style="color:white">${toName}</div><div class="inv-party-detail" style="color:rgba(255,255,255,0.4)">${[toCompany,toEmail,toAddr].filter(Boolean).join('<br>')}</div></div>
+        </div>
+        <table class="inv-table" style="margin-top:24px">
+          <thead><tr>
+            <th style="background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.4)">Description</th>
+            <th style="background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.4);text-align:center">Qty</th>
+            <th style="background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.4);text-align:right">Rate</th>
+            <th style="background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.4);text-align:center">Tax</th>
+            <th style="background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.4);text-align:right">Amount</th>
+          </tr></thead>
+          <tbody>${itemRows.replace(/color:#374151/g,'color:rgba(255,255,255,0.7)').replace(/color:var\(--tpl-primary,#0a0a0f\)/g,'color:'+color)}</tbody>
+        </table>
+        <div class="inv-totals-wrap" style="margin-top:16px"><div class="inv-totals-box" style="border-top:1px solid rgba(255,255,255,0.1);padding-top:12px">${totalsHTML.replace(/class="itr"/g,'class="itr" style="color:rgba(255,255,255,0.4)"').replace(/class="itr grand"/g,'class="itr grand" style="color:white;border-color:rgba(255,255,255,0.3)"')}</div></div>
+        ${notes ? `<div class="inv-notes-section" style="border-color:rgba(255,255,255,0.08);color:rgba(255,255,255,0.35)">${notes}</div>` : ''}
+        <div class="inv-footer" style="color:rgba(255,255,255,0.2);border-color:rgba(255,255,255,0.06)">invoicefree.info</div>
+      </div>
+    `;
+  }
+
+  document.getElementById('invoice-render').innerHTML = html;
+  document.getElementById('preview-status').textContent = '✓ Up to date';
+}
+
+function formatDate(d) {
+  if (!d) return '—';
+  const [y,m,day] = d.split('-');
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${months[parseInt(m)-1]} ${parseInt(day)}, ${y}`;
+}
+
+// ── PREVIEW SCALE ──
+function scalePreview() {
+  const panel = document.querySelector('.preview-scroll');
+  const content = document.getElementById('invoice-render');
+  if (!panel || !content) return;
+  const pw = panel.clientWidth - 48;
+  const cw = content.scrollWidth || 640;
+  const scale = Math.min(1, pw / cw);
+  document.getElementById('preview-scale').style.transform = `scale(${scale})`;
+  document.getElementById('preview-scale').style.width = `${100/scale}%`;
+}
+window.addEventListener('resize', scalePreview);
+
+// ── PDF DOWNLOAD ──
+function downloadPDF() {
+  const inv = document.getElementById('invoice-render');
+  if (!inv) { showToast('Nothing to export yet!', 'error'); return; }
+  const w = window.open('', '_blank');
+  w.document.write(`<!DOCTYPE html><html><head><title>Invoice</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+      body{margin:0;padding:0;font-family:'Cabinet Grotesk',Arial,sans-serif}
+      @page{size:A4;margin:0}
+      @media print{body{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}}
+      ${document.querySelector('style').textContent}
+    </style>
+    </head><body>${inv.innerHTML}<script>window.onload=function(){window.print();setTimeout(()=>window.close(),1000)}<\/script></body></html>`);
+  w.document.close();
+  saveInvoiceToHistory();
+  showToast('✓ PDF ready! Choose "Save as PDF" in print dialog', 'success');
+}
+
+// ── PRINT ──
+function printInvoice() {
+  downloadPDF();
+}
+
+// ── SHARE MODAL ──
+function openShareModal() {
+  document.getElementById('share-modal').classList.add('open');
+}
+function generateShareLink() {
+  saveInvoiceToHistory();
+  const id = btoa(Date.now().toString()).replace(/=/g,'').substring(0,12);
+  const link = `https://invoicefree.info/invoice/view/${id}`;
+  document.getElementById('share-link-container').innerHTML = `
+    <p style="font-size:0.85rem;color:var(--slate);margin-bottom:12px">Share this link with your client:</p>
+    <div class="share-link-box">
+      <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${link}</span>
+      <button class="copy-btn" onclick="copyLink('${link}')">Copy</button>
+    </div>
+    <p style="font-size:0.75rem;color:#9ca3af;margin-top:10px">⚠️ In this version link opens locally. Connect backend for live sharing.</p>
+  `;
+}
+function copyLink(link) {
+  navigator.clipboard.writeText(link).then(() => showToast('✓ Link copied!', 'success'));
+}
+
+// ── EMAIL MODAL ──
+function openEmailModal() {
+  const clientEmail = v('to-email');
+  const fromName = v('from-name');
+  const invNum = v('inv-number');
+  document.getElementById('email-to').value = clientEmail;
+  document.getElementById('email-subject').value = `Invoice ${invNum} from ${fromName}`;
+  document.getElementById('email-body').value = `Hi,\n\nPlease find attached your invoice ${invNum}.\n\nTotal Due: ${document.getElementById('t-total').textContent}\n\nThank you for your business!\n\n${fromName}`;
+  document.getElementById('email-modal').classList.add('open');
+}
+function sendEmail() {
+  const to = document.getElementById('email-to').value;
+  if (!to) { showToast('Please enter recipient email', 'error'); return; }
+  // EmailJS integration placeholder
+  showToast('✓ Email feature requires EmailJS setup (see docs)', 'success');
+  closeModal('email-modal');
+}
+
+// ── PRO MODAL ──
+function openProModal() { document.getElementById('pro-modal').classList.add('open'); }
+function needsPro(btn) {
+  if (!state.isPro) {
+    openProModal();
+    return false;
+  }
+  return true;
+}
+
+// ── CLOSE MODAL ──
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); });
+});
+
+// ── HISTORY ──
+function saveInvoiceToHistory() {
+  let invoices = JSON.parse(localStorage.getItem('if_v2_invoices') || '[]');
+  const data = {
+    id: 'inv_' + Date.now(),
+    number: v('inv-number'),
+    client: v('to-name'),
+    total: document.getElementById('t-total').textContent,
+    date: v('inv-date'),
+    status: 'pending',
+    createdAt: new Date().toISOString()
+  };
+  // Replace if same number exists
+  const idx = invoices.findIndex(i => i.number === data.number);
+  if (idx > -1) invoices[idx] = data;
+  else invoices.unshift(data);
+  if (invoices.length > 50) invoices = invoices.slice(0, 50);
+  localStorage.setItem('if_v2_invoices', JSON.stringify(invoices));
+}
+
+function renderHistory() {
+  const invoices = JSON.parse(localStorage.getItem('if_v2_invoices') || '[]');
+  const c = document.getElementById('history-list');
+  if (!c) return;
+  if (!invoices.length) {
+    c.innerHTML = '<p style="color:var(--slate);font-size:0.9rem;text-align:center;padding:32px 0">No invoices saved yet.<br><a href="#" onclick="switchTab(\'editor\');return false" style="color:var(--gold)">Create your first invoice →</a></p>';
+    return;
+  }
+  c.innerHTML = `<table style="width:100%;border-collapse:collapse">
+    <thead><tr style="background:var(--surface)">
+      <th style="padding:10px;text-align:left;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--slate)">Invoice #</th>
+      <th style="padding:10px;text-align:left;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--slate)">Client</th>
+      <th style="padding:10px;text-align:right;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--slate)">Amount</th>
+      <th style="padding:10px;text-align:center;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--slate)">Status</th>
+      <th style="padding:10px;text-align:center;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--slate)">Action</th>
+    </tr></thead>
+    <tbody>
+      ${invoices.map(inv => `
+        <tr style="border-bottom:1px solid var(--border)">
+          <td style="padding:12px 10px;font-weight:700;font-size:0.88rem">${inv.number}</td>
+          <td style="padding:12px 10px;font-size:0.88rem;color:var(--slate)">${inv.client || '—'}</td>
+          <td style="padding:12px 10px;text-align:right;font-family:'JetBrains Mono',monospace;font-weight:600;font-size:0.88rem">${inv.total}</td>
+          <td style="padding:12px 10px;text-align:center">
+            <span style="background:${inv.status==='paid'?'#e5f4ee':'#fef3c7'};color:${inv.status==='paid'?'#166534':'#92400e'};font-size:0.72rem;font-weight:700;padding:3px 10px;border-radius:50px">${inv.status.toUpperCase()}</span>
+          </td>
+          <td style="padding:12px 10px;text-align:center">
+            <button onclick="markPaid('${inv.id}')" style="background:none;border:none;color:var(--mint);font-size:0.8rem;font-weight:700;cursor:pointer">Mark Paid</button>
+          </td>
+        </tr>
+      `).join('')}
+    </tbody>
+  </table>`;
+}
+
+function markPaid(id) {
+  let invoices = JSON.parse(localStorage.getItem('if_v2_invoices') || '[]');
+  const idx = invoices.findIndex(i => i.id === id);
+  if (idx > -1) { invoices[idx].status = 'paid'; localStorage.setItem('if_v2_invoices', JSON.stringify(invoices)); }
+  renderHistory();
+  showToast('✓ Invoice marked as paid', 'success');
+}
+
+function clearAllData() {
+  if (!confirm('Clear ALL saved data? This cannot be undone.')) return;
+  ['if_v2_draft','if_v2_invoices','if_v2_clients','if_v2_items'].forEach(k => localStorage.removeItem(k));
+  showToast('Data cleared', 'success');
+  location.reload();
+}
+
+// ── TOAST ──
+function showToast(msg, type='success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + type;
+  setTimeout(() => t.className = 'toast', 3500);
+}
+
+// ── KEYBOARD SHORTCUT ──
+document.addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 's') { e.preventDefault(); saveInvoiceToHistory(); showToast('✓ Invoice saved', 'success'); }
+  if ((e.metaKey || e.ctrlKey) && e.key === 'p') { e.preventDefault(); downloadPDF(); }
+});
+</script>
+</body>
+</html>

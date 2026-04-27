@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — InvoiceFree.info</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0a0a0f;--ink2:#1c1c2e;--gold:#c9a84c;--gold2:#e8c97a;--mint:#1de9b6;--ember:#e85d26;--slate:#8892a4;--border:#e5e7eb;--surface:#f8f7f4;--ff:'Cabinet Grotesk',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--ff);background:#f4f3ef;min-height:100vh}
+.nav{background:var(--ink);padding:0 28px;display:flex;align-items:center;justify-content:space-between;height:58px;position:sticky;top:0;z-index:100}
+.nav-logo{font-weight:900;font-size:1.2rem;color:white;text-decoration:none}.nav-logo span{color:var(--gold)}
+.nav-right{display:flex;align-items:center;gap:12px}
+.nav-user{font-size:0.85rem;color:rgba(255,255,255,0.55)}
+.nav-user strong{color:white}
+.nav-btn{padding:7px 16px;border-radius:50px;font-family:var(--ff);font-weight:700;font-size:0.82rem;cursor:pointer;border:none;text-decoration:none;transition:all 0.2s}
+.nb-ghost{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.12)}
+.nb-ghost:hover{background:rgba(255,255,255,0.14)}
+.nb-gold{background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--ink)}
+.nb-mint{color:var(--mint);background:rgba(29,233,182,0.1);border:1px solid rgba(29,233,182,0.25)}
+.layout{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 58px)}
+.sidebar{background:var(--ink2);padding:24px 12px;border-right:1px solid rgba(255,255,255,0.05)}
+.sidebar-label{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.25);padding:12px 12px 6px}
+.sidebar-nav{list-style:none}
+.sidebar-nav li a{display:flex;align-items:center;gap:10px;padding:10px 12px;color:rgba(255,255,255,0.55);text-decoration:none;border-radius:8px;font-size:0.88rem;font-weight:600;margin-bottom:2px;transition:all 0.2s}
+.sidebar-nav li a:hover,.sidebar-nav li a.active{background:rgba(255,255,255,0.08);color:white}
+.sidebar-nav li a.active{color:var(--gold)}
+.main{padding:32px;overflow-y:auto}
+.page-title{font-size:1.6rem;font-weight:900;letter-spacing:-0.04em;margin-bottom:28px}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+.stat-card{background:white;border-radius:14px;padding:24px;box-shadow:0 1px 4px rgba(0,0,0,0.06);border:1px solid rgba(0,0,0,0.04)}
+.sc-label{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--slate);margin-bottom:8px}
+.sc-value{font-family:'JetBrains Mono',monospace;font-size:1.8rem;font-weight:700;color:var(--ink)}
+.sc-sub{font-size:0.78rem;color:var(--mint);margin-top:4px}
+.upgrade-banner{background:linear-gradient(135deg,var(--ink2),#0f3460);border-radius:16px;padding:24px 28px;display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;flex-wrap:wrap;gap:16px}
+.ub-text strong{font-size:1rem;font-weight:800;color:white;display:block;margin-bottom:4px}
+.ub-text p{font-size:0.85rem;color:rgba(255,255,255,0.55)}
+.section-title{font-size:1rem;font-weight:800;margin-bottom:16px;letter-spacing:-0.02em}
+.data-table{width:100%;border-collapse:collapse;background:white;border-radius:14px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.06)}
+.data-table th{background:var(--surface);padding:12px 16px;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--slate);text-align:left}
+.data-table td{padding:14px 16px;font-size:0.9rem;border-bottom:1px solid #f3f4f6}
+.data-table tr:last-child td{border:none}
+.badge{display:inline-block;padding:3px 10px;border-radius:50px;font-size:0.72rem;font-weight:700}
+.badge-paid{background:#d1fae5;color:#065f46}
+.badge-pending{background:#fef3c7;color:#92400e}
+.badge-free{background:#f3f4f6;color:var(--slate)}
+.badge-pro{background:rgba(201,168,76,0.15);color:var(--gold)}
+.tbl-btn{background:none;border:none;font-family:var(--ff);font-weight:700;font-size:0.82rem;cursor:pointer;padding:4px 8px;border-radius:6px;transition:background 0.2s}
+.tbl-btn-mint{color:var(--mint)}.tbl-btn-mint:hover{background:rgba(29,233,182,0.08)}
+.empty-state{text-align:center;padding:48px;color:var(--slate)}
+.empty-state a{color:var(--gold);text-decoration:none;font-weight:700}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.sidebar{display:none}.stats-row{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="index.html" class="nav-logo">Invoice<span>Free</span></a>
+  <div class="nav-right">
+    <span class="nav-user">Hi, <strong id="nav-name">—</strong></span>
+    <a href="invoice-app.html" class="nav-btn nb-mint">+ New Invoice</a>
+    <button class="nav-btn nb-ghost" onclick="logout()">Logout</button>
+  </div>
+</nav>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-label">Menu</div>
+    <ul class="sidebar-nav">
+      <li><a href="dashboard.html" class="active">📊 Dashboard</a></li>
+      <li><a href="invoice-app.html">✏️ Create Invoice</a></li>
+      <li><a href="pricing.html">⭐ Upgrade Pro</a></li>
+    </ul>
+    <div class="sidebar-label" style="margin-top:16px">Account</div>
+    <ul class="sidebar-nav">
+      <li><a href="#" onclick="logout()">🚪 Logout</a></li>
+    </ul>
+  </aside>
+  <main class="main">
+    <div id="upgrade-banner-container"></div>
+    <h1 class="page-title" id="welcome-title">Dashboard</h1>
+    <div class="stats-row">
+      <div class="stat-card"><div class="sc-label">Total Invoices</div><div class="sc-value" id="stat-total">0</div><div class="sc-sub">All time</div></div>
+      <div class="stat-card"><div class="sc-label">This Month</div><div class="sc-value" id="stat-month">0</div><div class="sc-sub" id="stat-limit">Free: 0/5 used</div></div>
+      <div class="stat-card"><div class="sc-label">Pending</div><div class="sc-value" id="stat-pending">0</div><div class="sc-sub">Awaiting payment</div></div>
+      <div class="stat-card"><div class="sc-label">Your Plan</div><div class="sc-value" id="stat-plan">FREE</div><div class="sc-sub"><a href="pricing.html" style="color:var(--gold);text-decoration:none">Upgrade →</a></div></div>
+    </div>
+    <div class="section-title">Recent Invoices</div>
+    <table class="data-table">
+      <thead><tr><th>Invoice #</th><th>Client</th><th>Amount</th><th>Date</th><th>Status</th><th>Action</th></tr></thead>
+      <tbody id="invoices-tbody"></tbody>
+    </table>
+  </main>
+</div>
+<script>
+function getUser(){return JSON.parse(localStorage.getItem('if_current_user')||'null')}
+function logout(){localStorage.removeItem('if_current_user');location.href='index.html'}
+
+window.onload=function(){
+  const user=getUser();
+  if(!user){location.href='login.html';return}
+  document.getElementById('nav-name').textContent=user.name;
+  document.getElementById('welcome-title').textContent='Welcome back, '+user.name+' 👋';
+  document.getElementById('stat-plan').textContent=user.plan.toUpperCase();
+  document.getElementById('stat-plan').style.fontFamily="'Cabinet Grotesk',sans-serif";
+  document.getElementById('stat-plan').style.fontSize='1.4rem';
+
+  if(user.plan!=='pro'){
+    document.getElementById('upgrade-banner-container').innerHTML=`
+      <div class="upgrade-banner">
+        <div class="ub-text"><strong>You're on the Free Plan</strong><p>5 invoices/month. Upgrade to Pro for unlimited invoices, all templates, branding & email.</p></div>
+        <a href="pricing.html" style="background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--ink);padding:11px 24px;border-radius:50px;text-decoration:none;font-weight:800;font-size:0.88rem;white-space:nowrap">Upgrade to Pro ⭐</a>
+      </div>
+    `;
+  }
+
+  const invoices=JSON.parse(localStorage.getItem('if_v2_invoices')||'[]');
+  const myInvoices=invoices;
+  const thisMonth=new Date().toISOString().slice(0,7);
+  const monthInv=myInvoices.filter(i=>i.createdAt&&i.createdAt.startsWith(thisMonth));
+  const pending=myInvoices.filter(i=>i.status==='pending');
+
+  document.getElementById('stat-total').textContent=myInvoices.length;
+  document.getElementById('stat-month').textContent=monthInv.length;
+  document.getElementById('stat-pending').textContent=pending.length;
+  document.getElementById('stat-limit').textContent=user.plan==='pro'?'Pro: Unlimited':('Free: '+monthInv.length+'/5 used');
+
+  const tbody=document.getElementById('invoices-tbody');
+  if(!myInvoices.length){
+    tbody.innerHTML='<tr><td colspan="6" class="empty-state">No invoices yet. <a href="invoice-app.html">Create your first one →</a></td></tr>';
+  } else {
+    tbody.innerHTML=myInvoices.slice(0,15).map(inv=>`
+      <tr>
+        <td><strong>${inv.number}</strong></td>
+        <td>${inv.client||'—'}</td>
+        <td><strong style="font-family:'JetBrains Mono',monospace">${inv.total}</strong></td>
+        <td style="color:var(--slate)">${inv.date||'—'}</td>
+        <td><span class="badge badge-${inv.status==='paid'?'paid':'pending'}">${inv.status.toUpperCase()}</span></td>
+        <td>${inv.status!=='paid'?`<button class="tbl-btn tbl-btn-mint" onclick="markPaid('${inv.id}')">Mark Paid</button>`:'<span style="color:#9ca3af;font-size:0.8rem">✓ Paid</span>'}</td>
+      </tr>
+    `).join('');
+  }
+};
+
+function markPaid(id){
+  let inv=JSON.parse(localStorage.getItem('if_v2_invoices')||'[]');
+  const i=inv.findIndex(x=>x.id===id);
+  if(i>-1){inv[i].status='paid';localStorage.setItem('if_v2_invoices',JSON.stringify(inv));}
+  location.reload();
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+╔══════════════════════════════════════════════════════════════╗
+║   INVOICEFREE.INFO — COMPLETE BEGINNER DEPLOYMENT GUIDE     ║
+║   Written for someone with ZERO coding experience           ║
+╚══════════════════════════════════════════════════════════════╝
+
+YOUR WEBSITE FILES:
+═══════════════════
+📄 index.html          ← Home / Landing Page (with SEO)
+📄 invoice-app.html    ← The Main Invoice Creator Tool
+📄 pricing.html        ← Pricing Page
+📄 register.html       ← User Registration
+📄 login.html          ← Login Page
+📄 dashboard.html      ← User Dashboard
+📄 admin.html          ← Admin Control Panel
+📄 invoice-view.html   ← Shareable Invoice View
+📄 privacy.html        ← Privacy Policy
+📄 terms.html          ← Terms of Service
+📄 sitemap.xml         ← SEO Sitemap
+📄 robots.txt          ← SEO Robot Rules
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 1 — DOWNLOAD YOUR ZIP FILE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. Download the ZIP file Claude gave you
+2. Find it in your Downloads folder
+3. RIGHT-CLICK the ZIP file
+4. Click "Extract All" (Windows) OR double-click (Mac)
+5. You now have a folder called "invoicefree-v2"
+6. Open that folder — you should see all the .html files
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 2 — SIGN UP FOR NETLIFY (FREE HOSTING)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. Open browser → go to: https://www.netlify.com
+2. Click "Sign up" button (top right corner)
+3. Choose "Sign up with Email"
+4. Enter your email and create a password
+5. Check your email inbox
+6. Click the confirmation link in the email
+7. You are now inside Netlify!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 3 — UPLOAD YOUR WEBSITE (DRAG & DROP!)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. Inside Netlify, look for the section that says:
+   "Want to deploy a new site without connecting to Git?"
+   You will see a big box that says "Drag and drop"
+
+2. Open your File Explorer (Windows) or Finder (Mac)
+   Navigate to your "invoicefree-v2" folder
+
+3. HOLD left mouse button on the folder
+   DRAG it into the big Netlify box
+   RELEASE mouse button
+
+4. Wait 10-30 seconds while it uploads...
+
+5. SUCCESS! Netlify gives you a random address like:
+   https://wonderful-taffy-abc123.netlify.app
+
+   COPY this address — this is your live website!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 4 — CONNECT YOUR DOMAIN (invoicefree.info)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+You already own invoicefree.info. To use it with Netlify:
+
+IN NETLIFY:
+1. Click on your new site
+2. Click "Domain settings" or "Set up a custom domain"
+3. Type: invoicefree.info
+4. Click "Verify" then "Add domain"
+5. Netlify will show you NAMESERVER addresses like:
+   dns1.p01.nsone.net
+   dns2.p01.nsone.net
+   (yours will be slightly different — note them down!)
+
+WHERE YOU BOUGHT YOUR DOMAIN (GoDaddy / Namecheap / etc.):
+1. Log in to your domain registrar
+2. Find your domain: invoicefree.info
+3. Find "DNS" or "Nameservers" settings
+4. Change nameservers to the ones Netlify gave you
+5. Save / Update
+
+⏰ Wait 24-48 hours for the internet to update.
+   After that, your website is live at invoicefree.info!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 5 — ACCESSING ADMIN PANEL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+URL: https://invoicefree.info/admin.html
+
+Default Login:
+   Email:    admin@invoicefree.info
+   Password: admin123
+
+⚠️  IMPORTANT — CHANGE YOUR ADMIN PASSWORD!
+   1. Open login.html in a text editor (Notepad)
+   2. Find: password: 'admin123'
+   3. Change 'admin123' to a hard password
+   4. Save and re-upload the folder to Netlify
+
+What Admin Can Do:
+   ✓ See ALL users (free and paid)
+   ✓ See all invoices created
+   ✓ Upgrade users from Free → Pro
+   ✓ Downgrade Pro users → Free
+   ✓ Delete users
+   ✓ Search users by name or email
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 6 — UPDATING YOUR WEBSITE LATER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+When you want to make changes:
+1. Open the file you want to change in Notepad/TextEdit
+2. Make your changes
+3. Save the file
+4. Go to Netlify → your site → "Deploys"
+5. Drag the whole "invoicefree-v2" folder again
+6. It automatically updates! Takes 30 seconds.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+YOUR WEBSITE PAGES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+yourdomain.com/                  ← Home page
+yourdomain.com/invoice-app.html  ← Invoice Creator
+yourdomain.com/pricing.html      ← Pricing
+yourdomain.com/register.html     ← Sign Up
+yourdomain.com/login.html        ← Login
+yourdomain.com/dashboard.html    ← User Dashboard
+yourdomain.com/admin.html        ← Admin Panel
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+IMPORTANT NOTES ABOUT DATA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚠️  User accounts and invoice data is saved in the
+    browser's localStorage. This means:
+    
+    - Each browser on each device has its own data
+    - Clearing browser history will erase data
+    - Data is NOT shared across devices
+    
+    This is perfect for getting started!
+    
+    For a REAL shared database (multiple devices,
+    admin sees all users etc.) you need Firebase.
+    
+    Ask Claude: "Help me connect my InvoiceFree 
+    website to Firebase Firestore database"
+    
+    Firebase has a free tier for small websites!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+COST BREAKDOWN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Netlify hosting:    FREE ✓ (forever free tier)
+Domain name:        ~$10-15/year (you already have it)
+Firebase (optional): FREE tier available
+
+TOTAL MONTHLY COST: $0
+(vs $30/month on Replit — you save $360/year!)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FEATURES BUILT INTO YOUR WEBSITE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ Premium animated landing page
+✓ 5 invoice templates (2 free, 3 pro)
+✓ Live invoice preview as you type
+✓ PDF export (print to PDF)
+✓ Logo upload
+✓ Custom brand colors (6 presets + custom picker)
+✓ Auto-calculations (tax, discount, total)
+✓ Surcharges and extra fees
+✓ Multi-currency (USD, EUR, GBP, INR, PKR, AED, JPY, CAD)
+✓ Smart autofill (remembers clients and items)
+✓ Auto-save (every keystroke saved automatically)
+✓ Payment terms dropdown (Net 7/15/30 etc.)
+✓ Invoice history tab
+✓ Share invoice link (generates unique URL)
+✓ Email invoice modal (needs EmailJS setup)
+✓ User registration + login system
+✓ User dashboard with stats
+✓ Admin panel (see free/pro users, manage them)
+✓ Free vs Pro plan system
+✓ Full SEO (meta tags, schema, sitemap, robots.txt)
+✓ Mobile responsive design
+✓ Privacy Policy and Terms of Service pages
+✓ Pricing page with toggle (monthly/yearly)
+✓ Custom cursor animation
+✓ Scroll reveal animations
+✓ Floating invoice hero preview
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+NEED HELP? ASK CLAUDE!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+"How do I change the red color to green?"
+"How do I add my logo to all pages?"
+"Help me set up Firebase database"
+"Help me connect Stripe payments"
+"Help me set up EmailJS for sending invoices"
+"How do I add a new page?"
+"How do I change the admin password?"
