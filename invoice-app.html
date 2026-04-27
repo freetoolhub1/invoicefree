@@ -1037,9 +1037,8 @@ function downloadPDF() {
       body{margin:0;padding:0;font-family:'Cabinet Grotesk',Arial,sans-serif}
       @page{size:A4;margin:0}
       @media print{body{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}}
-      ${document.querySelector('style').textContent}
-    </style>
-    </head><body>${inv.innerHTML}<script>window.onload=function(){window.print();setTimeout(()=>window.close(),1000)}<\/script></body></html>`);
+      </style>
+    </head><body>${inv.innerHTML}<script>window.onload=function(){window.print();setTimeout(()=>window.close(),1000)}<" + "/script></body></html>`);
   w.document.close();
   saveInvoiceToHistory();
   showToast('✓ PDF ready! Choose "Save as PDF" in print dialog', 'success');
