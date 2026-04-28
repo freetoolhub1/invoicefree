@@ -10,8 +10,8 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html{background:#0a0a0f}
-body{font-family:"Cabinet Grotesk",system-ui,sans-serif;min-height:100vh;display:flex;flex-direction:column;background:#0a0a0f}
-body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellipse at 30% 20%,rgba(201,168,76,.07) 0%,transparent 60%);pointer-events:none}
+body{font-family:'Cabinet Grotesk',system-ui,sans-serif;min-height:100vh;display:flex;flex-direction:column;background:#0a0a0f}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 30% 20%,rgba(201,168,76,.07) 0%,transparent 60%);pointer-events:none}
 .nav{background:rgba(10,10,15,.9);backdrop-filter:blur(20px);padding:0 28px;display:flex;align-items:center;justify-content:space-between;height:58px;border-bottom:1px solid rgba(255,255,255,.06);position:relative;z-index:10}
 .nav-logo{font-weight:900;font-size:1.2rem;color:#fff;text-decoration:none;display:flex;align-items:center;gap:8px}
 .nav-logo span{color:#c9a84c}
@@ -21,13 +21,12 @@ body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellips
 .card{background:#fff;border-radius:20px;padding:44px 40px;width:100%;max-width:420px;box-shadow:0 24px 80px rgba(0,0,0,.4)}
 .title{font-size:1.8rem;font-weight:900;letter-spacing:-.04em;margin-bottom:6px;color:#0a0a0f}
 .subtitle{font-size:.88rem;color:#9ca3af;margin-bottom:28px}
-.social-btns{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
-.btn-social{display:flex;align-items:center;justify-content:center;gap:12px;padding:12px 20px;border-radius:12px;border:1.5px solid #e5e7eb;background:#fff;font-family:inherit;font-size:.9rem;font-weight:600;color:#111;cursor:pointer;transition:all .2s;width:100%}
-.btn-social:hover{border-color:#9ca3af;background:#fafafa;transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.08)}
-.btn-social:disabled{opacity:.6;cursor:wait}
-.btn-social svg{width:20px;height:20px;flex-shrink:0}
-.divider{display:flex;align-items:center;gap:12px;margin:20px 0;font-size:.78rem;color:#9ca3af}
-.divider::before,.divider::after{content:"";flex:1;height:1px;background:#e5e7eb}
+.btn-google{display:flex;align-items:center;justify-content:center;gap:12px;padding:13px 20px;border-radius:12px;border:1.5px solid #e5e7eb;background:#fff;font-family:inherit;font-size:.95rem;font-weight:600;color:#111;cursor:pointer;transition:all .2s;width:100%;margin-bottom:20px}
+.btn-google:hover{border-color:#9ca3af;background:#fafafa;transform:translateY(-1px);box-shadow:0 4px 14px rgba(0,0,0,.1)}
+.btn-google:disabled{opacity:.6;cursor:wait;transform:none}
+.btn-google svg{width:20px;height:20px;flex-shrink:0}
+.divider{display:flex;align-items:center;gap:12px;margin-bottom:20px;font-size:.78rem;color:#9ca3af}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:#e5e7eb}
 .fg{margin-bottom:16px}
 .fg label{display:block;font-size:.76rem;font-weight:700;color:#6b7280;margin-bottom:6px}
 .fg input{width:100%;padding:12px 14px;border:2px solid #e5e7eb;border-radius:10px;font-family:inherit;font-size:.95rem;color:#111;outline:none;transition:border-color .2s}
@@ -38,16 +37,14 @@ body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellips
 .alert{padding:11px 15px;border-radius:9px;font-size:.83rem;margin-bottom:14px;display:none}
 .alert.err{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5}
 .alert.ok{background:#d1fae5;color:#065f46;border:1px solid #6ee7b7}
-.btn-submit{width:100%;background:#0a0a0f;color:#fff;border:none;padding:14px;border-radius:50px;font-family:inherit;font-size:1rem;font-weight:800;cursor:pointer;transition:all .2s;letter-spacing:-.02em;margin-top:4px}
+.btn-submit{width:100%;background:#0a0a0f;color:#fff;border:none;padding:14px;border-radius:50px;font-family:inherit;font-size:1rem;font-weight:800;cursor:pointer;transition:all .2s;margin-top:4px}
 .btn-submit:hover{background:#1c1c2e;transform:translateY(-1px)}
-.btn-submit:disabled{opacity:.6;cursor:wait}
+.btn-submit:disabled{opacity:.6;cursor:wait;transform:none}
 .auth-switch{text-align:center;margin-top:18px;font-size:.86rem;color:#9ca3af}
 .auth-switch a{color:#c9a84c;text-decoration:none;font-weight:700}
-.firebase-note{background:#fef9ec;border:1px solid #fbbf24;border-radius:10px;padding:12px 16px;font-size:.78rem;color:#92400e;margin-bottom:20px;display:none}
-.firebase-note strong{display:block;margin-bottom:3px}
-.loading-overlay{display:none;position:fixed;inset:0;background:rgba(10,10,15,.7);z-index:100;align-items:center;justify-content:center;flex-direction:column;gap:16px}
+.loading-overlay{display:none;position:fixed;inset:0;background:rgba(10,10,15,.75);z-index:200;align-items:center;justify-content:center;flex-direction:column;gap:16px}
 .loading-overlay.show{display:flex}
-.spinner{width:40px;height:40px;border:3px solid rgba(201,168,76,.3);border-top-color:#c9a84c;border-radius:50%;animation:spin .8s linear infinite}
+.spinner{width:44px;height:44px;border:3px solid rgba(201,168,76,.25);border-top-color:#c9a84c;border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .loading-text{color:#fff;font-weight:600;font-size:.95rem}
 </style>
@@ -56,7 +53,7 @@ body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellips
 
 <div class="loading-overlay" id="loadingOverlay">
   <div class="spinner"></div>
-  <div class="loading-text">Signing you in...</div>
+  <div class="loading-text" id="loadingText">Signing you in...</div>
 </div>
 
 <nav class="nav">
@@ -72,99 +69,74 @@ body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellips
     <div class="title">Welcome back</div>
     <div class="subtitle">Sign in to your InvoiceFree account</div>
 
-    <!-- Firebase not configured warning - shown until Firebase keys added -->
-    <div class="firebase-note" id="fbNote">
-      <strong>&#9888;&#65039; Social login needs Firebase setup</strong>
-      See HOW-TO-DEPLOY.txt to connect Firebase Auth for real Google/Apple/Microsoft login.
-      Email login works now without Firebase.
-    </div>
-
-    <div class="social-btns">
-      <button class="btn-social" id="btnGoogle" onclick="socialLogin('google')">
-        <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-        Continue with Google
-      </button>
-      <button class="btn-social" id="btnMicrosoft" onclick="socialLogin('microsoft')">
-        <svg viewBox="0 0 24 24"><path fill="#f25022" d="M1 1h10v10H1z"/><path fill="#00a4ef" d="M13 1h10v10H13z"/><path fill="#7fba00" d="M1 13h10v10H1z"/><path fill="#ffb900" d="M13 13h10v10H13z"/></svg>
-        Continue with Hotmail / Microsoft
-      </button>
-      <button class="btn-social" id="btnApple" onclick="socialLogin('apple')">
-        <svg viewBox="0 0 24 24"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.4c1.29.07 2.18.74 2.94.8 1.12-.22 2.19-.91 3.39-.84 1.44.12 2.53.66 3.24 1.67-2.98 1.78-2.27 5.7.42 6.82-.51 1.35-1.2 2.68-2 3.43zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" fill="#111"/></svg>
-        Continue with Apple
-      </button>
-    </div>
+    <!-- GOOGLE LOGIN -->
+    <button class="btn-google" id="btnGoogle" onclick="loginWithGoogle()">
+      <svg viewBox="0 0 24 24">
+        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+      </svg>
+      Continue with Google
+    </button>
 
     <div class="divider">or sign in with email</div>
+
     <div class="alert err" id="err"></div>
     <div class="alert ok" id="ok"></div>
-    <div class="fg"><label>Email Address</label><input type="email" id="email" placeholder="you@example.com" autocomplete="email"></div>
+
     <div class="fg">
-      <div class="fg-row"><label>Password</label><a href="#">Forgot password?</a></div>
-      <input type="password" id="pass" placeholder="Your password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+      <label>Email Address</label>
+      <input type="email" id="email" placeholder="you@example.com" autocomplete="email">
     </div>
-    <button class="btn-submit" id="btnEmail" onclick="doLogin()">Sign In &rarr;</button>
+    <div class="fg">
+      <div class="fg-row">
+        <label>Password</label>
+        <a href="#" onclick="resetPassword(); return false;">Forgot password?</a>
+      </div>
+      <input type="password" id="pass" placeholder="Your password" autocomplete="current-password" onkeydown="if(event.key==='Enter')emailLogin()">
+    </div>
+
+    <button class="btn-submit" id="btnEmail" onclick="emailLogin()">Sign In &rarr;</button>
     <div class="auth-switch">No account? <a href="register.html">Create free account</a></div>
   </div>
 </div>
 
-<!-- Firebase SDK -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import { getAuth, signInWithPopup, GoogleAuthProvider, OAuthProvider, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
-// ╔══════════════════════════════════════════════════════╗
-// ║  FIREBASE CONFIG — Replace with your Firebase keys  ║
-// ║  Get from: console.firebase.google.com              ║
-// ║  Project Settings → Your Apps → Firebase SDK snippet║
-// ╚══════════════════════════════════════════════════════╝
-const FIREBASE_CONFIG = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+const firebaseConfig = {
+  apiKey: "AIzaSyC2EMpgQDWvXtBHSZpzVF2xJGTrFQOlO1o",
+  authDomain: "invoicefree-login.firebaseapp.com",
+  projectId: "invoicefree-login",
+  storageBucket: "invoicefree-login.firebasestorage.app",
+  messagingSenderId: "1070627464426",
+  appId: "1:1070627464426:web:f868d3135acac55c4b6393",
+  measurementId: "G-HQFRM381FE"
 };
 
-const FIREBASE_READY = FIREBASE_CONFIG.apiKey !== "YOUR_API_KEY";
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-let app, auth, db;
+// If already logged in — redirect immediately
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    await loadUserAndRedirect(user);
+  }
+});
 
-if (FIREBASE_READY) {
-  app = initializeApp(FIREBASE_CONFIG);
-  auth = getAuth(app);
-  db = getFirestore(app);
-  
-  // Auto-login if already signed in with Firebase
-  onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      await loadAndRedirectUser(user);
-    }
-  });
-} else {
-  // Firebase not configured — show note, disable social buttons
-  document.getElementById("fbNote").style.display = "block";
-  ["btnGoogle","btnMicrosoft","btnApple"].forEach(id => {
-    var btn = document.getElementById(id);
-    btn.disabled = true;
-    btn.title = "Requires Firebase setup — see HOW-TO-DEPLOY.txt";
-    btn.style.opacity = ".5";
-    btn.style.cursor = "not-allowed";
-  });
-}
-
-async function loadAndRedirectUser(firebaseUser) {
-  showLoading(true);
+async function loadUserAndRedirect(firebaseUser) {
+  showLoading("Signing you in...");
   try {
-    // Get or create user profile in Firestore
     const ref = doc(db, "users", firebaseUser.uid);
     const snap = await getDoc(ref);
     let profile;
     if (snap.exists()) {
       profile = snap.data();
     } else {
-      // New user — create pro profile with 3-month trial
       const exp = new Date();
       exp.setMonth(exp.getMonth() + 3);
       profile = {
@@ -180,107 +152,98 @@ async function loadAndRedirectUser(firebaseUser) {
       };
       await setDoc(ref, profile);
     }
-    // Save to localStorage for offline use
     localStorage.setItem("if_current_user", JSON.stringify(profile));
-    window.location.href = "dashboard.html";
+    window.location.href = profile.role === "admin" ? "admin.html" : "dashboard.html";
   } catch(e) {
-    showLoading(false);
-    showErr("Error loading profile: " + e.message);
+    hideLoading();
+    showErr("Error loading account: " + e.message);
   }
 }
 
-// Expose socialLogin to window
-window.socialLogin = async function(provider) {
-  if (!FIREBASE_READY) {
-    showErr("Social login requires Firebase setup. Please use email login, or set up Firebase — see HOW-TO-DEPLOY.txt");
-    return;
-  }
-  showLoading(true);
+// Google login
+window.loginWithGoogle = async function() {
+  document.getElementById("btnGoogle").disabled = true;
+  showLoading("Opening Google login...");
   try {
-    let prov;
-    if (provider === "google") {
-      prov = new GoogleAuthProvider();
-      prov.addScope("email");
-      prov.addScope("profile");
-    } else if (provider === "microsoft") {
-      prov = new OAuthProvider("microsoft.com");
-      prov.addScope("email");
-      prov.setCustomParameters({ prompt: "select_account" });
-    } else if (provider === "apple") {
-      prov = new OAuthProvider("apple.com");
-      prov.addScope("email");
-      prov.addScope("name");
-    }
-    const result = await signInWithPopup(auth, prov);
-    await loadAndRedirectUser(result.user);
+    const provider = new GoogleAuthProvider();
+    provider.addScope("email");
+    provider.addScope("profile");
+    const result = await signInWithPopup(auth, provider);
+    await loadUserAndRedirect(result.user);
   } catch(e) {
-    showLoading(false);
-    if (e.code === "auth/popup-closed-by-user") return;
+    hideLoading();
+    document.getElementById("btnGoogle").disabled = false;
+    if (e.code === "auth/popup-closed-by-user" || e.code === "auth/cancelled-popup-request") return;
     if (e.code === "auth/popup-blocked") {
-      showErr("Popup was blocked. Please allow popups for this site in your browser settings.");
+      showErr("Popup blocked! Please allow popups for this site in your browser, then try again.");
+    } else {
+      showErr("Google login failed: " + e.message);
+    }
+  }
+};
+
+// Email login
+window.emailLogin = async function() {
+  const email = document.getElementById("email").value.trim().toLowerCase();
+  const pass = document.getElementById("pass").value;
+  if (!email || !pass) { showErr("Please enter your email and password."); return; }
+  document.getElementById("btnEmail").disabled = true;
+  showLoading("Signing you in...");
+  try {
+    const result = await signInWithEmailAndPassword(auth, email, pass);
+    await loadUserAndRedirect(result.user);
+  } catch(e) {
+    hideLoading();
+    document.getElementById("btnEmail").disabled = false;
+    if (e.code === "auth/wrong-password" || e.code === "auth/user-not-found" || e.code === "auth/invalid-credential") {
+      showErr("Incorrect email or password. Please try again.");
+    } else if (e.code === "auth/too-many-requests") {
+      showErr("Too many failed attempts. Please try again later or reset your password.");
     } else {
       showErr("Login failed: " + e.message);
     }
   }
 };
 
-// Email login
-window.doLogin = async function() {
-  const email = document.getElementById("email").value.trim().toLowerCase();
-  const pass = document.getElementById("pass").value;
-  if (!email || !pass) { showErr("Please enter your email and password."); return; }
-  
-  if (FIREBASE_READY) {
-    // Firebase email auth
-    document.getElementById("btnEmail").disabled = true;
-    showLoading(true);
-    try {
-      const result = await signInWithEmailAndPassword(auth, email, pass);
-      await loadAndRedirectUser(result.user);
-    } catch(e) {
-      showLoading(false);
-      document.getElementById("btnEmail").disabled = false;
-      if (e.code === "auth/wrong-password" || e.code === "auth/user-not-found" || e.code === "auth/invalid-credential") {
-        showErr("Incorrect email or password. Please try again.");
-      } else {
-        showErr("Login error: " + e.message);
-      }
-    }
-  } else {
-    // localStorage fallback (no Firebase)
-    const users = JSON.parse(localStorage.getItem("if_users") || "[]");
-    const user = users.find(u => u.email === email && u.password === pass);
-    if (!user) { showErr("Incorrect email or password."); return; }
-    localStorage.setItem("if_current_user", JSON.stringify(user));
-    showOk("Signing you in...");
-    setTimeout(() => { window.location.href = user.role === "admin" ? "admin.html" : "dashboard.html"; }, 600);
+// Password reset
+window.resetPassword = async function() {
+  const email = document.getElementById("email").value.trim();
+  if (!email) { showErr("Enter your email address above, then click Forgot password."); return; }
+  try {
+    await sendPasswordResetEmail(auth, email);
+    showOk("Password reset email sent! Check your inbox.");
+  } catch(e) {
+    showErr("Could not send reset email: " + e.message);
   }
 };
 
-// Ensure hidden admin exists in localStorage
+// Admin account in localStorage (hidden, for direct /admin.html access)
 (function() {
   const users = JSON.parse(localStorage.getItem("if_users") || "[]");
   if (!users.find(u => u.role === "admin")) {
-    users.push({id:"admin_001",name:"Admin",email:"admin@invoicefree.info",password:"Adm!n#IF2025",role:"admin",plan:"pro",joined:new Date().toISOString().split("T")[0],invoiceCount:0});
+    users.push({ id:"admin_001", name:"Admin", email:"admin@invoicefree.info", password:"Adm!n#IF2025", role:"admin", plan:"pro", joined: new Date().toISOString().split("T")[0], invoiceCount:0 });
     localStorage.setItem("if_users", JSON.stringify(users));
   }
 })();
 
-function showLoading(show) {
-  document.getElementById("loadingOverlay").classList.toggle("show", show);
+function showLoading(text) {
+  document.getElementById("loadingText").textContent = text || "Loading...";
+  document.getElementById("loadingOverlay").classList.add("show");
+}
+function hideLoading() {
+  document.getElementById("loadingOverlay").classList.remove("show");
 }
 function showErr(m) {
   const e = document.getElementById("err"); e.textContent = m; e.style.display = "block";
   document.getElementById("ok").style.display = "none";
-  showLoading(false);
+  hideLoading();
 }
 function showOk(m) {
   const e = document.getElementById("ok"); e.textContent = m; e.style.display = "block";
   document.getElementById("err").style.display = "none";
 }
-// Expose for non-module context
-window.showErr = showErr; window.showOk = showOk;
+window.showErr = showErr;
+window.showOk = showOk;
 </script>
-
 </body>
 </html>
