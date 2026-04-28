@@ -311,6 +311,7 @@ body{font-family:'Cabinet Grotesk',system-ui,sans-serif;background:#0a0a0f;color
   .stat-item{min-width:50%;border-bottom:1px solid rgba(255,255,255,.08)}
 }
 </style>
+<script src="lang.js" defer></script>
 </head>
 <body>
 <nav class="nav" id="navbar">
@@ -328,12 +329,14 @@ body{font-family:'Cabinet Grotesk',system-ui,sans-serif;background:#0a0a0f;color
     <li><a href="#features">Features</a></li>
     <li><a href="#templates">Templates</a></li>
     <li><a href="#pricing">Pricing</a></li>
+    <li><a href="blog.html">Blog</a></li>
     <li><a href="invoice-app.html">Create Invoice</a></li>
   </ul>
-  <div class="nav-right">
-    <a href="login.html" class="btn-login">Login</a>
+  <div class="nav-right" id="nav-right">
+    <a href="login.html" class="btn-login" id="nav-login-btn">Login</a>
     <a href="invoice-app.html" class="btn-try">Try Free &#8594;</a>
   </div>
+  <div id="lang-selector-placeholder" style="display:flex;align-items:center"></div>
   <button class="hamburger" onclick="document.getElementById('mob').classList.toggle('open')">&#9776;</button>
 </nav>
 <div class="mobile-menu" id="mob">
@@ -346,8 +349,8 @@ body{font-family:'Cabinet Grotesk',system-ui,sans-serif;background:#0a0a0f;color
 
 <section class="hero">
   <div class="eyebrow"><div class="edot"></div>Trusted by 50,000+ Freelancers Worldwide</div>
-  <h1 class="h1">Create <em>Beautiful</em><br>Invoices in Seconds</h1>
-  <p class="sub">Professional invoicing made effortless. Design, send, and track invoices that get you paid faster.</p>
+  <h1 class="h1" data-i18n="hero_title">Create <em>Beautiful</em><br>Invoices in Seconds</h1>
+  <p class="sub" data-i18n="hero_sub">Professional invoicing made effortless. Design, send, and track invoices that get you paid faster.</p>
   <div class="hero-btns">
     <a href="invoice-app.html" class="btn-main">&#10022; Create Invoice Free</a>
     <a href="#pricing" class="btn-sec">View Pricing</a>
@@ -533,12 +536,12 @@ body{font-family:'Cabinet Grotesk',system-ui,sans-serif;background:#0a0a0f;color
         <div class="flogo"><svg width="20" height="20" viewBox="0 0 32 32" fill="none"><rect x="8" y="6" width="16" height="20" rx="3" fill="#c9a84c"/><rect x="11" y="18" width="10" height="2.5" rx="1.25" fill="#0a0a0f" opacity=".85"/></svg>Invoice<span>Free</span></div>
         <p class="fdesc">The most beautiful free invoice generator for freelancers and small businesses worldwide.</p>
       </div>
-      <div class="fcol"><h4>Product</h4><ul><li><a href="invoice-app.html">Invoice Generator</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="#features">Features</a></li></ul></div>
+      <div class="fcol"><h4>Product</h4><ul><li><a href="invoice-app.html">Invoice Generator</a></li><li><a href="blog.html">Blog</li><li><a href="pricing.html">Pricing</a></li><li><a href="#features">Features</a></li></ul></div>
       <div class="fcol"><h4>Account</h4><ul><li><a href="register.html">Register Free</a></li><li><a href="login.html">Login</a></li><li><a href="dashboard.html">Dashboard</a></li></ul></div>
       <div class="fcol"><h4>Legal</h4><ul><li><a href="privacy.html">Privacy Policy</a></li><li><a href="terms.html">Terms of Service</a></li><li><a href="mailto:support@invoicefree.info">Contact</a></li></ul></div>
     </div>
     <div class="fbot">
-      <span class="fcopy">&copy; 2025 InvoiceFree.info &mdash; All rights reserved.</span>
+      <span class="fcopy">&copy; 2025 InvoiceFree.info &mdash; All rights reserved. &nbsp;|&nbsp; <a href="https://www.freetoolhub.info" target="_blank" rel="dofollow" style="color:#c9a84c;text-decoration:none">FreeToolHub.info</a> &mdash; 58+ Free Online Tools</span>
       <div class="flinks"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="sitemap.xml">Sitemap</a></div>
     </div>
   </div>
@@ -566,6 +569,37 @@ setTimeout(runStats,1500);
     if(d)d.textContent=pad(diff/86400000);if(h)h.textContent=pad((diff%86400000)/3600000);if(m)m.textContent=pad((diff%3600000)/60000);if(s)s.textContent=pad((diff%60000)/1000);}
   tick();setInterval(tick,1000);
 })();
+</script>
+<script>
+// Check if user is logged in and update nav
+(function(){
+  var user = null;
+  try { user = JSON.parse(localStorage.getItem('if_current_user')||'null'); } catch(e){}
+  if (user && user.name) {
+    var nr = document.getElementById('nav-right');
+    if (nr) {
+      nr.innerHTML = '<span style="font-size:.85rem;color:rgba(255,255,255,.6);display:flex;align-items:center;gap:8px">'
+        + (user.photoURL ? '<img src="'+user.photoURL+'" style="width:26px;height:26px;border-radius:50%;object-fit:cover;border:2px solid rgba(201,168,76,.4)">' : '')
+        + '<span>' + user.name.split(' ')[0] + '</span>'
+        + (user.plan==='pro' ? '<span style="background:linear-gradient(135deg,#c9a84c,#e8c97a);color:#0a0a0f;font-size:.58rem;font-weight:800;padding:2px 7px;border-radius:4px;letter-spacing:.06em">PRO</span>' : '')
+        + '</span>'
+        + '<a href="dashboard.html" style="color:rgba(255,255,255,.7);text-decoration:none;font-size:.9rem;font-weight:500;padding:9px 20px;border:1px solid rgba(255,255,255,.2);border-radius:50px;transition:all .2s">Dashboard</a>'
+        + '<button onclick="doLogout()" style="background:rgba(255,255,255,.07);color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.12);font-family:inherit;font-size:.88rem;font-weight:600;padding:9px 18px;border-radius:50px;cursor:pointer;transition:all .2s">Logout</button>';
+    }
+  }
+})();
+function doLogout(){
+  localStorage.removeItem('if_current_user');
+  try {
+    Promise.all([
+      import("https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"),
+      import("https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js")
+    ]).then(([{initializeApp},{getAuth,signOut}])=>{
+      const app=initializeApp({apiKey:"AIzaSyC2EMpgQDWvXtBHSZpzVF2xJGTrFQOlO1o",authDomain:"invoicefree-login.firebaseapp.com",projectId:"invoicefree-login",storageBucket:"invoicefree-login.firebasestorage.app",messagingSenderId:"1070627464426",appId:"1:1070627464426:web:f868d3135acac55c4b6393"});
+      signOut(getAuth(app)).finally(()=>location.reload());
+    }).catch(()=>location.reload());
+  } catch(e){ location.reload(); }
+}
 </script>
 </body>
 </html>

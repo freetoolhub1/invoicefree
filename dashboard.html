@@ -111,22 +111,54 @@ body{font-family:var(--ff);background:#f4f3ef;min-height:100vh}
 </div>
 <script>
 function getUser(){return JSON.parse(localStorage.getItem('if_current_user')||'null')}
-function logout(){localStorage.removeItem('if_current_user');location.href='index.html'}
+function doLogout(){logout();}
+function logout(){
+  localStorage.removeItem('if_current_user');
+  // Sign out Firebase too
+  try {
+    import("https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js").then(({initializeApp})=>{
+      import("https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js").then(({getAuth,signOut})=>{
+        const app=initializeApp({apiKey:"AIzaSyC2EMpgQDWvXtBHSZpzVF2xJGTrFQOlO1o",authDomain:"invoicefree-login.firebaseapp.com",projectId:"invoicefree-login",storageBucket:"invoicefree-login.firebasestorage.app",messagingSenderId:"1070627464426",appId:"1:1070627464426:web:f868d3135acac55c4b6393"});
+        signOut(getAuth(app)).finally(()=>location.href='index.html');
+      });
+    });
+  } catch(e){ location.href='index.html'; }
+}
 
 window.onload=function(){
   const user=getUser();
   if(!user){location.href='login.html';return}
   document.getElementById('nav-name').textContent=user.name;
+  // Pro badge
+  if(user.plan==='pro'){
+    const badge=document.getElementById('pro-badge');
+    if(badge) badge.style.display='inline-flex';
+  }
+  // Photo avatar
+  if(user.photoURL){
+    const av=document.getElementById('nav-avatar');
+    if(av){ av.src=user.photoURL; av.style.display='block'; }
+  }
   document.getElementById('welcome-title').textContent='Welcome back, '+user.name+' 👋';
   document.getElementById('stat-plan').textContent=user.plan.toUpperCase();
   document.getElementById('stat-plan').style.fontFamily="'Cabinet Grotesk',sans-serif";
   document.getElementById('stat-plan').style.fontSize='1.4rem';
 
-  if(user.plan!=='pro'){
+  if(user.plan==='pro'){
+    document.getElementById('upgrade-banner-container').innerHTML=`
+      <div style="background:linear-gradient(135deg,rgba(201,168,76,.12),rgba(201,168,76,.04));border:1px solid rgba(201,168,76,.25);border-radius:14px;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="background:linear-gradient(135deg,#c9a84c,#e8c97a);width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem">&#11088;</div>
+          <div><strong style="color:#0a0a0f;font-size:.95rem">You're on Pro Plan</strong><p style="font-size:.8rem;color:#6b7280;margin-top:2px">Unlimited invoices &middot; All templates &middot; Custom branding ${user.promoExpiry?'&middot; Free until '+new Date(user.promoExpiry).toLocaleDateString():''}</p></div>
+        </div>
+        <span style="background:linear-gradient(135deg,#c9a84c,#e8c97a);color:#0a0a0f;font-size:.72rem;font-weight:800;padding:5px 14px;border-radius:50px;letter-spacing:.06em">PRO &#10003;</span>
+      </div>
+    `;
+  } else if(user.plan!=='pro'){
     document.getElementById('upgrade-banner-container').innerHTML=`
       <div class="upgrade-banner">
         <div class="ub-text"><strong>You're on the Free Plan</strong><p>5 invoices/month. Upgrade to Pro for unlimited invoices, all templates, branding & email.</p></div>
-        <a href="pricing.html" style="background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--ink);padding:11px 24px;border-radius:50px;text-decoration:none;font-weight:800;font-size:0.88rem;white-space:nowrap">Upgrade to Pro ⭐</a>
+        <a href="upgrade.html" style="background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--ink);padding:11px 24px;border-radius:50px;text-decoration:none;font-weight:800;font-size:0.88rem;white-space:nowrap">Upgrade to Pro ⭐</a>
       </div>
     `;
   }

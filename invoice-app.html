@@ -1047,18 +1047,41 @@ window.addEventListener('resize', scalePreview);
 function downloadPDF() {
   const inv = document.getElementById('invoice-render');
   if (!inv) { showToast('Nothing to export yet!', 'error'); return; }
-  const w = window.open('', '_blank');
-  w.document.write(`<!DOCTYPE html><html><head>
+  showToast('Preparing PDF...', 'success');
+  // Use print for reliable PDF generation across all devices including mobile
+  const printContent = inv.innerHTML;
+  const printWindow = window.open('', '_blank');
+  if (!printWindow) {
+    // Popup blocked - fallback to same window print
+    const orig = document.body.innerHTML;
+    document.body.innerHTML = '<div style="padding:0;margin:0">' + printContent + '</div>';
+    window.print();
+    document.body.innerHTML = orig;
+    location.reload();
+    return;
+  }
+  printWindow.document.write(`<!DOCTYPE html><html><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Invoice</title>
     <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
-      body{margin:0;padding:0;font-family:'Cabinet Grotesk',Arial,sans-serif}
-      @page{size:A4;margin:0}
-      @media print{body{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}}
-      </style>
-    </head><body>${inv.innerHTML}<script>window.onload=function(){window.print();setTimeout(()=>window.close(),1000)}<" + "/script></body></html>`);
-  w.document.close();
-  saveInvoiceToHistory();
-  showToast('✓ PDF ready! Choose "Save as PDF" in print dialog', 'success');
+      *{margin:0;padding:0;box-sizing:border-box}
+      body{font-family:'Cabinet Grotesk',Arial,sans-serif;background:#fff;padding:0;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+      @page{size:A4;margin:15mm}
+      @media print{
+        body{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+        button,.no-print{display:none!important}
+      }
+      .invoice-preview{max-width:100%;padding:0}
+    </style>
+  </head><body><div class="invoice-preview">${printContent}<\/div>
+  <script>
+    window.onload=function(){
+      setTimeout(function(){window.print();setTimeout(function(){window.close();},1000);},500);
+    };
+  <\/script></body></html>`);
+  printWindow.document.close();
 }
 
 // ── PRINT ──
@@ -1072,8 +1095,13 @@ function openShareModal() {
 }
 function generateShareLink() {
   saveInvoiceToHistory();
-  const id = btoa(Date.now().toString()).replace(/=/g,'').substring(0,12);
-  const link = `https://invoicefree.info/invoice/view/${id}`;
+  const id = btoa(Date.now().toString()).replace(/[^a-zA-Z0-9]/g,'').substring(0,16);
+  // Save full invoice draft under this specific ID for the viewer
+  const draft = JSON.parse(localStorage.getItem('if_v2_draft')||'{}');
+  draft.shareId = id;
+  localStorage.setItem('if_v2_draft', JSON.stringify(draft));
+  localStorage.setItem('if_share_'+id, JSON.stringify(draft));
+  const link = `${location.origin}/invoice-view.html?id=${id}`;
   document.getElementById('share-link-container').innerHTML = `
     <p style="font-size:0.85rem;color:var(--slate);margin-bottom:12px">Share this link with your client:</p>
     <div class="share-link-box">
@@ -1099,10 +1127,17 @@ function openEmailModal() {
 }
 function sendEmail() {
   const to = document.getElementById('email-to').value;
+  const subject = document.getElementById('email-subject').value;
+  const body = document.getElementById('email-body').value;
   if (!to) { showToast('Please enter recipient email', 'error'); return; }
-  // EmailJS integration placeholder
-  showToast('✓ Email feature requires EmailJS setup (see docs)', 'success');
+  // Open user's default email client (Gmail, Outlook, Apple Mail etc)
+  // This opens whatever email app the user is logged into on their device
+  const mailtoLink = 'mailto:' + encodeURIComponent(to)
+    + '?subject=' + encodeURIComponent(subject)
+    + '&body=' + encodeURIComponent(body + '\n\nView invoice online: ' + (document.getElementById('share-link-container')?.querySelector('span')?.textContent || ''));
+  window.location.href = mailtoLink;
   closeModal('email-modal');
+  showToast('Opening your email app...', 'success');
 }
 
 // ── PRO MODAL ──
