@@ -69,7 +69,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <div class="title">Welcome back</div>
     <div class="subtitle">Sign in to your InvoiceFree account</div>
 
-    <!-- GOOGLE LOGIN -->
     <button class="btn-google" id="btnGoogle" onclick="loginWithGoogle()">
       <svg viewBox="0 0 24 24">
         <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -92,7 +91,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <div class="fg">
       <div class="fg-row">
         <label>Password</label>
-        <a href="#" onclick="resetPassword(); return false;">Forgot password?</a>
+        <a href="#" onclick="resetPassword();return false;">Forgot password?</a>
       </div>
       <input type="password" id="pass" placeholder="Your password" autocomplete="current-password" onkeydown="if(event.key==='Enter')emailLogin()">
     </div>
@@ -105,7 +104,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
 import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC2EMpgQDWvXtBHSZpzVF2xJGTrFQOlO1o",
@@ -113,54 +111,60 @@ const firebaseConfig = {
   projectId: "invoicefree-login",
   storageBucket: "invoicefree-login.firebasestorage.app",
   messagingSenderId: "1070627464426",
-  appId: "1:1070627464426:web:f868d3135acac55c4b6393",
-  measurementId: "G-HQFRM381FE"
+  appId: "1:1070627464426:web:f868d3135acac55c4b6393"
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getFirestore(app);
 
-// If already logged in — redirect immediately
-onAuthStateChanged(auth, async (user) => {
+// If already logged in redirect immediately
+onAuthStateChanged(auth, (user) => {
   if (user) {
-    await loadUserAndRedirect(user);
+    saveAndRedirect(user);
   }
 });
 
-async function loadUserAndRedirect(firebaseUser) {
-  showLoading("Signing you in...");
-  try {
-    const ref = doc(db, "users", firebaseUser.uid);
-    const snap = await getDoc(ref);
-    let profile;
-    if (snap.exists()) {
-      profile = snap.data();
-    } else {
-      const exp = new Date();
-      exp.setMonth(exp.getMonth() + 3);
-      profile = {
-        id: firebaseUser.uid,
-        name: firebaseUser.displayName || firebaseUser.email.split("@")[0],
-        email: firebaseUser.email,
-        role: "user",
-        plan: "pro",
-        promoExpiry: exp.toISOString(),
-        joined: new Date().toISOString().split("T")[0],
-        invoiceCount: 0,
-        photoURL: firebaseUser.photoURL || ""
-      };
-      await setDoc(ref, profile);
-    }
-    localStorage.setItem("if_current_user", JSON.stringify(profile));
-    window.location.href = profile.role === "admin" ? "admin.html" : "dashboard.html";
-  } catch(e) {
-    hideLoading();
-    showErr("Error loading account: " + e.message);
-  }
+function promoExpiry() {
+  const d = new Date();
+  d.setMonth(d.getMonth() + 3);
+  return d.toISOString();
 }
 
-// Google login
+function saveAndRedirect(firebaseUser) {
+  showLoading("Signing you in...");
+  // Build profile from Firebase user — no Firestore needed
+  const existing = JSON.parse(localStorage.getItem("if_current_user") || "null");
+  let profile;
+  if (existing && existing.id === firebaseUser.uid) {
+    // Already have profile — use it
+    profile = existing;
+  } else {
+    // New login — create fresh profile
+    profile = {
+      id: firebaseUser.uid,
+      name: firebaseUser.displayName || firebaseUser.email.split("@")[0],
+      email: firebaseUser.email,
+      photoURL: firebaseUser.photoURL || "",
+      role: "user",
+      plan: "pro",
+      promoExpiry: promoExpiry(),
+      joined: new Date().toISOString().split("T")[0],
+      invoiceCount: 0
+    };
+  }
+  localStorage.setItem("if_current_user", JSON.stringify(profile));
+
+  // Also save in users list for admin panel
+  const users = JSON.parse(localStorage.getItem("if_users") || "[]");
+  const idx = users.findIndex(u => u.id === profile.id);
+  if (idx > -1) { users[idx] = profile; } else { users.push(profile); }
+  localStorage.setItem("if_users", JSON.stringify(users));
+
+  setTimeout(() => {
+    window.location.href = profile.role === "admin" ? "admin.html" : "dashboard.html";
+  }, 300);
+}
+
 window.loginWithGoogle = async function() {
   document.getElementById("btnGoogle").disabled = true;
   showLoading("Opening Google login...");
@@ -169,20 +173,21 @@ window.loginWithGoogle = async function() {
     provider.addScope("email");
     provider.addScope("profile");
     const result = await signInWithPopup(auth, provider);
-    await loadUserAndRedirect(result.user);
+    saveAndRedirect(result.user);
   } catch(e) {
     hideLoading();
     document.getElementById("btnGoogle").disabled = false;
     if (e.code === "auth/popup-closed-by-user" || e.code === "auth/cancelled-popup-request") return;
     if (e.code === "auth/popup-blocked") {
-      showErr("Popup blocked! Please allow popups for this site in your browser, then try again.");
+      showErr("Popup blocked! Allow popups for this site in your browser settings.");
+    } else if (e.code === "auth/unauthorized-domain") {
+      showErr("Domain not authorized. Add invoicefree.info in Firebase Console > Authentication > Settings > Authorized domains.");
     } else {
       showErr("Google login failed: " + e.message);
     }
   }
 };
 
-// Email login
 window.emailLogin = async function() {
   const email = document.getElementById("email").value.trim().toLowerCase();
   const pass = document.getElementById("pass").value;
@@ -191,24 +196,23 @@ window.emailLogin = async function() {
   showLoading("Signing you in...");
   try {
     const result = await signInWithEmailAndPassword(auth, email, pass);
-    await loadUserAndRedirect(result.user);
+    saveAndRedirect(result.user);
   } catch(e) {
     hideLoading();
     document.getElementById("btnEmail").disabled = false;
     if (e.code === "auth/wrong-password" || e.code === "auth/user-not-found" || e.code === "auth/invalid-credential") {
-      showErr("Incorrect email or password. Please try again.");
+      showErr("Incorrect email or password.");
     } else if (e.code === "auth/too-many-requests") {
-      showErr("Too many failed attempts. Please try again later or reset your password.");
+      showErr("Too many attempts. Try again later or reset your password.");
     } else {
       showErr("Login failed: " + e.message);
     }
   }
 };
 
-// Password reset
 window.resetPassword = async function() {
   const email = document.getElementById("email").value.trim();
-  if (!email) { showErr("Enter your email address above, then click Forgot password."); return; }
+  if (!email) { showErr("Enter your email above then click Forgot password."); return; }
   try {
     await sendPasswordResetEmail(auth, email);
     showOk("Password reset email sent! Check your inbox.");
@@ -217,7 +221,7 @@ window.resetPassword = async function() {
   }
 };
 
-// Admin account in localStorage (hidden, for direct /admin.html access)
+// Hidden admin in localStorage
 (function() {
   const users = JSON.parse(localStorage.getItem("if_users") || "[]");
   if (!users.find(u => u.role === "admin")) {
@@ -230,20 +234,9 @@ function showLoading(text) {
   document.getElementById("loadingText").textContent = text || "Loading...";
   document.getElementById("loadingOverlay").classList.add("show");
 }
-function hideLoading() {
-  document.getElementById("loadingOverlay").classList.remove("show");
-}
-function showErr(m) {
-  const e = document.getElementById("err"); e.textContent = m; e.style.display = "block";
-  document.getElementById("ok").style.display = "none";
-  hideLoading();
-}
-function showOk(m) {
-  const e = document.getElementById("ok"); e.textContent = m; e.style.display = "block";
-  document.getElementById("err").style.display = "none";
-}
-window.showErr = showErr;
-window.showOk = showOk;
+function hideLoading() { document.getElementById("loadingOverlay").classList.remove("show"); }
+function showErr(m) { document.getElementById("err").textContent = m; document.getElementById("err").style.display = "block"; document.getElementById("ok").style.display = "none"; hideLoading(); }
+function showOk(m) { document.getElementById("ok").textContent = m; document.getElementById("ok").style.display = "block"; document.getElementById("err").style.display = "none"; }
 </script>
 </body>
 </html>

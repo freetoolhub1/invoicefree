@@ -80,7 +80,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <div class="title">Create your account</div>
     <div class="subtitle">Start invoicing professionally &mdash; free forever</div>
 
-    <!-- GOOGLE SIGNUP -->
     <button class="btn-google" id="btnGoogle" onclick="signupWithGoogle()">
       <svg viewBox="0 0 24 24">
         <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -109,7 +108,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
 import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, updateProfile, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC2EMpgQDWvXtBHSZpzVF2xJGTrFQOlO1o",
@@ -117,54 +115,57 @@ const firebaseConfig = {
   projectId: "invoicefree-login",
   storageBucket: "invoicefree-login.firebasestorage.app",
   messagingSenderId: "1070627464426",
-  appId: "1:1070627464426:web:f868d3135acac55c4b6393",
-  measurementId: "G-HQFRM381FE"
+  appId: "1:1070627464426:web:f868d3135acac55c4b6393"
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getFirestore(app);
 
 // Already logged in — redirect
-onAuthStateChanged(auth, async (user) => {
-  if (user) { await createProfileAndRedirect(user, user.displayName || ""); }
+onAuthStateChanged(auth, (user) => {
+  if (user) { saveAndRedirect(user); }
 });
 
 function promoExpiry() {
   const d = new Date(); d.setMonth(d.getMonth() + 3); return d.toISOString();
 }
 
-async function createProfileAndRedirect(firebaseUser, displayName) {
+function saveAndRedirect(firebaseUser, displayName) {
   showLoading("Setting up your account...");
-  try {
-    const ref = doc(db, "users", firebaseUser.uid);
-    const snap = await getDoc(ref);
-    let profile;
-    if (snap.exists()) {
-      profile = snap.data();
-    } else {
-      profile = {
-        id: firebaseUser.uid,
-        name: displayName || firebaseUser.displayName || firebaseUser.email.split("@")[0],
-        email: firebaseUser.email,
-        role: "user",
-        plan: "pro",
-        promoExpiry: promoExpiry(),
-        joined: new Date().toISOString().split("T")[0],
-        invoiceCount: 0,
-        photoURL: firebaseUser.photoURL || ""
-      };
-      await setDoc(ref, profile);
-    }
-    localStorage.setItem("if_current_user", JSON.stringify(profile));
-    window.location.href = "dashboard.html";
-  } catch(e) {
-    hideLoading();
-    showErr("Error setting up account: " + e.message);
+  const name = displayName || firebaseUser.displayName || firebaseUser.email.split("@")[0];
+
+  // Check if user already exists in localStorage
+  const users = JSON.parse(localStorage.getItem("if_users") || "[]");
+  let profile = users.find(u => u.id === firebaseUser.uid || u.email === firebaseUser.email);
+
+  if (!profile) {
+    // New user — give 3 months pro free
+    profile = {
+      id: firebaseUser.uid,
+      name: name,
+      email: firebaseUser.email,
+      photoURL: firebaseUser.photoURL || "",
+      role: "user",
+      plan: "pro",
+      promoExpiry: promoExpiry(),
+      joined: new Date().toISOString().split("T")[0],
+      invoiceCount: 0
+    };
+    users.push(profile);
+  } else {
+    // Existing user — update firebase uid and photo if needed
+    profile.id = firebaseUser.uid;
+    profile.photoURL = firebaseUser.photoURL || profile.photoURL || "";
+    const idx = users.findIndex(u => u.email === firebaseUser.email);
+    if (idx > -1) users[idx] = profile;
   }
+
+  localStorage.setItem("if_users", JSON.stringify(users));
+  localStorage.setItem("if_current_user", JSON.stringify(profile));
+
+  setTimeout(() => { window.location.href = "dashboard.html"; }, 300);
 }
 
-// Google signup
 window.signupWithGoogle = async function() {
   document.getElementById("btnGoogle").disabled = true;
   showLoading("Opening Google signup...");
@@ -173,34 +174,35 @@ window.signupWithGoogle = async function() {
     provider.addScope("email");
     provider.addScope("profile");
     const result = await signInWithPopup(auth, provider);
-    await createProfileAndRedirect(result.user, result.user.displayName || "");
+    saveAndRedirect(result.user, result.user.displayName);
   } catch(e) {
     hideLoading();
     document.getElementById("btnGoogle").disabled = false;
     if (e.code === "auth/popup-closed-by-user" || e.code === "auth/cancelled-popup-request") return;
     if (e.code === "auth/popup-blocked") {
-      showErr("Popup blocked! Allow popups for this site in your browser settings, then try again.");
+      showErr("Popup blocked! Allow popups for this site in your browser settings.");
+    } else if (e.code === "auth/unauthorized-domain") {
+      showErr("Domain not authorized. Go to Firebase Console > Authentication > Settings > Authorized domains and add invoicefree.info");
     } else {
       showErr("Google signup failed: " + e.message);
     }
   }
 };
 
-// Email register
 window.emailRegister = async function() {
   const name = document.getElementById("rname").value.trim();
   const email = document.getElementById("remail").value.trim().toLowerCase();
   const pass = document.getElementById("rpass").value;
-  if (!name || !email || !pass) { showErr("Please fill in all fields."); return; }
-  if (pass.length < 6) { showErr("Password must be at least 6 characters."); return; }
-  if (!email.includes("@")) { showErr("Please enter a valid email address."); return; }
+  if (!name) { showErr("Please enter your full name."); return; }
+  if (!email || !email.includes("@")) { showErr("Please enter a valid email address."); return; }
+  if (!pass || pass.length < 6) { showErr("Password must be at least 6 characters."); return; }
 
   document.getElementById("btnEmail").disabled = true;
   showLoading("Creating your account...");
   try {
     const result = await createUserWithEmailAndPassword(auth, email, pass);
     await updateProfile(result.user, { displayName: name });
-    await createProfileAndRedirect(result.user, name);
+    saveAndRedirect(result.user, name);
   } catch(e) {
     hideLoading();
     document.getElementById("btnEmail").disabled = false;
@@ -219,9 +221,8 @@ function showLoading(text) {
   document.getElementById("loadingOverlay").classList.add("show");
 }
 function hideLoading() { document.getElementById("loadingOverlay").classList.remove("show"); }
-function showErr(m) { const e = document.getElementById("err"); e.textContent = m; e.style.display = "block"; document.getElementById("ok").style.display = "none"; hideLoading(); }
-function showOk(m) { const e = document.getElementById("ok"); e.textContent = m; e.style.display = "block"; document.getElementById("err").style.display = "none"; }
-window.showErr = showErr; window.showOk = showOk;
+function showErr(m) { document.getElementById("err").textContent = m; document.getElementById("err").style.display = "block"; document.getElementById("ok").style.display = "none"; hideLoading(); }
+function showOk(m) { document.getElementById("ok").textContent = m; document.getElementById("ok").style.display = "block"; document.getElementById("err").style.display = "none"; }
 </script>
 </body>
 </html>
