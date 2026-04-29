@@ -337,6 +337,7 @@ body{font-family:'Cabinet Grotesk',system-ui,sans-serif;background:#0a0a0f;color
     <a href="invoice-app.html" class="btn-try">Try Free &#8594;</a>
   </div>
   <div id="lang-selector-placeholder" style="display:flex;align-items:center"></div>
+  <span id="lang-ph"></span>
   <button class="hamburger" onclick="document.getElementById('mob').classList.toggle('open')">&#9776;</button>
 </nav>
 <div class="mobile-menu" id="mob">
@@ -352,8 +353,8 @@ body{font-family:'Cabinet Grotesk',system-ui,sans-serif;background:#0a0a0f;color
   <h1 class="h1" data-i18n="hero_title">Create <em>Beautiful</em><br>Invoices in Seconds</h1>
   <p class="sub" data-i18n="hero_sub">Professional invoicing made effortless. Design, send, and track invoices that get you paid faster.</p>
   <div class="hero-btns">
-    <a href="invoice-app.html" class="btn-main">&#10022; Create Invoice Free</a>
-    <a href="#pricing" class="btn-sec">View Pricing</a>
+    <a href="invoice-app.html" class="btn-main" data-i18n="hero_btn">&#10022; Create Invoice Free</a>
+    <a href="#pricing" class="btn-sec" data-i18n="hero_btn2">View Pricing</a>
   </div>
   <div class="preview-wrap">
     <div class="preview-glow"></div>
@@ -380,10 +381,10 @@ body{font-family:'Cabinet Grotesk',system-ui,sans-serif;background:#0a0a0f;color
     </div>
   </div>
   <div class="stats-bar">
-    <div class="stat-item"><div class="sn" id="s1">0<span class="g">K+</span></div><div class="sl">Active Users</div></div>
-    <div class="stat-item"><div class="sn" id="s2">0<span class="g">M+</span></div><div class="sl">Invoices Created</div></div>
-    <div class="stat-item"><div class="sn" id="s3">0<span class="g">&#9733;</span></div><div class="sl">Avg Rating</div></div>
-    <div class="stat-item"><div class="sn">$<span id="s4">0</span></div><div class="sl">To Start</div></div>
+    <div class="stat-item"><div class="sn" id="s1">0<span class="g">K+</span></div><div class="sl" data-i18n="stat_users">Active Users</div></div>
+    <div class="stat-item"><div class="sn" id="s2">0<span class="g">M+</span></div><div class="sl" data-i18n="stat_invoices">Invoices Created</div></div>
+    <div class="stat-item"><div class="sn" id="s3">0<span class="g">&#9733;</span></div><div class="sl" data-i18n="stat_rating">Avg Rating</div></div>
+    <div class="stat-item"><div class="sn">$<span id="s4">0</span></div><div class="sl" data-i18n="stat_free">To Start</div></div>
   </div>
 </section>
 
@@ -394,9 +395,9 @@ body{font-family:'Cabinet Grotesk',system-ui,sans-serif;background:#0a0a0f;color
 
 <section class="sec dark" id="features">
   <div class="con">
-    <span class="stag">Everything You Need</span>
-    <h2 class="sh2">Packed with <em>powerful</em> features</h2>
-    <p class="ssub">Everything you need to invoice professionally.</p>
+    <span class="stag" data-i18n="feat_tag">Everything You Need</span>
+    <h2 class="sh2" data-i18n="feat_h2">Packed with <em>powerful</em> features</h2>
+    <p class="ssub" data-i18n="feat_sub">Everything you need to invoice professionally.</p>
     <div class="feat-grid">
       <div class="fcard"><div class="ficon">&#128196;</div><div class="ftitle">Multi-Template System</div><div class="fdesc">5 stunning templates. Switch instantly, customize colors and layout.</div></div>
       <div class="fcard"><div class="ficon">&#9889;</div><div class="ftitle">Smart Auto-Calculate</div><div class="fdesc">Real-time tax, discount and total calculations. Zero math errors.</div></div>
@@ -413,9 +414,9 @@ body{font-family:'Cabinet Grotesk',system-ui,sans-serif;background:#0a0a0f;color
 
 <section class="sec darker" id="templates">
   <div class="con">
-    <span class="stag">Invoice Templates</span>
-    <h2 class="sh2">Five <em>stunning</em> designs</h2>
-    <p class="ssub">Pick the template that matches your brand.</p>
+    <span class="stag" data-i18n="tpl_tag">Invoice Templates</span>
+    <h2 class="sh2" data-i18n="tpl_h2">Five <em>stunning</em> designs</h2>
+    <p class="ssub" data-i18n="tpl_sub">Pick the template that matches your brand.</p>
     <div style="display:flex;gap:18px;overflow-x:auto;padding:6px 0 16px;scrollbar-width:none">
       <div style="flex-shrink:0;width:230px;border-radius:12px;overflow:hidden;border:2px solid #c9a84c"><div style="height:160px;background:#f8f7f4;padding:16px;display:flex;flex-direction:column"><div style="font-weight:900;font-size:.95rem;color:#0a0a0f">INVOICE</div><div style="font-size:.62rem;color:#6b7280;margin-top:5px">Acme Studio</div><div style="margin-top:auto;display:flex;justify-content:space-between;font-size:.7rem"><span style="color:#6b7280">Total</span><span style="font-weight:800;color:#0a0a0f">$6,877</span></div></div><div style="background:rgba(0,0,0,.75);padding:9px 14px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:.76rem;font-weight:700;color:#fff">Classic</span><span style="background:#1de9b6;color:#003d2e;font-size:.55rem;font-weight:800;padding:2px 8px;border-radius:50px">FREE</span></div></div>
       <div style="flex-shrink:0;width:230px;border-radius:12px;overflow:hidden;border:2px solid rgba(255,255,255,.12)"><div style="height:160px;background:#0f172a;padding:16px;display:flex;flex-direction:column;color:#fff"><div style="font-size:.58rem;letter-spacing:.12em;opacity:.5;text-transform:uppercase">Invoice</div><div style="font-size:1.5rem;font-weight:900;margin-top:4px;letter-spacing:-1px">INV-0089</div><div style="margin-top:auto;font-size:.7rem;opacity:.6">TechCorp</div></div><div style="background:rgba(0,0,0,.75);padding:9px 14px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:.76rem;font-weight:700;color:#fff">Modern</span><span style="background:#1de9b6;color:#003d2e;font-size:.55rem;font-weight:800;padding:2px 8px;border-radius:50px">FREE</span></div></div>
@@ -428,8 +429,8 @@ body{font-family:'Cabinet Grotesk',system-ui,sans-serif;background:#0a0a0f;color
 
 <section class="sec dark">
   <div class="con">
-    <span class="stag">How It Works</span>
-    <h2 class="sh2">Invoice in <em>four</em> steps</h2>
+    <span class="stag" data-i18n="hiw_tag">How It Works</span>
+    <h2 class="sh2" data-i18n="hiw_h2">Invoice in <em>four</em> steps</h2>
     <div class="steps">
       <div class="step"><div class="snum">01</div><div class="stitle">Enter Details</div><div class="sdesc">Fill your business info, client details and line items with smart autofill.</div></div>
       <div class="step"><div class="snum">02</div><div class="stitle">Pick Template</div><div class="sdesc">Choose from 5 templates. Customize colors, fonts and logo.</div></div>
@@ -442,18 +443,18 @@ body{font-family:'Cabinet Grotesk',system-ui,sans-serif;background:#0a0a0f;color
 <div class="promo-wrap">
   <div class="promo-box">
     <div>
-      <div class="pbadge">&#127873; LIMITED TIME OFFER</div>
-      <h2 class="ph2">Get <em>3 Months Free</em> Pro Access</h2>
-      <p class="psub">Sign up today and get full Pro features free for 3 months. No credit card required.</p>
+      <div class="pbadge" data-i18n="promo_badge">&#127873; LIMITED TIME OFFER</div>
+      <h2 class="ph2" data-i18n="promo_h2">Get <em>3 Months Free</em> Pro Access</h2>
+      <p class="psub" data-i18n="promo_sub">Sign up today and get full Pro features free for 3 months. No credit card required.</p>
       <div class="pcd-wrap">
-        <div class="pcd"><div class="pcdn" id="pcd-d">--</div><div class="pcdl">Days</div></div>
-        <div class="pcd"><div class="pcdn" id="pcd-h">--</div><div class="pcdl">Hours</div></div>
-        <div class="pcd"><div class="pcdn" id="pcd-m">--</div><div class="pcdl">Mins</div></div>
-        <div class="pcd"><div class="pcdn" id="pcd-s">--</div><div class="pcdl">Secs</div></div>
+        <div class="pcd"><div class="pcdn" id="pcd-d">--</div><div class="pcdl" data-i18n="promo_days">Days</div></div>
+        <div class="pcd"><div class="pcdn" id="pcd-h">--</div><div class="pcdl" data-i18n="promo_hrs">Hours</div></div>
+        <div class="pcd"><div class="pcdn" id="pcd-m">--</div><div class="pcdl" data-i18n="promo_mins">Mins</div></div>
+        <div class="pcd"><div class="pcdn" id="pcd-s">--</div><div class="pcdl" data-i18n="promo_secs">Secs</div></div>
       </div>
     </div>
     <div>
-      <a href="register.html?promo=3MONTHS" class="btn-promo">&#127881; Claim 3 Months Free</a>
+      <a href="register.html?promo=3MONTHS" class="btn-promo" data-i18n="promo_btn">&#127881; Claim 3 Months Free</a>
       <div class="pnote">No card needed &middot; Cancel anytime</div>
     </div>
   </div>
@@ -461,8 +462,8 @@ body{font-family:'Cabinet Grotesk',system-ui,sans-serif;background:#0a0a0f;color
 
 <section class="sec darker" id="pricing">
   <div class="con">
-    <span class="stag">Pricing</span>
-    <h2 class="sh2">Simple, <em>honest</em> pricing</h2>
+    <span class="stag" data-i18n="price_tag">Pricing</span>
+    <h2 class="sh2" data-i18n="price_h2">Simple, <em>honest</em> pricing</h2>
     <p class="ssub">Start free forever. Upgrade when your business needs more power.</p>
     <div class="p-cards">
       <div class="pc">
@@ -505,8 +506,8 @@ body{font-family:'Cabinet Grotesk',system-ui,sans-serif;background:#0a0a0f;color
 
 <section class="sec dark">
   <div class="con">
-    <span class="stag">What Users Say</span>
-    <h2 class="sh2">Loved by <em>freelancers</em></h2>
+    <span class="stag" data-i18n="testi_tag">What Users Say</span>
+    <h2 class="sh2" data-i18n="testi_h2">Loved by <em>freelancers</em></h2>
     <div class="testi-grid">
       <div class="tc"><div class="tstars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><div class="ttext">"Switched from a $30/month tool to InvoiceFree and the invoices look better. Templates are gorgeous and PDF quality is perfect."</div><div class="tauthor"><div class="tavatar"><img src="https://api.dicebear.com/7.x/personas/svg?seed=SarahMitchell&backgroundColor=b6e3f4&radius=50" alt="Sarah" loading="lazy"></div><div><div class="tname">Sarah Mitchell</div><div class="trole">Brand Designer, London</div></div></div></div>
       <div class="tc"><div class="tstars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><div class="ttext">"The auto-save saved me when my browser crashed mid-invoice. Came back and everything was there. This app gets it."</div><div class="tauthor"><div class="tavatar"><img src="https://api.dicebear.com/7.x/personas/svg?seed=JamesTorres&backgroundColor=ffdfbf&radius=50" alt="James" loading="lazy"></div><div><div class="tname">James Torres</div><div class="trole">Full-Stack Dev, NYC</div></div></div></div>
@@ -520,8 +521,8 @@ body{font-family:'Cabinet Grotesk',system-ui,sans-serif;background:#0a0a0f;color
 
 <section class="sec darker">
   <div class="cta-box">
-    <h2 class="ctah2">Ready to invoice <em>beautifully?</em></h2>
-    <p class="ctasub">Join 50,000+ freelancers. Start free. 3 months Pro on us.</p>
+    <h2 class="ctah2" data-i18n="cta_h2">Ready to invoice <em>beautifully?</em></h2>
+    <p class="ctasub" data-i18n="cta_sub">Join 50,000+ freelancers. Start free. 3 months Pro on us.</p>
     <div class="ctabtns">
       <a href="invoice-app.html" class="btn-main">&#10022; Create Your First Invoice</a>
       <a href="register.html?promo=3MONTHS" class="btn-sec">&#127881; Claim 3 Months Free</a>

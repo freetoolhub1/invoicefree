@@ -1,162 +1,615 @@
-// InvoiceFree.info — Multi-Language Support
-// Supported: English, Spanish, French, German, Arabic, Urdu, Hindi, Portuguese
-const TRANSLATIONS = {
+// ═══════════════════════════════════════════════════════
+// InvoiceFree.info — Full Site Multi-Language System
+// Supports: EN, ES, FR, DE, AR (RTL), UR (RTL), HI, PT
+// Auto-detects by browser/region. Applies to ALL pages.
+// ═══════════════════════════════════════════════════════
+
+const LANG_DATA = {
   en: {
     name:"English", dir:"ltr", flag:"🇺🇸",
-    hero_title:"Create <em>Beautiful</em><br>Invoices in Seconds",
+    // NAV
+    nav_home:"Home", nav_features:"Features", nav_templates:"Templates",
+    nav_pricing:"Pricing", nav_create:"Create Invoice", nav_blog:"Blog",
+    nav_login:"Login", nav_try:"Try Free", nav_dashboard:"Dashboard", nav_logout:"Logout",
+    // HERO
+    hero_eyebrow:"Trusted by 50,000+ Freelancers Worldwide",
+    hero_h1:"Create <em>Beautiful</em><br>Invoices in Seconds",
     hero_sub:"Professional invoicing made effortless. Design, send, and track invoices that get you paid faster.",
-    hero_btn:"Create Invoice Free",
-    hero_btn2:"View Pricing",
-    stat_users:"Active Users", stat_invoices:"Invoices Created", stat_rating:"Avg Rating", stat_start:"To Start",
-    nav_features:"Features", nav_templates:"Templates", nav_pricing:"Pricing", nav_create:"Create Invoice",
-    nav_login:"Login", nav_try:"Try Free",
-    promo_badge:"LIMITED TIME OFFER", promo_title:"Get <em>3 Months Free</em> Pro Access",
+    hero_btn:"✦ Create Invoice Free", hero_btn2:"View Pricing",
+    // STATS
+    stat_users:"Active Users", stat_invoices:"Invoices Created", stat_rating:"Avg Rating", stat_free:"To Start",
+    // TICKER items
+    ticker_1:"Free Invoice Generator", ticker_2:"PDF Export", ticker_3:"Auto-Save",
+    ticker_4:"Multi-Currency", ticker_5:"5 Templates", ticker_6:"Custom Branding",
+    ticker_7:"Smart Autofill", ticker_8:"Email Invoice", ticker_9:"Shareable Links",
+    ticker_10:"Payment Tracking", ticker_11:"Tax Calculator", ticker_12:"No Credit Card",
+    // SECTIONS
+    feat_tag:"Everything You Need",
+    feat_h2:"Packed with <em>powerful</em> features",
+    feat_sub:"Everything you need to invoice professionally.",
+    tpl_tag:"Invoice Templates", tpl_h2:"Five <em>stunning</em> designs",
+    tpl_sub:"Pick the template that matches your brand.",
+    hiw_tag:"How It Works", hiw_h2:"Invoice in <em>four</em> steps",
+    hiw_s1:"Enter Details", hiw_s1d:"Fill your business info, client details and line items.",
+    hiw_s2:"Pick Template", hiw_s2d:"Choose from 5 templates. Customize colors and logo.",
+    hiw_s3:"Preview & Export", hiw_s3d:"See live preview. Export PDF or shareable link.",
+    hiw_s4:"Get Paid", hiw_s4d:"Send to clients, track payment status, mark as paid.",
+    // PROMO
+    promo_badge:"🎁 LIMITED TIME OFFER",
+    promo_h2:"Get <em>3 Months Free</em> Pro Access",
     promo_sub:"Sign up today and get full Pro features free for 3 months. No credit card required.",
-    promo_btn:"Claim 3 Months Free", promo_note:"No card needed · Cancel anytime",
+    promo_btn:"🎉 Claim 3 Months Free", promo_note:"No card needed · Cancel anytime",
+    promo_days:"Days", promo_hrs:"Hours", promo_mins:"Mins", promo_secs:"Secs",
+    // PRICING
+    price_tag:"Pricing", price_h2:"Simple, <em>honest</em> pricing",
+    price_sub:"Start free forever. Upgrade when your business needs more power.",
+    price_free_tier:"Free Plan", price_free_amt:"$0", price_free_per:"/mo",
+    price_free_period:"Forever free · No credit card",
+    price_pro_tier:"Pro Plan", price_pro_period:"3 months FREE then $4.99/mo · Cancel anytime",
+    price_popular:"⭐ MOST POPULAR",
+    price_btn_free:"Start Free →", price_btn_pro:"🎁 Get 3 Months Free →",
+    price_note:"No hidden fees · Cancel anytime · 3 months free for new users",
+    feat_unlimited:"Unlimited invoices", feat_templates:"All 5 premium templates",
+    feat_pdf:"High-res PDF export", feat_branding:"Custom branding + logo",
+    feat_email:"Email invoice to client", feat_share:"Shareable invoice links",
+    feat_history:"Invoice history", feat_support:"Priority support",
+    // TESTIMONIALS
+    testi_tag:"What Users Say", testi_h2:"Loved by <em>freelancers</em>",
+    // CTA
+    cta_h2:"Ready to invoice <em>beautifully?</em>",
+    cta_sub:"Join 50,000+ freelancers. Start free. 3 months Pro on us.",
+    cta_btn:"✦ Create Your First Invoice", cta_btn2:"🎁 Claim 3 Months Free",
+    // FOOTER
+    footer_copy:"© 2025 InvoiceFree.info — All rights reserved.",
+    // BLOG
+    blog_tag:"Resources & Guides", blog_h2:"Invoice Tips for <em>Freelancers</em>",
+    blog_sub:"Expert guides to invoice professionally, get paid faster, and grow your business.",
+    blog_read:"Read article →",
+    // LOGIN/REGISTER
+    login_title:"Welcome back", login_sub:"Sign in to your InvoiceFree account",
+    login_google:"Sign in with Google", login_email:"Email Address",
+    login_pass:"Password", login_forgot:"Forgot password?", login_btn:"Sign In →",
+    login_switch:"No account?", login_switch_link:"Create free account",
+    reg_title:"Create your account", reg_sub:"Start invoicing professionally — free forever",
+    reg_google:"Sign up with Google", reg_name:"Full Name", reg_email:"Email Address",
+    reg_pass:"Password (min 6 characters)", reg_btn:"🎉 Create Free Account →",
+    reg_switch:"Already have an account?", reg_switch_link:"Login",
+    reg_terms:"By registering you agree to our",
+    // INVOICE APP
+    app_from:"Your Business Info", app_to:"Client Info", app_items:"Invoice Items",
+    app_add_item:"Add Item", app_preview:"Live Preview", app_download:"Download PDF",
+    app_share:"Share Link", app_email:"Email Invoice", app_print:"Print",
+    app_template:"Template", app_color:"Color",
   },
   es: {
     name:"Español", dir:"ltr", flag:"🇪🇸",
-    hero_title:"Crea <em>Facturas</em><br>Profesionales en Segundos",
+    nav_home:"Inicio", nav_features:"Características", nav_templates:"Plantillas",
+    nav_pricing:"Precios", nav_create:"Crear Factura", nav_blog:"Blog",
+    nav_login:"Iniciar Sesión", nav_try:"Prueba Gratis", nav_dashboard:"Panel", nav_logout:"Cerrar Sesión",
+    hero_eyebrow:"Confiado por más de 50,000 Freelancers en todo el Mundo",
+    hero_h1:"Crea <em>Facturas Hermosas</em><br>en Segundos",
     hero_sub:"Facturación profesional sin esfuerzo. Diseña, envía y rastrea facturas para cobrar más rápido.",
-    hero_btn:"Crear Factura Gratis",
-    hero_btn2:"Ver Precios",
-    stat_users:"Usuarios Activos", stat_invoices:"Facturas Creadas", stat_rating:"Calificación", stat_start:"Para Empezar",
-    nav_features:"Características", nav_templates:"Plantillas", nav_pricing:"Precios", nav_create:"Crear Factura",
-    nav_login:"Iniciar Sesión", nav_try:"Prueba Gratis",
-    promo_badge:"OFERTA LIMITADA", promo_title:"Obtén <em>3 Meses Gratis</em> de Pro",
+    hero_btn:"✦ Crear Factura Gratis", hero_btn2:"Ver Precios",
+    stat_users:"Usuarios Activos", stat_invoices:"Facturas Creadas", stat_rating:"Calificación", stat_free:"Para Empezar",
+    ticker_1:"Generador de Facturas Gratis", ticker_2:"Exportar PDF", ticker_3:"Auto-Guardado",
+    ticker_4:"Multi-Divisa", ticker_5:"5 Plantillas", ticker_6:"Marca Personalizada",
+    ticker_7:"Autocompletar", ticker_8:"Enviar Factura", ticker_9:"Links Compartibles",
+    ticker_10:"Seguimiento de Pagos", ticker_11:"Calculadora de Impuestos", ticker_12:"Sin Tarjeta de Crédito",
+    feat_tag:"Todo lo que Necesitas",
+    feat_h2:"Cargado de <em>funciones potentes</em>",
+    feat_sub:"Todo lo que necesitas para facturar profesionalmente.",
+    tpl_tag:"Plantillas de Facturas", tpl_h2:"Cinco <em>diseños impresionantes</em>",
+    tpl_sub:"Elige la plantilla que combina con tu marca.",
+    hiw_tag:"Cómo Funciona", hiw_h2:"Factura en <em>cuatro</em> pasos",
+    hiw_s1:"Ingresa Datos", hiw_s1d:"Completa info de tu empresa y cliente.",
+    hiw_s2:"Elige Plantilla", hiw_s2d:"5 plantillas. Personaliza colores y logo.",
+    hiw_s3:"Vista Previa y Exportar", hiw_s3d:"Vista en vivo. Exporta PDF o link compartible.",
+    hiw_s4:"Cobra", hiw_s4d:"Envía al cliente y rastrea el estado de pago.",
+    promo_badge:"🎁 OFERTA LIMITADA",
+    promo_h2:"Obtén <em>3 Meses Gratis</em> de Acceso Pro",
     promo_sub:"Regístrate hoy y obtén todas las funciones Pro gratis por 3 meses. Sin tarjeta de crédito.",
-    promo_btn:"Reclamar 3 Meses Gratis", promo_note:"Sin tarjeta · Cancela cuando quieras",
+    promo_btn:"🎉 Reclamar 3 Meses Gratis", promo_note:"Sin tarjeta · Cancela cuando quieras",
+    promo_days:"Días", promo_hrs:"Horas", promo_mins:"Mins", promo_secs:"Segs",
+    price_tag:"Precios", price_h2:"Precios <em>simples y honestos</em>",
+    price_sub:"Empieza gratis para siempre. Mejora cuando tu negocio necesite más.",
+    price_free_tier:"Plan Gratuito", price_free_amt:"$0", price_free_per:"/mes",
+    price_free_period:"Gratis para siempre · Sin tarjeta",
+    price_pro_tier:"Plan Pro", price_pro_period:"3 meses GRATIS luego $4.99/mes",
+    price_popular:"⭐ MÁS POPULAR",
+    price_btn_free:"Empezar Gratis →", price_btn_pro:"🎁 Obtén 3 Meses Gratis →",
+    price_note:"Sin cargos ocultos · Cancela cuando quieras",
+    feat_unlimited:"Facturas ilimitadas", feat_templates:"Las 5 plantillas premium",
+    feat_pdf:"Exportar PDF de alta resolución", feat_branding:"Marca personalizada + logo",
+    feat_email:"Enviar factura al cliente", feat_share:"Links de facturas compartibles",
+    feat_history:"Historial de facturas", feat_support:"Soporte prioritario",
+    testi_tag:"Lo que Dicen los Usuarios", testi_h2:"Amado por los <em>freelancers</em>",
+    cta_h2:"¿Listo para facturar <em>hermosamente?</em>",
+    cta_sub:"Únete a 50,000+ freelancers. Empieza gratis. 3 meses Pro de regalo.",
+    cta_btn:"✦ Crear Tu Primera Factura", cta_btn2:"🎁 Reclamar 3 Meses Gratis",
+    footer_copy:"© 2025 InvoiceFree.info — Todos los derechos reservados.",
+    blog_tag:"Recursos y Guías", blog_h2:"Consejos de Facturas para <em>Freelancers</em>",
+    blog_sub:"Guías expertas para facturar profesionalmente y hacer crecer tu negocio.",
+    blog_read:"Leer artículo →",
+    login_title:"Bienvenido de nuevo", login_sub:"Inicia sesión en tu cuenta de InvoiceFree",
+    login_google:"Iniciar con Google", login_email:"Correo Electrónico",
+    login_pass:"Contraseña", login_forgot:"¿Olvidaste tu contraseña?", login_btn:"Iniciar Sesión →",
+    login_switch:"¿No tienes cuenta?", login_switch_link:"Crear cuenta gratis",
+    reg_title:"Crea tu cuenta", reg_sub:"Empieza a facturar profesionalmente — gratis para siempre",
+    reg_google:"Registrarse con Google", reg_name:"Nombre Completo", reg_email:"Correo Electrónico",
+    reg_pass:"Contraseña (mín. 6 caracteres)", reg_btn:"🎉 Crear Cuenta Gratis →",
+    reg_switch:"¿Ya tienes cuenta?", reg_switch_link:"Iniciar Sesión",
+    reg_terms:"Al registrarte aceptas nuestros",
+    app_from:"Tu Empresa", app_to:"Datos del Cliente", app_items:"Artículos",
+    app_add_item:"Agregar Artículo", app_preview:"Vista Previa", app_download:"Descargar PDF",
+    app_share:"Compartir Link", app_email:"Enviar por Email", app_print:"Imprimir",
+    app_template:"Plantilla", app_color:"Color",
   },
   fr: {
     name:"Français", dir:"ltr", flag:"🇫🇷",
-    hero_title:"Créez de <em>Belles</em><br>Factures en Secondes",
-    hero_sub:"La facturation professionnelle simplifiée. Créez, envoyez et suivez vos factures pour être payé plus vite.",
-    hero_btn:"Créer une Facture Gratuitement",
-    hero_btn2:"Voir les Tarifs",
-    stat_users:"Utilisateurs Actifs", stat_invoices:"Factures Créées", stat_rating:"Note Moyenne", stat_start:"Pour Commencer",
-    nav_features:"Fonctionnalités", nav_templates:"Modèles", nav_pricing:"Tarifs", nav_create:"Créer Facture",
-    nav_login:"Connexion", nav_try:"Essai Gratuit",
-    promo_badge:"OFFRE LIMITÉE", promo_title:"Obtenez <em>3 Mois Gratuits</em> Pro",
-    promo_sub:"Inscrivez-vous aujourd'hui et obtenez toutes les fonctionnalités Pro gratuitement pendant 3 mois.",
-    promo_btn:"Réclamer 3 Mois Gratuits", promo_note:"Sans carte · Annulez à tout moment",
-  },
-  de: {
-    name:"Deutsch", dir:"ltr", flag:"🇩🇪",
-    hero_title:"<em>Schöne</em> Rechnungen<br>in Sekunden erstellen",
-    hero_sub:"Professionelle Rechnungsstellung leicht gemacht. Erstellen, senden und verfolgen Sie Rechnungen.",
-    hero_btn:"Rechnung kostenlos erstellen",
-    hero_btn2:"Preise ansehen",
-    stat_users:"Aktive Nutzer", stat_invoices:"Erstellte Rechnungen", stat_rating:"Bewertung", stat_start:"Zum Start",
-    nav_features:"Funktionen", nav_templates:"Vorlagen", nav_pricing:"Preise", nav_create:"Rechnung erstellen",
-    nav_login:"Anmelden", nav_try:"Kostenlos testen",
-    promo_badge:"ZEITLICH BEGRENZT", promo_title:"<em>3 Monate gratis</em> Pro-Zugang",
-    promo_sub:"Registrieren Sie sich heute und erhalten Sie 3 Monate lang alle Pro-Funktionen kostenlos.",
-    promo_btn:"3 Monate gratis beanspruchen", promo_note:"Keine Karte · Jederzeit kündbar",
+    nav_home:"Accueil", nav_features:"Fonctionnalités", nav_templates:"Modèles",
+    nav_pricing:"Tarifs", nav_create:"Créer une Facture", nav_blog:"Blog",
+    nav_login:"Connexion", nav_try:"Essai Gratuit", nav_dashboard:"Tableau de Bord", nav_logout:"Déconnexion",
+    hero_eyebrow:"Approuvé par plus de 50 000 Freelances dans le Monde",
+    hero_h1:"Créez de <em>Belles Factures</em><br>en Quelques Secondes",
+    hero_sub:"La facturation professionnelle simplifiée. Créez, envoyez et suivez vos factures.",
+    hero_btn:"✦ Créer une Facture Gratuitement", hero_btn2:"Voir les Tarifs",
+    stat_users:"Utilisateurs Actifs", stat_invoices:"Factures Créées", stat_rating:"Note Moyenne", stat_free:"Pour Commencer",
+    ticker_1:"Générateur de Factures Gratuit", ticker_2:"Export PDF", ticker_3:"Sauvegarde Auto",
+    ticker_4:"Multi-Devise", ticker_5:"5 Modèles", ticker_6:"Marque Personnalisée",
+    ticker_7:"Saisie Auto", ticker_8:"Envoyer Facture", ticker_9:"Liens Partageables",
+    ticker_10:"Suivi des Paiements", ticker_11:"Calculateur de Taxes", ticker_12:"Sans Carte Bancaire",
+    feat_tag:"Tout ce dont vous avez Besoin",
+    feat_h2:"Rempli de <em>fonctionnalités puissantes</em>",
+    feat_sub:"Tout ce qu'il faut pour facturer professionnellement.",
+    tpl_tag:"Modèles de Factures", tpl_h2:"Cinq <em>designs magnifiques</em>",
+    tpl_sub:"Choisissez le modèle qui correspond à votre marque.",
+    hiw_tag:"Comment ça Marche", hiw_h2:"Facturez en <em>quatre</em> étapes",
+    hiw_s1:"Entrez les Détails", hiw_s1d:"Remplissez vos infos et celles du client.",
+    hiw_s2:"Choisissez un Modèle", hiw_s2d:"5 modèles. Personnalisez couleurs et logo.",
+    hiw_s3:"Aperçu et Export", hiw_s3d:"Aperçu en direct. Exportez PDF ou lien.",
+    hiw_s4:"Soyez Payé", hiw_s4d:"Envoyez au client et suivez le paiement.",
+    promo_badge:"🎁 OFFRE LIMITÉE",
+    promo_h2:"Obtenez <em>3 Mois Gratuits</em> d'Accès Pro",
+    promo_sub:"Inscrivez-vous aujourd'hui et obtenez toutes les fonctionnalités Pro gratuitement.",
+    promo_btn:"🎉 Réclamer 3 Mois Gratuits", promo_note:"Sans carte · Annulez à tout moment",
+    promo_days:"Jours", promo_hrs:"Heures", promo_mins:"Mins", promo_secs:"Secs",
+    price_tag:"Tarifs", price_h2:"Tarifs <em>simples et honnêtes</em>",
+    price_sub:"Commencez gratuitement. Améliorez quand vous en avez besoin.",
+    price_free_tier:"Plan Gratuit", price_free_amt:"0 €", price_free_per:"/mois",
+    price_free_period:"Gratuit à vie · Sans carte bancaire",
+    price_pro_tier:"Plan Pro", price_pro_period:"3 mois GRATUITS puis 4,99 €/mois",
+    price_popular:"⭐ PLUS POPULAIRE",
+    price_btn_free:"Commencer Gratuitement →", price_btn_pro:"🎁 Obtenir 3 Mois Gratuits →",
+    price_note:"Sans frais cachés · Annulez quand vous voulez",
+    feat_unlimited:"Factures illimitées", feat_templates:"Les 5 modèles premium",
+    feat_pdf:"Export PDF haute résolution", feat_branding:"Marque + logo personnalisés",
+    feat_email:"Envoyer la facture au client", feat_share:"Liens de factures partageables",
+    feat_history:"Historique des factures", feat_support:"Support prioritaire",
+    testi_tag:"Ce que Disent les Utilisateurs", testi_h2:"Aimé par les <em>freelances</em>",
+    cta_h2:"Prêt à facturer <em>magnifiquement ?</em>",
+    cta_sub:"Rejoignez 50 000+ freelances. Commencez gratuitement.",
+    cta_btn:"✦ Créer Votre Première Facture", cta_btn2:"🎁 Réclamer 3 Mois Gratuits",
+    footer_copy:"© 2025 InvoiceFree.info — Tous droits réservés.",
+    blog_tag:"Ressources et Guides", blog_h2:"Conseils de Facturation pour <em>Freelances</em>",
+    blog_sub:"Guides experts pour facturer professionnellement et développer votre activité.",
+    blog_read:"Lire l'article →",
+    login_title:"Bon retour", login_sub:"Connectez-vous à votre compte InvoiceFree",
+    login_google:"Continuer avec Google", login_email:"Adresse e-mail",
+    login_pass:"Mot de passe", login_forgot:"Mot de passe oublié ?", login_btn:"Se Connecter →",
+    login_switch:"Pas de compte ?", login_switch_link:"Créer un compte gratuit",
+    reg_title:"Créez votre compte", reg_sub:"Commencez à facturer — gratuit pour toujours",
+    reg_google:"S'inscrire avec Google", reg_name:"Nom complet", reg_email:"Adresse e-mail",
+    reg_pass:"Mot de passe (min. 6 caractères)", reg_btn:"🎉 Créer un Compte Gratuit →",
+    reg_switch:"Déjà un compte ?", reg_switch_link:"Se connecter",
+    reg_terms:"En vous inscrivant, vous acceptez nos",
+    app_from:"Votre Entreprise", app_to:"Informations Client", app_items:"Articles",
+    app_add_item:"Ajouter un Article", app_preview:"Aperçu en Direct", app_download:"Télécharger PDF",
+    app_share:"Partager le Lien", app_email:"Envoyer par Email", app_print:"Imprimer",
+    app_template:"Modèle", app_color:"Couleur",
   },
   ar: {
     name:"العربية", dir:"rtl", flag:"🇸🇦",
-    hero_title:"أنشئ <em>فواتير احترافية</em><br>في ثوانٍ",
+    nav_home:"الرئيسية", nav_features:"المميزات", nav_templates:"القوالب",
+    nav_pricing:"الأسعار", nav_create:"إنشاء فاتورة", nav_blog:"المدونة",
+    nav_login:"تسجيل الدخول", nav_try:"جرب مجاناً", nav_dashboard:"لوحة التحكم", nav_logout:"تسجيل الخروج",
+    hero_eyebrow:"يثق به أكثر من 50,000 مستقل حول العالم",
+    hero_h1:"أنشئ <em>فواتير احترافية</em><br>في ثوانٍ",
     hero_sub:"إصدار فواتير احترافية بكل سهولة. صمم وأرسل وتتبع فواتيرك للحصول على مدفوعاتك أسرع.",
-    hero_btn:"إنشاء فاتورة مجانًا",
-    hero_btn2:"عرض الأسعار",
-    stat_users:"المستخدمون النشطون", stat_invoices:"الفواتير المنشأة", stat_rating:"متوسط التقييم", stat_start:"للبدء",
-    nav_features:"المميزات", nav_templates:"القوالب", nav_pricing:"الأسعار", nav_create:"إنشاء فاتورة",
-    nav_login:"تسجيل الدخول", nav_try:"جرب مجانًا",
-    promo_badge:"عرض محدود المدة", promo_title:"احصل على <em>3 أشهر مجانية</em> من Pro",
+    hero_btn:"✦ إنشاء فاتورة مجاناً", hero_btn2:"عرض الأسعار",
+    stat_users:"المستخدمون النشطون", stat_invoices:"الفواتير المنشأة", stat_rating:"متوسط التقييم", stat_free:"للبدء",
+    ticker_1:"مولّد فواتير مجاني", ticker_2:"تصدير PDF", ticker_3:"حفظ تلقائي",
+    ticker_4:"متعدد العملات", ticker_5:"5 قوالب", ticker_6:"علامة تجارية مخصصة",
+    ticker_7:"ملء تلقائي ذكي", ticker_8:"إرسال فاتورة", ticker_9:"روابط مشاركة",
+    ticker_10:"تتبع المدفوعات", ticker_11:"حاسبة الضريبة", ticker_12:"بدون بطاقة ائتمان",
+    feat_tag:"كل ما تحتاجه",
+    feat_h2:"مليء بـ<em>ميزات قوية</em>",
+    feat_sub:"كل ما تحتاجه لإصدار فواتير احترافية.",
+    tpl_tag:"قوالب الفواتير", tpl_h2:"خمسة <em>تصاميم رائعة</em>",
+    tpl_sub:"اختر القالب الذي يناسب علامتك التجارية.",
+    hiw_tag:"كيف يعمل", hiw_h2:"أصدر فاتورة في <em>أربع</em> خطوات",
+    hiw_s1:"أدخل التفاصيل", hiw_s1d:"أدخل معلومات شركتك والعميل.",
+    hiw_s2:"اختر القالب", hiw_s2d:"5 قوالب. خصص الألوان والشعار.",
+    hiw_s3:"معاينة وتصدير", hiw_s3d:"معاينة مباشرة. صدّر PDF أو رابط مشاركة.",
+    hiw_s4:"احصل على المال", hiw_s4d:"أرسل للعميل وتتبع حالة الدفع.",
+    promo_badge:"🎁 عرض لفترة محدودة",
+    promo_h2:"احصل على <em>3 أشهر مجانية</em> من Pro",
     promo_sub:"سجّل اليوم واحصل على جميع ميزات Pro مجانًا لمدة 3 أشهر. لا يلزم بطاقة ائتمان.",
-    promo_btn:"المطالبة بـ 3 أشهر مجانية", promo_note:"بدون بطاقة · إلغاء في أي وقت",
+    promo_btn:"🎉 المطالبة بـ 3 أشهر مجانية", promo_note:"بدون بطاقة · إلغاء في أي وقت",
+    promo_days:"أيام", promo_hrs:"ساعات", promo_mins:"دقائق", promo_secs:"ثواني",
+    price_tag:"الأسعار", price_h2:"أسعار <em>بسيطة وشفافة</em>",
+    price_sub:"ابدأ مجاناً للأبد. طوّر عندما تحتاج المزيد.",
+    price_free_tier:"الخطة المجانية", price_free_amt:"$0", price_free_per:"/شهر",
+    price_free_period:"مجاني للأبد · بدون بطاقة",
+    price_pro_tier:"خطة Pro", price_pro_period:"3 أشهر مجانية ثم 4.99$/شهر",
+    price_popular:"⭐ الأكثر شعبية",
+    price_btn_free:"ابدأ مجاناً ←", price_btn_pro:"🎁 احصل على 3 أشهر مجانية ←",
+    price_note:"بدون رسوم خفية · إلغاء في أي وقت",
+    feat_unlimited:"فواتير غير محدودة", feat_templates:"جميع القوالب الـ 5",
+    feat_pdf:"تصدير PDF عالي الجودة", feat_branding:"علامة تجارية + شعار مخصص",
+    feat_email:"إرسال الفاتورة للعميل", feat_share:"روابط فواتير قابلة للمشاركة",
+    feat_history:"سجل الفواتير", feat_support:"دعم ذو أولوية",
+    testi_tag:"ماذا يقول المستخدمون", testi_h2:"محبوب من <em>المستقلين</em>",
+    cta_h2:"هل أنت مستعد للفوترة <em>باحترافية؟</em>",
+    cta_sub:"انضم لأكثر من 50,000 مستقل. ابدأ مجاناً. 3 أشهر Pro هدية.",
+    cta_btn:"✦ أنشئ فاتورتك الأولى", cta_btn2:"🎁 المطالبة بـ 3 أشهر مجانية",
+    footer_copy:"© 2025 InvoiceFree.info — جميع الحقوق محفوظة.",
+    blog_tag:"موارد وأدلة", blog_h2:"نصائح الفواتير <em>للمستقلين</em>",
+    blog_sub:"أدلة متخصصة للفوترة الاحترافية وتنمية أعمالك.",
+    blog_read:"اقرأ المقال ←",
+    login_title:"مرحباً بعودتك", login_sub:"سجّل الدخول إلى حسابك في InvoiceFree",
+    login_google:"الدخول بـ Google", login_email:"البريد الإلكتروني",
+    login_pass:"كلمة المرور", login_forgot:"نسيت كلمة المرور؟", login_btn:"تسجيل الدخول ←",
+    login_switch:"ليس لديك حساب؟", login_switch_link:"إنشاء حساب مجاني",
+    reg_title:"أنشئ حسابك", reg_sub:"ابدأ الفوترة الاحترافية — مجاناً للأبد",
+    reg_google:"التسجيل بـ Google", reg_name:"الاسم الكامل", reg_email:"البريد الإلكتروني",
+    reg_pass:"كلمة المرور (6 أحرف على الأقل)", reg_btn:"🎉 إنشاء حساب مجاني ←",
+    reg_switch:"لديك حساب؟", reg_switch_link:"تسجيل الدخول",
+    reg_terms:"بالتسجيل فأنت توافق على",
+    app_from:"معلومات عملك", app_to:"معلومات العميل", app_items:"عناصر الفاتورة",
+    app_add_item:"إضافة عنصر", app_preview:"معاينة مباشرة", app_download:"تحميل PDF",
+    app_share:"مشاركة الرابط", app_email:"إرسال بالبريد", app_print:"طباعة",
+    app_template:"القالب", app_color:"اللون",
   },
   ur: {
     name:"اردو", dir:"rtl", flag:"🇵🇰",
-    hero_title:"<em>خوبصورت انوائس</em><br>چند سیکنڈ میں بنائیں",
+    nav_home:"ہوم", nav_features:"خصوصیات", nav_templates:"ٹیمپلیٹس",
+    nav_pricing:"قیمتیں", nav_create:"انوائس بنائیں", nav_blog:"بلاگ",
+    nav_login:"لاگ ان", nav_try:"مفت آزمائیں", nav_dashboard:"ڈیش بورڈ", nav_logout:"لاگ آوٹ",
+    hero_eyebrow:"دنیا بھر میں 50,000+ فری لانسرز کا اعتماد",
+    hero_h1:"<em>خوبصورت انوائس</em><br>سیکنڈوں میں بنائیں",
     hero_sub:"پیشہ ورانہ انوائسنگ آسان ہو گئی۔ انوائس بنائیں، بھیجیں اور ادائیگی ٹریک کریں۔",
-    hero_btn:"مفت انوائس بنائیں",
-    hero_btn2:"قیمتیں دیکھیں",
-    stat_users:"فعال صارفین", stat_invoices:"بنائے گئے انوائس", stat_rating:"اوسط درجہ بندی", stat_start:"شروع کریں",
-    nav_features:"خصوصیات", nav_templates:"ٹیمپلیٹس", nav_pricing:"قیمتیں", nav_create:"انوائس بنائیں",
-    nav_login:"لاگ ان", nav_try:"مفت آزمائیں",
-    promo_badge:"محدود وقت کی پیشکش", promo_title:"<em>3 ماہ مفت</em> Pro رسائی پائیں",
-    promo_sub:"آج رجسٹر کریں اور 3 ماہ کے لیے تمام Pro خصوصیات مفت میں پائیں۔ کریڈٹ کارڈ کی ضرورت نہیں۔",
-    promo_btn:"3 ماہ مفت حاصل کریں", promo_note:"کارڈ نہیں چاہیے · کبھی بھی منسوخ کریں",
+    hero_btn:"✦ مفت انوائس بنائیں", hero_btn2:"قیمتیں دیکھیں",
+    stat_users:"فعال صارفین", stat_invoices:"بنائے گئے انوائس", stat_rating:"اوسط درجہ بندی", stat_free:"شروع کریں",
+    ticker_1:"مفت انوائس جنریٹر", ticker_2:"PDF ایکسپورٹ", ticker_3:"خودکار محفوظ",
+    ticker_4:"ملٹی کرنسی", ticker_5:"5 ٹیمپلیٹس", ticker_6:"کسٹم برانڈنگ",
+    ticker_7:"سمارٹ آٹوفل", ticker_8:"انوائس ای میل", ticker_9:"شیئر ایبل لنکس",
+    ticker_10:"پیمنٹ ٹریکنگ", ticker_11:"ٹیکس کیلکولیٹر", ticker_12:"کریڈٹ کارڈ نہیں",
+    feat_tag:"آپ کو جو چاہیے سب",
+    feat_h2:"<em>طاقتور خصوصیات</em> سے بھرپور",
+    feat_sub:"پیشہ ورانہ انوائسنگ کے لیے جو بھی چاہیے۔",
+    tpl_tag:"انوائس ٹیمپلیٹس", tpl_h2:"پانچ <em>شاندار ڈیزائن</em>",
+    tpl_sub:"اپنے برانڈ کے مطابق ٹیمپلیٹ چنیں۔",
+    hiw_tag:"یہ کیسے کام کرتا ہے", hiw_h2:"<em>چار</em> مراحل میں انوائس بنائیں",
+    hiw_s1:"تفصیلات درج کریں", hiw_s1d:"اپنی اور کلائنٹ کی معلومات بھریں۔",
+    hiw_s2:"ٹیمپلیٹ چنیں", hiw_s2d:"5 ٹیمپلیٹس۔ رنگ اور لوگو کسٹمائز کریں۔",
+    hiw_s3:"پریویو اور ایکسپورٹ", hiw_s3d:"لائیو پریویو دیکھیں۔ PDF یا لنک شیئر کریں۔",
+    hiw_s4:"پیسے وصول کریں", hiw_s4d:"کلائنٹ کو بھیجیں اور پیمنٹ ٹریک کریں۔",
+    promo_badge:"🎁 محدود وقت کی پیشکش",
+    promo_h2:"<em>3 ماہ مفت</em> Pro رسائی پائیں",
+    promo_sub:"آج رجسٹر کریں اور 3 ماہ کے لیے تمام Pro خصوصیات مفت میں پائیں۔",
+    promo_btn:"🎉 3 ماہ مفت حاصل کریں", promo_note:"کارڈ نہیں چاہیے · کبھی بھی منسوخ کریں",
+    promo_days:"دن", promo_hrs:"گھنٹے", promo_mins:"منٹ", promo_secs:"سیکنڈ",
+    price_tag:"قیمتیں", price_h2:"<em>سادہ اور شفاف</em> قیمتیں",
+    price_sub:"ہمیشہ کے لیے مفت شروع کریں۔",
+    price_free_tier:"مفت پلان", price_free_amt:"$0", price_free_per:"/ماہ",
+    price_free_period:"ہمیشہ مفت · کارڈ نہیں چاہیے",
+    price_pro_tier:"Pro پلان", price_pro_period:"3 ماہ مفت پھر $4.99/ماہ",
+    price_popular:"⭐ سب سے مقبول",
+    price_btn_free:"مفت شروع کریں ←", price_btn_pro:"🎁 3 ماہ مفت لیں ←",
+    price_note:"کوئی چھپی فیس نہیں · کبھی بھی منسوخ کریں",
+    feat_unlimited:"لامحدود انوائس", feat_templates:"تمام 5 پریمیم ٹیمپلیٹس",
+    feat_pdf:"ہائی ریز PDF ایکسپورٹ", feat_branding:"کسٹم برانڈنگ + لوگو",
+    feat_email:"کلائنٹ کو انوائس ای میل", feat_share:"شیئر ایبل انوائس لنکس",
+    feat_history:"انوائس ہسٹری", feat_support:"ترجیحی سپورٹ",
+    testi_tag:"صارفین کیا کہتے ہیں", testi_h2:"فری لانسرز کی <em>پسندیدہ</em>",
+    cta_h2:"<em>خوبصورت</em> انوائس بنانے کے لیے تیار ہیں؟",
+    cta_sub:"50,000+ فری لانسرز سے جڑیں۔ مفت شروع کریں۔",
+    cta_btn:"✦ اپنی پہلی انوائس بنائیں", cta_btn2:"🎁 3 ماہ مفت حاصل کریں",
+    footer_copy:"© 2025 InvoiceFree.info — جملہ حقوق محفوظ ہیں۔",
+    blog_tag:"وسائل اور رہنمائی", blog_h2:"فری لانسرز کے لیے <em>انوائس ٹپس</em>",
+    blog_sub:"پیشہ ورانہ انوائسنگ اور کاروبار بڑھانے کے ماہرانہ رہنما۔",
+    blog_read:"مضمون پڑھیں ←",
+    login_title:"واپس خوش آمدید", login_sub:"اپنے InvoiceFree اکاؤنٹ میں لاگ ان کریں",
+    login_google:"Google سے لاگ ان کریں", login_email:"ای میل ایڈریس",
+    login_pass:"پاسورڈ", login_forgot:"پاسورڈ بھول گئے؟", login_btn:"لاگ ان کریں ←",
+    login_switch:"اکاؤنٹ نہیں ہے؟", login_switch_link:"مفت اکاؤنٹ بنائیں",
+    reg_title:"اپنا اکاؤنٹ بنائیں", reg_sub:"پیشہ ورانہ انوائسنگ شروع کریں — ہمیشہ مفت",
+    reg_google:"Google سے سائن اپ", reg_name:"پورا نام", reg_email:"ای میل ایڈریس",
+    reg_pass:"پاسورڈ (کم از کم 6 حروف)", reg_btn:"🎉 مفت اکاؤنٹ بنائیں ←",
+    reg_switch:"پہلے سے اکاؤنٹ ہے؟", reg_switch_link:"لاگ ان کریں",
+    reg_terms:"رجسٹر کر کے آپ ہماری",
+    app_from:"آپ کی کمپنی", app_to:"کلائنٹ کی معلومات", app_items:"اشیاء",
+    app_add_item:"آئٹم شامل کریں", app_preview:"لائیو پریویو", app_download:"PDF ڈاؤنلوڈ",
+    app_share:"لنک شیئر کریں", app_email:"ای میل کریں", app_print:"پرنٹ کریں",
+    app_template:"ٹیمپلیٹ", app_color:"رنگ",
   },
   hi: {
     name:"हिंदी", dir:"ltr", flag:"🇮🇳",
-    hero_title:"<em>सुंदर इनवॉइस</em><br>सेकंडों में बनाएं",
+    nav_home:"होम", nav_features:"विशेषताएं", nav_templates:"टेम्पलेट",
+    nav_pricing:"मूल्य", nav_create:"इनवॉइस बनाएं", nav_blog:"ब्लॉग",
+    nav_login:"लॉगिन", nav_try:"मुफ़्त आज़माएं", nav_dashboard:"डैशबोर्ड", nav_logout:"लॉगआउट",
+    hero_eyebrow:"दुनियाभर में 50,000+ फ्रीलांसर्स का भरोसा",
+    hero_h1:"<em>खूबसूरत इनवॉइस</em><br>सेकंडों में बनाएं",
     hero_sub:"पेशेवर इनवॉइसिंग आसान बनाई। इनवॉइस डिज़ाइन करें, भेजें और तेज़ी से भुगतान पाएं।",
-    hero_btn:"मुफ़्त इनवॉइस बनाएं",
-    hero_btn2:"मूल्य देखें",
-    stat_users:"सक्रिय उपयोगकर्ता", stat_invoices:"बनाए गए इनवॉइस", stat_rating:"औसत रेटिंग", stat_start:"शुरू करने के लिए",
-    nav_features:"विशेषताएं", nav_templates:"टेम्पलेट", nav_pricing:"मूल्य निर्धारण", nav_create:"इनवॉइस बनाएं",
-    nav_login:"लॉगिन", nav_try:"मुफ़्त आज़माएं",
-    promo_badge:"सीमित समय ऑफर", promo_title:"<em>3 महीने मुफ़्त</em> Pro एक्सेस पाएं",
-    promo_sub:"आज साइन अप करें और 3 महीने के लिए सभी Pro सुविधाएं मुफ़्त पाएं। क्रेडिट कार्ड की जरूरत नहीं।",
-    promo_btn:"3 महीने मुफ़्त पाएं", promo_note:"कार्ड नहीं चाहिए · कभी भी रद्द करें",
+    hero_btn:"✦ मुफ़्त इनवॉइस बनाएं", hero_btn2:"मूल्य देखें",
+    stat_users:"सक्रिय उपयोगकर्ता", stat_invoices:"बनाए गए इनवॉइस", stat_rating:"औसत रेटिंग", stat_free:"शुरू करने के लिए",
+    ticker_1:"मुफ़्त इनवॉइस जनरेटर", ticker_2:"PDF एक्सपोर्ट", ticker_3:"ऑटो-सेव",
+    ticker_4:"मल्टी-करेंसी", ticker_5:"5 टेम्पलेट", ticker_6:"कस्टम ब्रांडिंग",
+    ticker_7:"स्मार्ट ऑटोफिल", ticker_8:"ईमेल इनवॉइस", ticker_9:"शेयर लिंक",
+    ticker_10:"पेमेंट ट्रैकिंग", ticker_11:"टैक्स कैलकुलेटर", ticker_12:"क्रेडिट कार्ड नहीं",
+    feat_tag:"सब कुछ जो आपको चाहिए",
+    feat_h2:"<em>शक्तिशाली सुविधाओं</em> से भरपूर",
+    feat_sub:"पेशेवर इनवॉइसिंग के लिए सब कुछ।",
+    tpl_tag:"इनवॉइस टेम्पलेट", tpl_h2:"पांच <em>शानदार डिज़ाइन</em>",
+    tpl_sub:"अपने ब्रांड से मेल खाने वाला टेम्पलेट चुनें।",
+    hiw_tag:"यह कैसे काम करता है", hiw_h2:"<em>चार</em> चरणों में इनवॉइस करें",
+    hiw_s1:"विवरण भरें", hiw_s1d:"अपनी और क्लाइंट की जानकारी भरें।",
+    hiw_s2:"टेम्पलेट चुनें", hiw_s2d:"5 टेम्पलेट। रंग और लोगो कस्टमाइज़ करें।",
+    hiw_s3:"प्रिव्यू और एक्सपोर्ट", hiw_s3d:"लाइव प्रिव्यू देखें। PDF या शेयर लिंक।",
+    hiw_s4:"भुगतान पाएं", hiw_s4d:"क्लाइंट को भेजें और पेमेंट ट्रैक करें।",
+    promo_badge:"🎁 सीमित समय ऑफर",
+    promo_h2:"<em>3 महीने मुफ़्त</em> Pro एक्सेस पाएं",
+    promo_sub:"आज साइन अप करें और 3 महीने के लिए सभी Pro सुविधाएं मुफ़्त पाएं।",
+    promo_btn:"🎉 3 महीने मुफ़्त पाएं", promo_note:"कार्ड नहीं चाहिए · कभी भी रद्द करें",
+    promo_days:"दिन", promo_hrs:"घंटे", promo_mins:"मिनट", promo_secs:"सेकंड",
+    price_tag:"मूल्य निर्धारण", price_h2:"<em>सरल, ईमानदार</em> कीमतें",
+    price_sub:"हमेशा के लिए मुफ़्त शुरू करें।",
+    price_free_tier:"मुफ़्त प्लान", price_free_amt:"$0", price_free_per:"/माह",
+    price_free_period:"हमेशा मुफ़्त · कार्ड नहीं चाहिए",
+    price_pro_tier:"Pro प्लान", price_pro_period:"3 महीने मुफ़्त फिर $4.99/माह",
+    price_popular:"⭐ सबसे लोकप्रिय",
+    price_btn_free:"मुफ़्त शुरू करें →", price_btn_pro:"🎁 3 महीने मुफ़्त पाएं →",
+    price_note:"कोई छुपी फीस नहीं · कभी भी रद्द करें",
+    feat_unlimited:"असीमित इनवॉइस", feat_templates:"सभी 5 प्रीमियम टेम्पलेट",
+    feat_pdf:"हाई-रेज PDF एक्सपोर्ट", feat_branding:"कस्टम ब्रांडिंग + लोगो",
+    feat_email:"क्लाइंट को ईमेल इनवॉइस", feat_share:"शेयरेबल इनवॉइस लिंक",
+    feat_history:"इनवॉइस इतिहास", feat_support:"प्राथमिकता समर्थन",
+    testi_tag:"उपयोगकर्ता क्या कहते हैं", testi_h2:"फ्रीलांसर्स का <em>पसंदीदा</em>",
+    cta_h2:"<em>खूबसूरती से</em> इनवॉइस करने के लिए तैयार?",
+    cta_sub:"50,000+ फ्रीलांसर्स से जुड़ें। मुफ़्त शुरू करें।",
+    cta_btn:"✦ पहला इनवॉइस बनाएं", cta_btn2:"🎁 3 महीने मुफ़्त पाएं",
+    footer_copy:"© 2025 InvoiceFree.info — सभी अधिकार सुरक्षित।",
+    blog_tag:"संसाधन और गाइड", blog_h2:"फ्रीलांसर्स के लिए <em>इनवॉइस टिप्स</em>",
+    blog_sub:"पेशेवर इनवॉइसिंग और व्यापार बढ़ाने के विशेषज्ञ गाइड।",
+    blog_read:"लेख पढ़ें →",
+    login_title:"वापस स्वागत है", login_sub:"अपने InvoiceFree खाते में साइन इन करें",
+    login_google:"Google से साइन इन", login_email:"ईमेल पता",
+    login_pass:"पासवर्ड", login_forgot:"पासवर्ड भूल गए?", login_btn:"साइन इन करें →",
+    login_switch:"खाता नहीं है?", login_switch_link:"मुफ़्त खाता बनाएं",
+    reg_title:"अपना खाता बनाएं", reg_sub:"पेशेवर इनवॉइसिंग शुरू करें — हमेशा मुफ़्त",
+    reg_google:"Google से साइन अप", reg_name:"पूरा नाम", reg_email:"ईमेल पता",
+    reg_pass:"पासवर्ड (कम से कम 6 अक्षर)", reg_btn:"🎉 मुफ़्त खाता बनाएं →",
+    reg_switch:"पहले से खाता है?", reg_switch_link:"लॉगिन करें",
+    reg_terms:"रजिस्टर करके आप हमारी",
+    app_from:"आपकी कंपनी", app_to:"क्लाइंट की जानकारी", app_items:"आइटम",
+    app_add_item:"आइटम जोड़ें", app_preview:"लाइव प्रिव्यू", app_download:"PDF डाउनलोड",
+    app_share:"लिंक शेयर करें", app_email:"ईमेल करें", app_print:"प्रिंट",
+    app_template:"टेम्पलेट", app_color:"रंग",
+  },
+  de: {
+    name:"Deutsch", dir:"ltr", flag:"🇩🇪",
+    nav_home:"Startseite", nav_features:"Funktionen", nav_templates:"Vorlagen",
+    nav_pricing:"Preise", nav_create:"Rechnung erstellen", nav_blog:"Blog",
+    nav_login:"Anmelden", nav_try:"Kostenlos testen", nav_dashboard:"Dashboard", nav_logout:"Abmelden",
+    hero_eyebrow:"Vertraut von über 50.000 Freelancern weltweit",
+    hero_h1:"<em>Schöne Rechnungen</em><br>in Sekunden erstellen",
+    hero_sub:"Professionelle Rechnungsstellung leicht gemacht. Erstellen, senden und verfolgen Sie Rechnungen.",
+    hero_btn:"✦ Rechnung kostenlos erstellen", hero_btn2:"Preise ansehen",
+    stat_users:"Aktive Nutzer", stat_invoices:"Erstellte Rechnungen", stat_rating:"Bewertung", stat_free:"Zum Starten",
+    ticker_1:"Kostenloser Rechnungsgenerator", ticker_2:"PDF Export", ticker_3:"Auto-Speichern",
+    ticker_4:"Multi-Währung", ticker_5:"5 Vorlagen", ticker_6:"Eigenes Branding",
+    ticker_7:"Smart Autofill", ticker_8:"Rechnung per E-Mail", ticker_9:"Teilbare Links",
+    ticker_10:"Zahlungsverfolgung", ticker_11:"Steuerrechner", ticker_12:"Keine Kreditkarte",
+    feat_tag:"Alles was Sie brauchen",
+    feat_h2:"Vollgepackt mit <em>leistungsstarken Funktionen</em>",
+    feat_sub:"Alles für professionelle Rechnungsstellung.",
+    tpl_tag:"Rechnungsvorlagen", tpl_h2:"Fünf <em>atemberaubende Designs</em>",
+    tpl_sub:"Wählen Sie die Vorlage, die zu Ihrer Marke passt.",
+    hiw_tag:"So funktioniert es", hiw_h2:"Rechnung in <em>vier</em> Schritten",
+    hiw_s1:"Details eingeben", hiw_s1d:"Geschäftsdaten und Kundendaten ausfüllen.",
+    hiw_s2:"Vorlage wählen", hiw_s2d:"5 Vorlagen. Farben und Logo anpassen.",
+    hiw_s3:"Vorschau & Export", hiw_s3d:"Live-Vorschau. PDF oder teilbaren Link exportieren.",
+    hiw_s4:"Bezahlt werden", hiw_s4d:"An Kunden senden, Zahlungsstatus verfolgen.",
+    promo_badge:"🎁 ZEITLICH BEGRENZT",
+    promo_h2:"<em>3 Monate kostenlos</em> Pro-Zugang",
+    promo_sub:"Registrieren Sie sich heute und erhalten Sie 3 Monate lang alle Pro-Funktionen kostenlos.",
+    promo_btn:"🎉 3 Monate kostenlos beanspruchen", promo_note:"Keine Karte · Jederzeit kündbar",
+    promo_days:"Tage", promo_hrs:"Stunden", promo_mins:"Min", promo_secs:"Sek",
+    price_tag:"Preise", price_h2:"<em>Einfache, ehrliche</em> Preise",
+    price_sub:"Kostenlos starten. Upgraden wenn Sie mehr brauchen.",
+    price_free_tier:"Kostenloser Plan", price_free_amt:"0 €", price_free_per:"/Monat",
+    price_free_period:"Für immer kostenlos · Keine Kreditkarte",
+    price_pro_tier:"Pro-Plan", price_pro_period:"3 Monate GRATIS dann 4,99 €/Monat",
+    price_popular:"⭐ BELIEBTESTE",
+    price_btn_free:"Kostenlos starten →", price_btn_pro:"🎁 3 Monate kostenlos →",
+    price_note:"Keine versteckten Kosten · Jederzeit kündbar",
+    feat_unlimited:"Unbegrenzte Rechnungen", feat_templates:"Alle 5 Premium-Vorlagen",
+    feat_pdf:"HD-PDF-Export", feat_branding:"Eigenes Branding + Logo",
+    feat_email:"Rechnung per E-Mail senden", feat_share:"Teilbare Rechnungslinks",
+    feat_history:"Rechnungsverlauf", feat_support:"Prioritätssupport",
+    testi_tag:"Was Nutzer sagen", testi_h2:"Von <em>Freelancern</em> geliebt",
+    cta_h2:"Bereit, <em>schön</em> zu fakturieren?",
+    cta_sub:"Treten Sie 50.000+ Freelancern bei. Kostenlos starten.",
+    cta_btn:"✦ Erste Rechnung erstellen", cta_btn2:"🎁 3 Monate kostenlos beanspruchen",
+    footer_copy:"© 2025 InvoiceFree.info — Alle Rechte vorbehalten.",
+    blog_tag:"Ressourcen & Ratgeber", blog_h2:"Rechnungstipps für <em>Freelancer</em>",
+    blog_sub:"Expertenratgeber für professionelle Rechnungsstellung.",
+    blog_read:"Artikel lesen →",
+    login_title:"Willkommen zurück", login_sub:"Bei Ihrem InvoiceFree-Konto anmelden",
+    login_google:"Mit Google anmelden", login_email:"E-Mail-Adresse",
+    login_pass:"Passwort", login_forgot:"Passwort vergessen?", login_btn:"Anmelden →",
+    login_switch:"Noch kein Konto?", login_switch_link:"Kostenloses Konto erstellen",
+    reg_title:"Konto erstellen", reg_sub:"Professionell fakturieren — kostenlos",
+    reg_google:"Mit Google registrieren", reg_name:"Vollständiger Name", reg_email:"E-Mail-Adresse",
+    reg_pass:"Passwort (mind. 6 Zeichen)", reg_btn:"🎉 Kostenloses Konto erstellen →",
+    reg_switch:"Bereits ein Konto?", reg_switch_link:"Anmelden",
+    reg_terms:"Mit der Registrierung stimmen Sie unseren",
+    app_from:"Ihre Firma", app_to:"Kundeninformationen", app_items:"Rechnungspositionen",
+    app_add_item:"Position hinzufügen", app_preview:"Live-Vorschau", app_download:"PDF herunterladen",
+    app_share:"Link teilen", app_email:"Per E-Mail senden", app_print:"Drucken",
+    app_template:"Vorlage", app_color:"Farbe",
   },
   pt: {
     name:"Português", dir:"ltr", flag:"🇧🇷",
-    hero_title:"Crie <em>Faturas Bonitas</em><br>em Segundos",
+    nav_home:"Início", nav_features:"Recursos", nav_templates:"Modelos",
+    nav_pricing:"Preços", nav_create:"Criar Fatura", nav_blog:"Blog",
+    nav_login:"Entrar", nav_try:"Teste Grátis", nav_dashboard:"Painel", nav_logout:"Sair",
+    hero_eyebrow:"Confiado por mais de 50.000 Freelancers no Mundo",
+    hero_h1:"Crie <em>Faturas Bonitas</em><br>em Segundos",
     hero_sub:"Faturação profissional simplificada. Crie, envie e rastreie faturas para ser pago mais rápido.",
-    hero_btn:"Criar Fatura Grátis",
-    hero_btn2:"Ver Preços",
-    stat_users:"Usuários Ativos", stat_invoices:"Faturas Criadas", stat_rating:"Avaliação Média", stat_start:"Para Começar",
-    nav_features:"Recursos", nav_templates:"Modelos", nav_pricing:"Preços", nav_create:"Criar Fatura",
-    nav_login:"Entrar", nav_try:"Teste Grátis",
-    promo_badge:"OFERTA LIMITADA", promo_title:"Ganhe <em>3 Meses Grátis</em> de Pro",
-    promo_sub:"Cadastre-se hoje e ganhe todos os recursos Pro gratuitamente por 3 meses. Sem cartão de crédito.",
-    promo_btn:"Resgatar 3 Meses Grátis", promo_note:"Sem cartão · Cancele quando quiser",
+    hero_btn:"✦ Criar Fatura Grátis", hero_btn2:"Ver Preços",
+    stat_users:"Usuários Ativos", stat_invoices:"Faturas Criadas", stat_rating:"Avaliação Média", stat_free:"Para Começar",
+    ticker_1:"Gerador de Faturas Grátis", ticker_2:"Exportar PDF", ticker_3:"Salvo Automaticamente",
+    ticker_4:"Multi-Moeda", ticker_5:"5 Modelos", ticker_6:"Marca Personalizada",
+    ticker_7:"Preenchimento Auto", ticker_8:"Enviar Fatura", ticker_9:"Links Compartilháveis",
+    ticker_10:"Rastreio de Pagamentos", ticker_11:"Calculadora de Impostos", ticker_12:"Sem Cartão de Crédito",
+    feat_tag:"Tudo que você Precisa",
+    feat_h2:"Repleto de <em>recursos poderosos</em>",
+    feat_sub:"Tudo para faturar profissionalmente.",
+    tpl_tag:"Modelos de Fatura", tpl_h2:"Cinco <em>designs impressionantes</em>",
+    tpl_sub:"Escolha o modelo que combina com sua marca.",
+    hiw_tag:"Como Funciona", hiw_h2:"Fature em <em>quatro</em> passos",
+    hiw_s1:"Insira os Detalhes", hiw_s1d:"Preencha suas informações e do cliente.",
+    hiw_s2:"Escolha um Modelo", hiw_s2d:"5 modelos. Personalize cores e logo.",
+    hiw_s3:"Pré-visualize e Exporte", hiw_s3d:"Pré-visualização ao vivo. Exporte PDF ou link.",
+    hiw_s4:"Receba o Pagamento", hiw_s4d:"Envie ao cliente e rastreie o pagamento.",
+    promo_badge:"🎁 OFERTA LIMITADA",
+    promo_h2:"Ganhe <em>3 Meses Grátis</em> de Acesso Pro",
+    promo_sub:"Cadastre-se hoje e ganhe todos os recursos Pro gratuitamente por 3 meses.",
+    promo_btn:"🎉 Resgatar 3 Meses Grátis", promo_note:"Sem cartão · Cancele quando quiser",
+    promo_days:"Dias", promo_hrs:"Horas", promo_mins:"Min", promo_secs:"Seg",
+    price_tag:"Preços", price_h2:"Preços <em>simples e honestos</em>",
+    price_sub:"Comece grátis para sempre. Melhore quando precisar.",
+    price_free_tier:"Plano Gratuito", price_free_amt:"$0", price_free_per:"/mês",
+    price_free_period:"Gratuito para sempre · Sem cartão",
+    price_pro_tier:"Plano Pro", price_pro_period:"3 meses GRÁTIS depois $4.99/mês",
+    price_popular:"⭐ MAIS POPULAR",
+    price_btn_free:"Começar Grátis →", price_btn_pro:"🎁 Ganhar 3 Meses Grátis →",
+    price_note:"Sem taxas ocultas · Cancele quando quiser",
+    feat_unlimited:"Faturas ilimitadas", feat_templates:"Todos os 5 modelos premium",
+    feat_pdf:"Exportação PDF em alta resolução", feat_branding:"Marca + logo personalizados",
+    feat_email:"Enviar fatura ao cliente", feat_share:"Links de faturas compartilháveis",
+    feat_history:"Histórico de faturas", feat_support:"Suporte prioritário",
+    testi_tag:"O que os Usuários Dizem", testi_h2:"Amado pelos <em>freelancers</em>",
+    cta_h2:"Pronto para faturar <em>lindamente?</em>",
+    cta_sub:"Junte-se a 50.000+ freelancers. Comece grátis.",
+    cta_btn:"✦ Criar Sua Primeira Fatura", cta_btn2:"🎁 Resgatar 3 Meses Grátis",
+    footer_copy:"© 2025 InvoiceFree.info — Todos os direitos reservados.",
+    blog_tag:"Recursos e Guias", blog_h2:"Dicas de Faturação para <em>Freelancers</em>",
+    blog_sub:"Guias especializados para faturar profissionalmente e crescer seu negócio.",
+    blog_read:"Ler artigo →",
+    login_title:"Bem-vindo de volta", login_sub:"Entre na sua conta InvoiceFree",
+    login_google:"Entrar com Google", login_email:"Endereço de e-mail",
+    login_pass:"Senha", login_forgot:"Esqueceu a senha?", login_btn:"Entrar →",
+    login_switch:"Sem conta?", login_switch_link:"Criar conta grátis",
+    reg_title:"Crie sua conta", reg_sub:"Comece a faturar profissionalmente — grátis para sempre",
+    reg_google:"Cadastrar com Google", reg_name:"Nome completo", reg_email:"Endereço de e-mail",
+    reg_pass:"Senha (mín. 6 caracteres)", reg_btn:"🎉 Criar Conta Grátis →",
+    reg_switch:"Já tem conta?", reg_switch_link:"Entrar",
+    reg_terms:"Ao se registrar você concorda com nossos",
+    app_from:"Sua Empresa", app_to:"Informações do Cliente", app_items:"Itens",
+    app_add_item:"Adicionar Item", app_preview:"Pré-visualização ao Vivo", app_download:"Baixar PDF",
+    app_share:"Compartilhar Link", app_email:"Enviar por E-mail", app_print:"Imprimir",
+    app_template:"Modelo", app_color:"Cor",
   }
 };
 
-// Detect language from browser
-function detectLanguage() {
+// ── LANGUAGE DETECTION ──
+const LANG_MAP = {
+  // Browser language code -> our lang code
+  'en':'en','en-us':'en','en-gb':'en','en-au':'en','en-ca':'en',
+  'es':'es','es-es':'es','es-mx':'es','es-ar':'es','es-co':'es',
+  'fr':'fr','fr-fr':'fr','fr-be':'fr','fr-ca':'fr','fr-ch':'fr',
+  'de':'de','de-de':'de','de-at':'de','de-ch':'de',
+  'ar':'ar','ar-sa':'ar','ar-ae':'ar','ar-eg':'ar','ar-iq':'ar','ar-ma':'ar',
+  'ur':'ur','ur-pk':'ur',
+  'hi':'hi','hi-in':'hi',
+  'pt':'pt','pt-br':'pt','pt-pt':'pt',
+};
+
+function detectLang() {
+  // 1. Check saved preference
   const saved = localStorage.getItem('if_lang');
-  if (saved && TRANSLATIONS[saved]) return saved;
-  const browser = (navigator.language || navigator.userLanguage || 'en').split('-')[0].toLowerCase();
-  return TRANSLATIONS[browser] ? browser : 'en';
+  if (saved && LANG_DATA[saved]) return saved;
+  // 2. Check URL param ?lang=es
+  const urlLang = new URLSearchParams(location.search).get('lang');
+  if (urlLang && LANG_DATA[urlLang]) return urlLang;
+  // 3. Detect from browser languages (tries all preferred)
+  const langs = navigator.languages || [navigator.language || navigator.userLanguage || 'en'];
+  for (const l of langs) {
+    const code = l.toLowerCase();
+    if (LANG_MAP[code]) return LANG_MAP[code];
+    const prefix = code.split('-')[0];
+    if (LANG_MAP[prefix]) return LANG_MAP[prefix];
+  }
+  return 'en';
 }
 
-// Apply translations to page
-function applyLanguage(lang) {
-  const t = TRANSLATIONS[lang];
-  if (!t) return;
+function t(key) {
+  const lang = detectLang();
+  const data = LANG_DATA[lang] || LANG_DATA['en'];
+  return data[key] || LANG_DATA['en'][key] || key;
+}
+
+function applyLang(lang) {
+  if (!LANG_DATA[lang]) return;
   localStorage.setItem('if_lang', lang);
+  // Apply dir (RTL for Arabic/Urdu)
   document.documentElement.lang = lang;
-  document.documentElement.dir = t.dir;
-  
-  // Apply to elements with data-i18n attribute
+  document.documentElement.dir = LANG_DATA[lang].dir;
+  if (LANG_DATA[lang].dir === 'rtl') {
+    document.body.style.textAlign = 'right';
+  } else {
+    document.body.style.textAlign = '';
+  }
+  // Apply all data-i18n elements
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
-    if (t[key] !== undefined) {
-      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-        el.placeholder = t[key];
-      } else {
-        el.innerHTML = t[key];
-      }
+    const val = LANG_DATA[lang][key] || LANG_DATA['en'][key];
+    if (val === undefined) return;
+    if (el.tagName === 'INPUT' && el.type !== 'button' && el.type !== 'submit') {
+      el.placeholder = val;
+    } else if (el.tagName === 'TEXTAREA') {
+      el.placeholder = val;
+    } else {
+      el.innerHTML = val;
     }
   });
-
-  // Update lang selector UI
-  const sel = document.getElementById('lang-selector');
+  // Update selector UI
+  const sel = document.getElementById('if-lang-sel');
   if (sel) sel.value = lang;
 }
 
-// Build language selector HTML
 function buildLangSelector() {
-  const current = detectLanguage();
-  const options = Object.entries(TRANSLATIONS)
-    .map(([code, t]) => `<option value="${code}" ${code===current?'selected':''}>${t.flag} ${t.name}</option>`)
+  const cur = detectLang();
+  const opts = Object.entries(LANG_DATA)
+    .map(([code,d]) => `<option value="${code}"${code===cur?' selected':''}>${d.flag} ${d.name}</option>`)
     .join('');
-  return `<select id="lang-selector" onchange="applyLanguage(this.value)" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.7);font-family:inherit;font-size:.78rem;padding:5px 10px;border-radius:6px;cursor:pointer;outline:none">${options}</select>`;
+  return `<select id="if-lang-sel" onchange="applyLang(this.value)"
+    style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.75);font-family:inherit;font-size:.78rem;padding:5px 10px;border-radius:7px;cursor:pointer;outline:none;max-width:140px">${opts}</select>`;
 }
 
-// Auto-apply on page load
+// Auto-run on every page
 document.addEventListener('DOMContentLoaded', function() {
-  const lang = detectLanguage();
-  // Insert language selector into nav if placeholder exists
-  const placeholder = document.getElementById('lang-selector-placeholder');
-  if (placeholder) placeholder.innerHTML = buildLangSelector();
-  applyLanguage(lang);
+  const lang = detectLang();
+  // Inject selector into placeholder if present
+  const ph = document.getElementById('lang-ph');
+  if (ph) ph.innerHTML = buildLangSelector();
+  applyLang(lang);
 });
 
-window.applyLanguage = applyLanguage;
-window.buildLangSelector = buildLangSelector;
+// Expose globally
+window.applyLang = applyLang;
+window.t = t;
+window.LANG_DATA = LANG_DATA;
+window.detectLang = detectLang;

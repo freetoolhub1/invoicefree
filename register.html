@@ -51,6 +51,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 @keyframes spin{to{transform:rotate(360deg)}}
 .loading-text{color:#fff;font-weight:600;font-size:.95rem}
 </style>
+<script src="lang.js" defer></script>
 </head>
 <body>
 
@@ -77,8 +78,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       </div>
     </div>
 
-    <div class="title">Create your account</div>
-    <div class="subtitle">Start invoicing professionally &mdash; free forever</div>
+    <div class="title" data-i18n="reg_title">Create your account</div>
+    <div class="subtitle" data-i18n="reg_sub">Start invoicing professionally &mdash; free forever</div>
 
     <button class="btn-google" id="btnGoogle" onclick="signupWithGoogle()">
       <svg viewBox="0 0 24 24">
@@ -95,11 +96,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <div class="alert err" id="err"></div>
     <div class="alert ok" id="ok"></div>
 
-    <div class="fg"><label>Full Name</label><input type="text" id="rname" placeholder="John Smith" autocomplete="name"></div>
-    <div class="fg"><label>Email Address</label><input type="email" id="remail" placeholder="john@example.com" autocomplete="email"></div>
-    <div class="fg"><label>Password (min 6 characters)</label><input type="password" id="rpass" placeholder="Create a strong password" autocomplete="new-password" onkeydown="if(event.key==='Enter')emailRegister()"></div>
+    <div class="fg"><label>Full Name</label><input type="text" id="rname" placeholder="John Smith" data-i18n="reg_name" autocomplete="name"></div>
+    <div class="fg"><label>Email Address</label><input type="email" id="remail" placeholder="john@example.com" data-i18n="reg_email" autocomplete="email"></div>
+    <div class="fg"><label>Password (min 6 characters)</label><input type="password" id="rpass" placeholder="Create a strong password" data-i18n="reg_pass" autocomplete="new-password" onkeydown="if(event.key==='Enter')emailRegister()"></div>
 
-    <button class="btn-submit" id="btnEmail" onclick="emailRegister()">&#127881; Create Free Account &rarr;</button>
+    <button class="btn-submit" data-i18n="reg_btn" id="btnEmail" onclick="emailRegister()">&#127881; Create Free Account &rarr;</button>
     <div class="terms-note">By registering you agree to our <a href="terms.html">Terms</a> and <a href="privacy.html">Privacy Policy</a></div>
     <div class="auth-switch">Already have an account? <a href="login.html">Login</a></div>
   </div>
