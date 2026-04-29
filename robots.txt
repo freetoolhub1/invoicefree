@@ -1,12 +1,50 @@
+# InvoiceFree.info — robots.txt
+# https://invoicefree.info
+
 User-agent: *
 Allow: /
+Allow: /invoice-app.html
+Allow: /pricing.html
+Allow: /blog.html
+Allow: /blog/
+Allow: /register.html
+Allow: /privacy.html
+Allow: /terms.html
+Allow: /sitemap.xml
+Allow: /og-image.svg
+Allow: /lang.js
+
 Disallow: /admin.html
 Disallow: /dashboard.html
+Disallow: /login.html
+Disallow: /invoice-view.html
+Disallow: /upgrade.html
+Disallow: /?lang=
+Disallow: /*?*
 
+# Google
 User-agent: Googlebot
 Allow: /
 Disallow: /admin.html
 Disallow: /dashboard.html
 Crawl-delay: 1
 
+# Bing
+User-agent: Bingbot
+Allow: /
+Disallow: /admin.html
+Disallow: /dashboard.html
+Crawl-delay: 2
+
+# Block bad bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
 Sitemap: https://invoicefree.info/sitemap.xml
+Host: https://invoicefree.info
