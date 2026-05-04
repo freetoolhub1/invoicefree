@@ -5,7 +5,7 @@
 
   <url>
     <loc>https://invoicefree.info/</loc>
-    <lastmod>2025-04-27</lastmod>
+    <lastmod>2026-05-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://invoicefree.info/"/>
@@ -25,21 +25,30 @@
 
   <url>
     <loc>https://invoicefree.info/invoice-app.html</loc>
-    <lastmod>2025-04-27</lastmod>
+    <lastmod>2026-05-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.95</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invoicefree.info/invoice-app.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invoicefree.info/invoice-app.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invoicefree.info/invoice-app.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invoicefree.info/invoice-app.html?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invoicefree.info/invoice-app.html?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://invoicefree.info/invoice-app.html?lang=ur"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://invoicefree.info/invoice-app.html?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invoicefree.info/invoice-app.html?lang=pt"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invoicefree.info/invoice-app.html"/>
   </url>
 
   <url>
     <loc>https://invoicefree.info/pricing.html</loc>
-    <lastmod>2025-04-27</lastmod>
+    <lastmod>2026-05-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
 
   <url>
     <loc>https://invoicefree.info/blog.html</loc>
-    <lastmod>2025-04-27</lastmod>
+    <lastmod>2026-05-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
@@ -94,13 +103,6 @@
   </url>
 
   <url>
-    <loc>https://invoicefree.info/register.html</loc>
-    <lastmod>2025-04-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
-  </url>
-
-  <url>
     <loc>https://invoicefree.info/privacy.html</loc>
     <lastmod>2025-01-01</lastmod>
     <changefreq>yearly</changefreq>
@@ -117,7 +119,7 @@
 
   <url>
     <loc>https://invoicefree.info/free-invoice-generator.html</loc>
-    <lastmod>2025-04-27</lastmod>
+    <lastmod>2026-05-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.90</priority>
   </url>

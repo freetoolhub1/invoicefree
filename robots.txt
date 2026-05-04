@@ -19,8 +19,6 @@ Disallow: /dashboard.html
 Disallow: /login.html
 Disallow: /invoice-view.html
 Disallow: /upgrade.html
-Disallow: /?lang=
-Disallow: /*?*
 
 # Google
 User-agent: Googlebot

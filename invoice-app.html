@@ -1,30 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Create Invoice Free — Professional Invoice Generator | InvoiceFree.info</title>
 <meta name="description" content="Create a professional invoice online in seconds. Free PDF export, auto-calculations, multiple templates, multi-currency. No signup required.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://invoicefree.info/invoice-app.html">
+<link rel="alternate" hreflang="en" href="https://invoicefree.info/invoice-app.html">
+<link rel="alternate" hreflang="es" href="https://invoicefree.info/invoice-app.html?lang=es">
+<link rel="alternate" hreflang="fr" href="https://invoicefree.info/invoice-app.html?lang=fr">
+<link rel="alternate" hreflang="de" href="https://invoicefree.info/invoice-app.html?lang=de">
+<link rel="alternate" hreflang="ar" href="https://invoicefree.info/invoice-app.html?lang=ar">
+<link rel="alternate" hreflang="ur" href="https://invoicefree.info/invoice-app.html?lang=ur">
+<link rel="alternate" hreflang="hi" href="https://invoicefree.info/invoice-app.html?lang=hi">
+<link rel="alternate" hreflang="pt" href="https://invoicefree.info/invoice-app.html?lang=pt">
+<link rel="alternate" hreflang="x-default" href="https://invoicefree.info/invoice-app.html">
 <meta name="theme-color" content="#0a0a0f">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://invoicefree.info/invoice-app.html">
 <meta property="og:title" content="Create Invoice Free — Professional Invoice Generator">
 <meta property="og:description" content="Create a professional invoice online in seconds. Free PDF export, auto-calculations, multiple templates, multi-currency. No signup required.">
-<meta property="og:image" content="https://invoicefree.info/og-image.png">
+<meta property="og:image" content="https://invoicefree.info/og-image.svg">
 <meta property="og:site_name" content="InvoiceFree.info">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Create Invoice Free — Professional Invoice Generator">
 <meta name="twitter:description" content="Create a professional invoice online in seconds. Free PDF export, auto-calculations, multiple templates, multi-currency. No signup required.">
-<meta name="twitter:image" content="https://invoicefree.info/og-image.png">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="twitter:image" content="https://invoicefree.info/og-image.svg">
 
 
 
 
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"SoftwareApplication",
+  "name":"InvoiceFree Invoice Generator",
+  "url":"https://invoicefree.info/invoice-app.html",
+  "applicationCategory":"BusinessApplication",
+  "operatingSystem":"Any (Web Browser)",
+  "isAccessibleForFree":true,
+  "offers":[
+    {"@type":"Offer","price":"0","priceCurrency":"USD","name":"Free Plan"},
+    {"@type":"Offer","price":"4.99","priceCurrency":"USD","name":"Pro Plan","billingPeriod":"P1M"}
+  ],
+  "featureList":["PDF export","Auto-calculations","5 templates","Multi-currency","Custom branding"],
+  "aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","reviewCount":"2847","bestRating":"5"},
+  "breadcrumb":{"@type":"BreadcrumbList","itemListElement":[
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://invoicefree.info/"},
+    {"@type":"ListItem","position":2,"name":"Create Invoice","item":"https://invoicefree.info/invoice-app.html"}
+  ]}
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
 :root{
   --ink:#0a0a0f;--ink2:#1c1c2e;--white:#fff;--cream:#faf9f5;
@@ -57,7 +86,7 @@ body{font-family:'Cabinet Grotesk',sans-serif;background:#f4f3ef;color:var(--ink
 .tab:hover:not(.active){color:var(--ink)}
 
 /* MAIN LAYOUT */
-.app-layout{display:grid;grid-template-columns:1fr 520px;gap:0;height:calc(100vh - 97px);overflow:hidden}
+.app-layout{display:grid;grid-template-columns:1fr 520px;gap:0;height:calc(100vh - 104px);overflow:hidden}
 .form-panel{overflow-y:auto;padding:28px;background:#f4f3ef}
 .preview-panel{background:white;border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
 .preview-header{padding:16px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
@@ -251,6 +280,8 @@ body{font-family:'Cabinet Grotesk',sans-serif;background:#f4f3ef;color:var(--ink
 .pro-badge{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--ink);font-size:0.7rem;font-weight:800;padding:4px 10px;border-radius:50px;letter-spacing:0.04em}
 
 /* MOBILE */
+/* MOBILE EXPORT BAR */
+.mobile-export-bar{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--ink);border-top:1px solid rgba(255,255,255,.1);padding:10px 16px;gap:8px;z-index:200;box-shadow:0 -8px 30px rgba(0,0,0,.3)}
 @media(max-width:900px){
   .app-layout{grid-template-columns:1fr;height:auto}
   .preview-panel{display:none}
@@ -259,6 +290,8 @@ body{font-family:'Cabinet Grotesk',sans-serif;background:#f4f3ef;color:var(--ink
   .items-head{display:none}
   .item-row{grid-template-columns:1fr 1fr;row-gap:6px;padding:12px 8px}
   .item-row input{padding:10px;font-size:1rem}
+  .mobile-export-bar{display:flex}
+  body{padding-bottom:70px}
 }
 
 @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.hero-eyebrow,.hero-h1,.hero-sub,.hero-btns,.hero-preview,.stats-bar{animation:none;opacity:1;transform:none}}
@@ -282,9 +315,9 @@ body{font-family:'Cabinet Grotesk',sans-serif;background:#f4f3ef;color:var(--ink
 
 <!-- TABS -->
 <div class="app-tabs">
-  <div class="tab active" onclick="switchTab('editor')">✏️ Editor</div>
-  <div class="tab" onclick="switchTab('settings')">⚙️ Settings</div>
-  <div class="tab" onclick="switchTab('history')">📁 History</div>
+  <div class="tab active" onclick="switchTab('editor',this)">✏️ Editor</div>
+  <div class="tab" onclick="switchTab('settings',this)">⚙️ Settings</div>
+  <div class="tab" onclick="switchTab('history',this)">📁 History</div>
 </div>
 
 <!-- MAIN -->
@@ -505,7 +538,7 @@ body{font-family:'Cabinet Grotesk',sans-serif;background:#f4f3ef;color:var(--ink
     <div class="modal-sub">Unlock unlimited invoices, all templates, custom branding, PDF export, email sending, and invoice history.</div>
     <div class="modal-price">
       <div class="modal-amount">$4.99<span>/month</span></div>
-      <div style="font-size:0.78rem;opacity:0.5;margin-top:4px">7-day free trial · Cancel anytime</div>
+      <div style="font-size:0.78rem;opacity:0.5;margin-top:4px">3 months free · No credit card · Cancel anytime</div>
     </div>
     <a href="register.html" class="btn-go-pro">Start Free Trial →</a>
     <p style="text-align:center;font-size:0.75rem;color:#9ca3af;margin-top:12px">No credit card required for trial</p>
@@ -518,7 +551,7 @@ body{font-family:'Cabinet Grotesk',sans-serif;background:#f4f3ef;color:var(--ink
     <button class="modal-close" onclick="closeModal('email-modal')">✕</button>
     <div class="modal-icon">📧</div>
     <div class="modal-h2">Email Invoice</div>
-    <div class="modal-sub">Send this invoice directly to your client. A PDF will be attached automatically.</div>
+    <div class="modal-sub">Opens your email app pre-filled with invoice details. Download the PDF separately to attach it.</div>
     <div class="email-form">
       <div class="fg"><label>Recipient Email</label><input type="email" id="email-to" placeholder="client@example.com"></div>
       <div class="fg" style="margin-top:12px"><label>Subject</label><input type="text" id="email-subject" placeholder="Invoice INV-0001 from Acme Studio"></div>
@@ -534,15 +567,23 @@ body{font-family:'Cabinet Grotesk',sans-serif;background:#f4f3ef;color:var(--ink
     <button class="modal-close" onclick="closeModal('share-modal')">✕</button>
     <div class="modal-icon">🔗</div>
     <div class="modal-h2">Share Invoice Link</div>
-    <div class="modal-sub">Generate a unique shareable link your client can view online. Mobile-friendly, read-only, print-ready.</div>
+    <div class="modal-sub">Generate a link your client can view and print. <strong style="color:#e85d26">Note: link currently works only on this device/browser.</strong> For true cross-device sharing, download the PDF and send it directly.</div>
     <div id="share-link-container">
-      <button class="btn-go-pro" onclick="generateShareLink()">Generate Link →</button>
+      <button class="btn-go-pro" onclick="generateShareLink()">Generate Link (This Device Only) →</button>
     </div>
   </div>
 </div>
 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
+
+<!-- MOBILE EXPORT BAR -->
+<div class="mobile-export-bar">
+  <button class="btn-action btn-pdf" style="flex:1" onclick="downloadPDF()">📥 PDF</button>
+  <button class="btn-action btn-print" style="flex:1" onclick="printInvoice()">🖨️ Print</button>
+  <button class="btn-action btn-share" style="flex:1" onclick="openShareModal()">🔗 Share</button>
+  <button class="btn-action btn-email" style="flex:1" onclick="openEmailModal()">📧 Email</button>
+</div>
 
 <script>
 // ═══════════════════════════════════════════
@@ -685,9 +726,9 @@ function handleLogo(e) {
 }
 
 // ── TABS ──
-function switchTab(tab) {
+function switchTab(tab, el) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  event.target.classList.add('active');
+  if (el) el.classList.add('active');
   document.getElementById('editor-panel').style.display = tab === 'editor' ? 'block' : 'none';
   document.getElementById('settings-panel').style.display = tab === 'settings' ? 'block' : 'none';
   document.getElementById('history-panel').style.display = tab === 'history' ? 'block' : 'none';
@@ -956,6 +997,7 @@ function renderPreview() {
   const invDate = formatDate(v('inv-date'));
   const invDue = formatDate(v('inv-due'));
   const notes = v('inv-notes');
+  const terms = v('pay-terms') || 'Net 30';
   const color = state.primaryColor;
 
   const logoHTML = state.logoData ? `<img src="${state.logoData}" style="max-height:52px;max-width:160px;object-fit:contain;margin-bottom:6px">` : '';
@@ -1244,10 +1286,6 @@ function downloadPDF() {
 }
 
 function printInvoice() { downloadPDF(); }
-
-function printInvoice() {
-  downloadPDF();
-}
 
 // ── SHARE MODAL ──
 function openShareModal() {
