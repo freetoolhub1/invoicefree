@@ -163,8 +163,10 @@ function saveAndRedirect(firebaseUser, displayName) {
 
   localStorage.setItem("if_users", JSON.stringify(users));
   localStorage.setItem("if_current_user", JSON.stringify(profile));
+  localStorage.setItem("if_pro", "true");
 
-  setTimeout(() => { window.location.href = "dashboard.html"; }, 300);
+  // Redirect to invoice app so pro features are visible immediately
+  setTimeout(() => { window.location.href = "invoice-app.html?welcome=1"; }, 300);
 }
 
 window.signupWithGoogle = async function() {

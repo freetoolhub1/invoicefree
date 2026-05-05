@@ -657,6 +657,11 @@ window.onload = function() {
   setDefaultDates();
   generateInvoiceNumber();
   loadFromStorage();
+  // Show welcome message when arriving from registration
+  if (new URLSearchParams(location.search).get('welcome') === '1') {
+    setTimeout(() => showToast('🎉 Welcome! Your Pro plan is active — all features unlocked!', 'success'), 600);
+    history.replaceState({}, '', 'invoice-app.html');
+  }
   // Only add blank item if none loaded from storage
   if (state.items.length === 0) addItem();
   else renderItems();
@@ -752,6 +757,8 @@ function switchTab(tab, el) {
 function addItem(desc='', qty=1, rate=0, tax=0) {
   state.items.push({ desc, qty, rate, tax });
   renderItems();
+  getCalc();
+  renderPreview();
 }
 
 function removeItem(i) {
@@ -1234,13 +1241,22 @@ function formatDate(d) {
 // ── PREVIEW SCALE ──
 function scalePreview() {
   const panel = document.querySelector('.preview-scroll');
-  const content = document.getElementById('invoice-render');
-  if (!panel || !content) return;
+  const scaleEl = document.getElementById('preview-scale');
+  if (!panel || !scaleEl || panel.clientWidth === 0) return;
+  // Reset to natural size to measure correctly
+  scaleEl.style.transform = 'none';
+  scaleEl.style.width = '100%';
+  scaleEl.style.marginBottom = '0';
   const pw = panel.clientWidth - 48;
-  const cw = content.scrollWidth || 640;
+  const cw = scaleEl.scrollWidth || 640;
   const scale = Math.min(1, pw / cw);
-  document.getElementById('preview-scale').style.transform = `scale(${scale})`;
-  document.getElementById('preview-scale').style.width = `${100/scale}%`;
+  if (scale >= 1) return;
+  const ih = scaleEl.offsetHeight;
+  scaleEl.style.transformOrigin = 'top left';
+  scaleEl.style.transform = `scale(${scale})`;
+  scaleEl.style.width = `${100 / scale}%`;
+  // Collapse the empty space left below the scaled-down invoice
+  scaleEl.style.marginBottom = `${ih * (scale - 1)}px`;
 }
 window.addEventListener('resize', scalePreview);
 

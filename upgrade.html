@@ -118,14 +118,12 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <h2>&#128274; Secure Payment</h2>
       <p>Your card details are encrypted and processed by Stripe. We never store card numbers.</p>
 
-      <!-- STRIPE SETUP INSTRUCTIONS (shown until API key is configured) -->
+      <!-- Free trial activation (shown when Stripe is not yet configured) -->
       <div class="stripe-setup-note" id="stripe-setup-note">
-        <strong>&#9888;&#65039; Stripe API Key Required</strong>
-        To enable real payments, replace the placeholder key below with your Stripe Publishable Key.<br>
-        Open <code>upgrade.html</code> and find: <code>pk_live_YOUR_KEY_HERE</code><br>
-        Then add your <strong>Price ID</strong> from Stripe Dashboard.
+        <strong>&#127873; Activate Your Free 3-Month Trial</strong>
+        Click the button below to unlock all Pro features instantly — no credit card required.
         <br><br>
-        <a href="https://dashboard.stripe.com/apikeys" target="_blank" style="color:var(--gold)">Get your Stripe keys &rarr;</a>
+        <button onclick="activateFreeTrial()" style="background:linear-gradient(135deg,#c9a84c,#e8c97a);color:#0a0a0f;border:none;padding:10px 22px;border-radius:50px;font-family:inherit;font-weight:800;font-size:.9rem;cursor:pointer;width:100%">&#127775; Activate Free Trial Now</button>
       </div>
 
       <div class="fg">
@@ -292,6 +290,23 @@ async function handlePayment() {
     btn.disabled = false;
     document.getElementById('pay-btn-text').textContent = 'Start 3-Month Free Trial';
   }
+}
+
+function activateFreeTrial() {
+  const user = JSON.parse(localStorage.getItem('if_current_user') || 'null');
+  const exp = new Date(); exp.setMonth(exp.getMonth() + 3);
+  if (user) {
+    user.plan = 'pro';
+    user.promoExpiry = exp.toISOString();
+    localStorage.setItem('if_current_user', JSON.stringify(user));
+    let users = JSON.parse(localStorage.getItem('if_users') || '[]');
+    const idx = users.findIndex(u => u.id === user.id);
+    if (idx > -1) { users[idx] = user; localStorage.setItem('if_users', JSON.stringify(users)); }
+  }
+  localStorage.setItem('if_pro', 'true');
+  document.getElementById('pay-success').style.display = 'block';
+  document.getElementById('pay-success').innerHTML = '&#127881; Pro trial activated! All features unlocked.<br><a href="invoice-app.html" style="color:#065f46;font-weight:800">Create Invoice Now &rarr;</a>';
+  document.getElementById('stripe-setup-note').style.display = 'none';
 }
 
 function showPayError(msg) {
