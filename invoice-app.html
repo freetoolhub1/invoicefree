@@ -87,7 +87,8 @@ body{font-family:'Cabinet Grotesk',sans-serif;background:#f4f3ef;color:var(--ink
 
 /* MAIN LAYOUT */
 .app-layout{display:grid;grid-template-columns:1fr 520px;gap:0;height:calc(100vh - 104px);overflow:hidden}
-.form-panel{overflow-y:auto;padding:28px;background:#f4f3ef}
+.left-column{overflow:hidden;display:flex;flex-direction:column;background:#f4f3ef}
+.form-panel{overflow-y:auto;padding:28px;flex:1;background:#f4f3ef}
 .preview-panel{background:white;border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
 .preview-header{padding:16px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .preview-header-title{font-weight:800;font-size:0.9rem}
@@ -283,7 +284,9 @@ body{font-family:'Cabinet Grotesk',sans-serif;background:#f4f3ef;color:var(--ink
 /* MOBILE EXPORT BAR */
 .mobile-export-bar{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--ink);border-top:1px solid rgba(255,255,255,.1);padding:10px 16px;gap:8px;z-index:200;box-shadow:0 -8px 30px rgba(0,0,0,.3)}
 @media(max-width:900px){
-  .app-layout{grid-template-columns:1fr;height:auto}
+  .app-layout{grid-template-columns:1fr;height:auto;overflow:visible}
+  .left-column{height:auto;overflow:visible}
+  .form-panel{overflow-y:visible}
   .preview-panel{display:none}
   .form-row{grid-template-columns:1fr}
   .form-row-3{grid-template-columns:1fr}
@@ -335,6 +338,9 @@ body{font-family:'Cabinet Grotesk',sans-serif;background:#f4f3ef;color:var(--ink
 <!-- MAIN -->
 <div class="app-layout">
 
+<!-- LEFT COLUMN: editor / settings / history -->
+<div class="left-column">
+
   <!-- FORM PANEL -->
   <div class="form-panel" id="editor-panel">
 
@@ -371,7 +377,7 @@ body{font-family:'Cabinet Grotesk',sans-serif;background:#f4f3ef;color:var(--ink
       <div style="margin-bottom:16px">
         <label class="fg" style="gap:6px">
           <span style="font-size:0.78rem;font-weight:700;color:#6b7280">Company Logo</span>
-          <div class="logo-upload" id="logo-drop" onclick="document.getElementById('logo-input').click()">
+          <div class="logo-upload" id="logo-drop">
             <input type="file" id="logo-input" accept="image/*" onchange="handleLogo(event)">
             <img id="logo-preview-img" style="display:none" class="logo-preview">
             <div id="logo-placeholder">
@@ -521,6 +527,8 @@ body{font-family:'Cabinet Grotesk',sans-serif;background:#f4f3ef;color:var(--ink
     </div>
   </div>
 
+</div><!-- /left-column -->
+
   <!-- RIGHT: PREVIEW PANEL -->
   <div class="preview-panel">
     <div class="preview-header">
@@ -644,33 +652,42 @@ function isProUser() {
 }
 
 window.onload = function() {
-  // Clear old user data if a different user is now logged in
   try {
-    const user = JSON.parse(localStorage.getItem('if_current_user') || 'null');
-    const lastUserId = localStorage.getItem('if_last_user_id');
-    if (user && user.id && lastUserId && lastUserId !== user.id) {
-      // Different user — don't load old draft
-      console.log('New user detected, starting fresh');
-    } else if (user && user.id) {
-      localStorage.setItem('if_last_user_id', user.id);
-    }
-  } catch(e) {}
-  setDefaultDates();
-  generateInvoiceNumber();
-  loadSettings();
-  loadFromStorage();
-  // Show welcome message when arriving from registration
-  if (new URLSearchParams(location.search).get('welcome') === '1') {
-    setTimeout(() => showToast('🎉 Welcome! Your Pro plan is active — all features unlocked!', 'success'), 600);
-    history.replaceState({}, '', 'invoice-app.html');
+    // Detect user session change
+    try {
+      const user = JSON.parse(localStorage.getItem('if_current_user') || 'null');
+      const lastUserId = localStorage.getItem('if_last_user_id');
+      if (user && user.id && lastUserId && lastUserId !== user.id) {
+        console.log('New user detected, starting fresh');
+      } else if (user && user.id) {
+        localStorage.setItem('if_last_user_id', user.id);
+      }
+    } catch(e) {}
+
+    setDefaultDates();
+    generateInvoiceNumber();
+    loadSettings();
+    loadFromStorage();
+
+    // Welcome toast after registration
+    try {
+      if (new URLSearchParams(location.search).get('welcome') === '1') {
+        setTimeout(() => showToast('🎉 Welcome! Your Pro plan is active — all features unlocked!', 'success'), 600);
+        history.replaceState({}, '', 'invoice-app.html');
+      }
+    } catch(e) {}
+
+    // Ensure at least one line item
+    if (state.items.length === 0) addItem();
+    else { renderItems(); getCalc(); }
+
+    renderPreview();
+    setTimeout(scalePreview, 100);
+    renderHistory();
+    checkProStatus();
+  } catch(err) {
+    console.error('InvoiceFree init error:', err);
   }
-  // Only add blank item if none loaded from storage
-  if (state.items.length === 0) addItem();
-  else renderItems();
-  renderPreview();
-  scalePreview();
-  renderHistory();
-  checkProStatus();
 };
 
 function checkProStatus() {
@@ -749,10 +766,13 @@ function handleLogo(e) {
 function switchTab(tab, el) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   if (el) el.classList.add('active');
-  document.getElementById('editor-panel').style.display = tab === 'editor' ? 'block' : 'none';
-  document.getElementById('settings-panel').style.display = tab === 'settings' ? 'block' : 'none';
-  document.getElementById('history-panel').style.display = tab === 'history' ? 'block' : 'none';
+  const panels = { editor: 'editor-panel', settings: 'settings-panel', history: 'history-panel' };
+  Object.entries(panels).forEach(([name, id]) => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = (name === tab) ? 'block' : 'none';
+  });
   if (tab === 'history') renderHistory();
+  if (tab === 'editor') setTimeout(scalePreview, 50);
 }
 
 // ── LINE ITEMS ──
