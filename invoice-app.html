@@ -295,6 +295,18 @@ body{font-family:'Cabinet Grotesk',sans-serif;background:#f4f3ef;color:var(--ink
 }
 
 @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.hero-eyebrow,.hero-h1,.hero-sub,.hero-btns,.hero-preview,.stats-bar{animation:none;opacity:1;transform:none}}
+
+/* ── PRINT: show ONLY the invoice, hide all app chrome ── */
+@media print{
+  .nav,.app-tabs,.form-panel,.preview-header,.preview-actions,
+  .mobile-export-bar,.modal-overlay,.toast{display:none!important}
+  .app-layout{display:block!important;height:auto!important;overflow:visible!important}
+  .preview-panel{display:block!important;border:none!important;box-shadow:none!important;width:100%!important}
+  .preview-scroll{overflow:visible!important;padding:0!important}
+  #preview-scale{transform:none!important;width:100%!important}
+  body{padding-bottom:0!important}
+  @page{size:A4;margin:10mm}
+}
 </style>
 <script src="lang.js" defer></script>
 </head>
@@ -551,13 +563,14 @@ body{font-family:'Cabinet Grotesk',sans-serif;background:#f4f3ef;color:var(--ink
     <button class="modal-close" onclick="closeModal('email-modal')">✕</button>
     <div class="modal-icon">📧</div>
     <div class="modal-h2">Email Invoice</div>
-    <div class="modal-sub">Opens your email app pre-filled with invoice details. Download the PDF separately to attach it.</div>
+    <div class="modal-sub">The full invoice text will be in the email body. Click <strong>Send Invoice</strong> to download the PDF and open your email app — then attach the PDF.</div>
     <div class="email-form">
       <div class="fg"><label>Recipient Email</label><input type="email" id="email-to" placeholder="client@example.com"></div>
       <div class="fg" style="margin-top:12px"><label>Subject</label><input type="text" id="email-subject" placeholder="Invoice INV-0001 from Acme Studio"></div>
-      <div class="fg" style="margin-top:12px"><label>Message</label><textarea id="email-body" rows="4" placeholder="Hi [Name],&#10;&#10;Please find attached your invoice. Let me know if you have any questions.&#10;&#10;Thank you!"></textarea></div>
+      <div class="fg" style="margin-top:12px"><label>Message</label><textarea id="email-body" rows="6" placeholder="Hi [Name],&#10;&#10;Please find attached your invoice. Let me know if you have any questions.&#10;&#10;Thank you!"></textarea></div>
     </div>
-    <button class="btn-go-pro" style="margin-top:20px" onclick="sendEmail()">Send Invoice →</button>
+    <button class="btn-go-pro" style="margin-top:20px" onclick="sendEmail()">Send Invoice + Download PDF →</button>
+    <button onclick="downloadPDF();closeModal('email-modal')" style="display:block;width:100%;margin-top:10px;padding:10px;background:transparent;border:1.5px solid var(--indigo);color:var(--indigo);border-radius:50px;cursor:pointer;font-weight:600;font-size:0.9rem">📥 Download PDF Only</button>
   </div>
 </div>
 
@@ -1207,8 +1220,6 @@ function renderPreview() {
       </div>`;
   }
 
- }
-
   document.getElementById('invoice-render').innerHTML = html;
   document.getElementById('preview-status').textContent = '✓ Up to date';
 }
@@ -1241,16 +1252,8 @@ function downloadPDF() {
   const invoiceHTML = inv.innerHTML;
   const printWindow = window.open('', '_blank', 'width=900,height=700');
   if (!printWindow) {
-    // Popup blocked fallback
-    const d = document.createElement('div');
-    d.style.cssText = 'position:fixed;inset:0;background:#fff;z-index:99999;overflow:auto;padding:40px';
-    d.innerHTML = inv.innerHTML;
-    const closeBtn = document.createElement('button');
-    closeBtn.textContent = '✕ Close';
-    closeBtn.style.cssText = 'position:fixed;top:12px;right:12px;background:#0a0a0f;color:#fff;border:none;padding:8px 18px;border-radius:50px;cursor:pointer;font-weight:700;z-index:100000';
-    closeBtn.onclick = () => { document.body.removeChild(d); };
-    d.appendChild(closeBtn);
-    document.body.appendChild(d);
+    // Popup blocked: @media print CSS hides all app chrome, so window.print() shows only the invoice
+    showToast('Popup blocked — printing directly...', 'success');
     setTimeout(() => window.print(), 200);
     return;
   }
@@ -1314,28 +1317,78 @@ function copyLink(link) {
 }
 
 // ── EMAIL MODAL ──
+function buildTextInvoice() {
+  const fromName = v('from-name') || 'Your Business';
+  const fromEmail = v('from-email') || '';
+  const fromAddr = v('from-address') || '';
+  const toName = v('to-name') || '';
+  const toEmail = v('to-email') || '';
+  const toAddr = v('to-address') || '';
+  const invNum = v('inv-number') || 'INV-0001';
+  const issueDate = v('issue-date') || '';
+  const dueDate = v('due-date') || '';
+  const currency = v('currency') || '$';
+  const taxRate = parseFloat(v('tax-rate')) || 0;
+  const discount = parseFloat(v('discount')) || 0;
+  const notes = v('notes') || '';
+
+  const rows = state.items || [];
+  let subtotal = 0;
+  const lineLines = rows.map(r => {
+    const qty = parseFloat(r.qty) || 0;
+    const rate = parseFloat(r.rate) || 0;
+    const amt = qty * rate;
+    subtotal += amt;
+    return `  ${r.desc || 'Item'}  (Qty: ${qty} × ${currency}${rate.toFixed(2)})  =  ${currency}${amt.toFixed(2)}`;
+  });
+
+  const discountAmt = discount ? subtotal * discount / 100 : 0;
+  const taxable = subtotal - discountAmt;
+  const taxAmt = taxRate ? taxable * taxRate / 100 : 0;
+  const total = taxable + taxAmt;
+
+  const sep = '─'.repeat(48);
+  let txt = `INVOICE ${invNum}\n${sep}\n`;
+  txt += `FROM:  ${fromName}${fromEmail ? '  <' + fromEmail + '>' : ''}${fromAddr ? '\n       ' + fromAddr : ''}\n`;
+  txt += `TO:    ${toName}${toEmail ? '  <' + toEmail + '>' : ''}${toAddr ? '\n       ' + toAddr : ''}\n`;
+  if (issueDate) txt += `DATE:  ${formatDate(issueDate)}\n`;
+  if (dueDate) txt += `DUE:   ${formatDate(dueDate)}\n`;
+  txt += `${sep}\nITEMS:\n${lineLines.join('\n')}\n${sep}\n`;
+  txt += `SUBTOTAL:  ${currency}${subtotal.toFixed(2)}\n`;
+  if (discountAmt) txt += `DISCOUNT (${discount}%):  -${currency}${discountAmt.toFixed(2)}\n`;
+  if (taxAmt) txt += `TAX (${taxRate}%):  ${currency}${taxAmt.toFixed(2)}\n`;
+  txt += `TOTAL DUE:  ${currency}${total.toFixed(2)}\n`;
+  if (notes) txt += `${sep}\nNOTES: ${notes}\n`;
+  txt += `${sep}\nGenerated by invoicefree.info`;
+  return txt;
+}
+
 function openEmailModal() {
   const clientEmail = v('to-email');
   const fromName = v('from-name');
   const invNum = v('inv-number');
   document.getElementById('email-to').value = clientEmail;
   document.getElementById('email-subject').value = `Invoice ${invNum} from ${fromName}`;
-  document.getElementById('email-body').value = `Hi,\n\nPlease find attached your invoice ${invNum}.\n\nTotal Due: ${document.getElementById('t-total').textContent}\n\nThank you for your business!\n\n${fromName}`;
+  document.getElementById('email-body').value = `Hi ${v('to-name') || 'there'},\n\nPlease find below your invoice details. A PDF copy is being downloaded — please attach it to this email.\n\n${buildTextInvoice()}\n\nThank you for your business!`;
   document.getElementById('email-modal').classList.add('open');
 }
+
 function sendEmail() {
   const to = document.getElementById('email-to').value;
   const subject = document.getElementById('email-subject').value;
   const body = document.getElementById('email-body').value;
   if (!to) { showToast('Please enter recipient email', 'error'); return; }
-  // Open user's default email client (Gmail, Outlook, Apple Mail etc)
-  // This opens whatever email app the user is logged into on their device
-  const mailtoLink = 'mailto:' + encodeURIComponent(to)
-    + '?subject=' + encodeURIComponent(subject)
-    + '&body=' + encodeURIComponent(body + '\n\nView invoice online: ' + (document.getElementById('share-link-container')?.querySelector('span')?.textContent || ''));
-  window.location.href = mailtoLink;
+  // Download PDF first so user can attach it
+  downloadPDF();
   closeModal('email-modal');
-  showToast('Opening your email app...', 'success');
+  // Small delay so PDF dialog opens before mailto: navigates
+  setTimeout(() => {
+    const mailtoLink = 'mailto:' + encodeURIComponent(to)
+      + '?subject=' + encodeURIComponent(subject)
+      + '&body=' + encodeURIComponent(body);
+    window.open(mailtoLink, '_self');
+    showToast('PDF downloading — attach it to your email!', 'success');
+  }, 800);
 }
 
 // ── PRO MODAL ──
