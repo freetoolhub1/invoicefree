@@ -344,9 +344,9 @@ body{font-family:'Cabinet Grotesk',sans-serif;background:#f4f3ef;color:var(--ink
       <div class="tpl-picker">
         <button class="tpl-btn active" onclick="setTemplate(1,this)">Classic Pro</button>
         <button class="tpl-btn" onclick="setTemplate(2,this)">Modern Dark</button>
-        <button class="tpl-btn" onclick="needsPro(this)">Corporate Blue<span class="pro-lock">PRO</span></button>
-        <button class="tpl-btn" onclick="needsPro(this)">Elegant Dark<span class="pro-lock">PRO</span></button>
-        <button class="tpl-btn" onclick="needsPro(this)">Creative<span class="pro-lock">PRO</span></button>
+        <button class="tpl-btn" onclick="needsPro(this)&&setTemplate(3,this)">Corporate Blue<span class="pro-lock">PRO</span></button>
+        <button class="tpl-btn" onclick="needsPro(this)&&setTemplate(4,this)">Elegant Dark<span class="pro-lock">PRO</span></button>
+        <button class="tpl-btn" onclick="needsPro(this)&&setTemplate(5,this)">Creative<span class="pro-lock">PRO</span></button>
       </div>
       <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
         <span style="font-size:0.78rem;font-weight:700;color:var(--slate)">Primary Color:</span>
@@ -372,7 +372,7 @@ body{font-family:'Cabinet Grotesk',sans-serif;background:#f4f3ef;color:var(--ink
         <label class="fg" style="gap:6px">
           <span style="font-size:0.78rem;font-weight:700;color:#6b7280">Company Logo</span>
           <div class="logo-upload" id="logo-drop" onclick="document.getElementById('logo-input').click()">
-            <input type="file" id="logo-input" accept="image/*" onchange="handleLogo(event)" style="display:none">
+            <input type="file" id="logo-input" accept="image/*" onchange="handleLogo(event)">
             <img id="logo-preview-img" style="display:none" class="logo-preview">
             <div id="logo-placeholder">
               <div style="font-size:1.5rem;margin-bottom:4px">📷</div>
@@ -494,16 +494,17 @@ body{font-family:'Cabinet Grotesk',sans-serif;background:#f4f3ef;color:var(--ink
     <div class="form-section">
       <div class="fs-title"><span class="icon">⚙️</span> Preferences</div>
       <div class="fg"><label>Default Currency</label>
-        <select id="pref-currency">
-          <option>USD ($)</option><option>EUR (€)</option><option>GBP (£)</option><option>PKR (₨)</option>
+        <select id="pref-currency" onchange="saveSettings()">
+          <option value="USD ($)">USD ($)</option><option value="EUR (€)">EUR (€)</option><option value="GBP (£)">GBP (£)</option><option value="PKR (₨)">PKR (₨)</option>
         </select>
       </div>
       <div class="fg" style="margin-top:12px"><label>Default Payment Terms</label>
-        <select><option>Net 30</option><option>Net 15</option><option>Due on Receipt</option></select>
+        <select id="pref-terms" onchange="saveSettings()"><option>Net 30</option><option>Net 15</option><option>Due on Receipt</option></select>
       </div>
       <div class="fg" style="margin-top:12px"><label>Invoice Number Prefix</label>
-        <input type="text" id="inv-prefix" placeholder="INV-" value="INV-">
+        <input type="text" id="inv-prefix" placeholder="INV-" value="INV-" oninput="saveSettings()">
       </div>
+      <button class="btn-action btn-print" style="max-width:200px;margin-top:16px" onclick="applySettings()">✓ Apply Settings</button>
     </div>
     <div class="form-section">
       <div class="fs-title"><span class="icon">🗃️</span> Saved Data</div>
@@ -570,7 +571,7 @@ body{font-family:'Cabinet Grotesk',sans-serif;background:#f4f3ef;color:var(--ink
       <div class="fg" style="margin-top:12px"><label>Message</label><textarea id="email-body" rows="6" placeholder="Hi [Name],&#10;&#10;Please find attached your invoice. Let me know if you have any questions.&#10;&#10;Thank you!"></textarea></div>
     </div>
     <button class="btn-go-pro" style="margin-top:20px" onclick="sendEmail()">Send Invoice + Download PDF →</button>
-    <button onclick="downloadPDF();closeModal('email-modal')" style="display:block;width:100%;margin-top:10px;padding:10px;background:transparent;border:1.5px solid var(--indigo);color:var(--indigo);border-radius:50px;cursor:pointer;font-weight:600;font-size:0.9rem">📥 Download PDF Only</button>
+    <button onclick="downloadPDF();closeModal('email-modal')" style="display:block;width:100%;margin-top:10px;padding:10px;background:transparent;border:1.5px solid #6366f1;color:#6366f1;border-radius:50px;cursor:pointer;font-weight:600;font-size:0.9rem">📥 Download PDF Only</button>
   </div>
 </div>
 
@@ -656,6 +657,7 @@ window.onload = function() {
   } catch(e) {}
   setDefaultDates();
   generateInvoiceNumber();
+  loadSettings();
   loadFromStorage();
   // Show welcome message when arriving from registration
   if (new URLSearchParams(location.search).get('welcome') === '1') {
@@ -1341,27 +1343,29 @@ function buildTextInvoice() {
   const toEmail = v('to-email') || '';
   const toAddr = v('to-address') || '';
   const invNum = v('inv-number') || 'INV-0001';
-  const issueDate = v('issue-date') || '';
-  const dueDate = v('due-date') || '';
+  const issueDate = v('inv-date') || '';
+  const dueDate = v('inv-due') || '';
   const currency = v('currency') || '$';
-  const taxRate = parseFloat(v('tax-rate')) || 0;
-  const discount = parseFloat(v('discount')) || 0;
-  const notes = v('notes') || '';
+  const discountType = v('discount-type') || 'none';
+  const discountVal = parseFloat(v('discount-value')) || 0;
+  const notes = v('inv-notes') || '';
 
   const rows = state.items || [];
-  let subtotal = 0;
+  let subtotal = 0, taxTotal = 0;
   const lineLines = rows.map(r => {
     const qty = parseFloat(r.qty) || 0;
     const rate = parseFloat(r.rate) || 0;
     const amt = qty * rate;
+    const tax = parseFloat(r.tax) || 0;
     subtotal += amt;
-    return `  ${r.desc || 'Item'}  (Qty: ${qty} × ${currency}${rate.toFixed(2)})  =  ${currency}${amt.toFixed(2)}`;
+    taxTotal += amt * (tax / 100);
+    return `  ${r.desc || 'Item'}  (Qty: ${qty} × ${currency}${rate.toFixed(2)}${tax ? '  Tax: '+tax+'%' : ''})  =  ${currency}${amt.toFixed(2)}`;
   });
 
-  const discountAmt = discount ? subtotal * discount / 100 : 0;
-  const taxable = subtotal - discountAmt;
-  const taxAmt = taxRate ? taxable * taxRate / 100 : 0;
-  const total = taxable + taxAmt;
+  let discountAmt = 0;
+  if (discountType === 'pct') discountAmt = subtotal * discountVal / 100;
+  else if (discountType === 'fixed') discountAmt = discountVal;
+  const total = subtotal - discountAmt + taxTotal;
 
   const sep = '─'.repeat(48);
   let txt = `INVOICE ${invNum}\n${sep}\n`;
@@ -1371,8 +1375,8 @@ function buildTextInvoice() {
   if (dueDate) txt += `DUE:   ${formatDate(dueDate)}\n`;
   txt += `${sep}\nITEMS:\n${lineLines.join('\n')}\n${sep}\n`;
   txt += `SUBTOTAL:  ${currency}${subtotal.toFixed(2)}\n`;
-  if (discountAmt) txt += `DISCOUNT (${discount}%):  -${currency}${discountAmt.toFixed(2)}\n`;
-  if (taxAmt) txt += `TAX (${taxRate}%):  ${currency}${taxAmt.toFixed(2)}\n`;
+  if (discountAmt) txt += `DISCOUNT${discountType==='pct'?' ('+discountVal+'%)':''}:  -${currency}${discountAmt.toFixed(2)}\n`;
+  if (taxTotal) txt += `TAX:  ${currency}${taxTotal.toFixed(2)}\n`;
   txt += `TOTAL DUE:  ${currency}${total.toFixed(2)}\n`;
   if (notes) txt += `${sep}\nNOTES: ${notes}\n`;
   txt += `${sep}\nGenerated by invoicefree.info`;
@@ -1500,6 +1504,33 @@ function showToast(msg, type='success') {
   t.textContent = msg;
   t.className = 'toast show ' + type;
   setTimeout(() => t.className = 'toast', 3500);
+}
+
+// ── SETTINGS ──
+function saveSettings() {
+  const prefix = (document.getElementById('inv-prefix') || {}).value || 'INV-';
+  const currency = (document.getElementById('pref-currency') || {}).value || 'USD ($)';
+  const terms = (document.getElementById('pref-terms') || {}).value || 'Net 30';
+  localStorage.setItem('if_prefix', prefix);
+  localStorage.setItem('if_pref_currency', currency);
+  localStorage.setItem('if_pref_terms', terms);
+}
+
+function loadSettings() {
+  const prefix = localStorage.getItem('if_prefix') || 'INV-';
+  const currency = localStorage.getItem('if_pref_currency') || 'USD ($)';
+  const terms = localStorage.getItem('if_pref_terms') || 'Net 30';
+  const prefixEl = document.getElementById('inv-prefix');
+  if (prefixEl) prefixEl.value = prefix;
+  const currEl = document.getElementById('pref-currency');
+  if (currEl) currEl.value = currency;
+  const termsEl = document.getElementById('pref-terms');
+  if (termsEl) termsEl.value = terms;
+}
+
+function applySettings() {
+  saveSettings();
+  showToast('✓ Settings saved', 'success');
 }
 
 // ── KEYBOARD SHORTCUT ──
