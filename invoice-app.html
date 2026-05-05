@@ -80,16 +80,17 @@ body{font-family:'Cabinet Grotesk',sans-serif;background:#f4f3ef;color:var(--ink
 .nb-mint:hover{background:rgba(29,233,182,0.25)}
 
 /* TABS */
-.app-tabs{background:white;border-bottom:1px solid var(--border);display:flex;padding:0 28px}
+.app-tabs{background:white;border-bottom:1px solid var(--border);display:flex;padding:0 28px;position:sticky;top:58px;z-index:90}
 .tab{padding:14px 20px;font-weight:700;font-size:0.85rem;color:var(--slate);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;user-select:none}
 .tab.active{color:var(--ink);border-color:var(--gold)}
 .tab:hover:not(.active){color:var(--ink)}
 
 /* MAIN LAYOUT */
-.app-layout{display:grid;grid-template-columns:1fr 520px;gap:0;height:calc(100vh - 104px);overflow:hidden}
-.left-column{overflow:hidden;display:flex;flex-direction:column;background:#f4f3ef}
-.form-panel{overflow-y:auto;padding:28px;flex:1;background:#f4f3ef}
-.preview-panel{background:white;border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+.app-layout{display:grid;grid-template-columns:1fr 520px;gap:0;align-items:start}
+.left-column{background:#f4f3ef;padding-bottom:40px}
+.form-panel{padding:28px;background:#f4f3ef;display:none}
+.form-panel.active{display:block}
+.preview-panel{background:white;border-left:1px solid var(--border);display:flex;flex-direction:column;position:sticky;top:104px;height:calc(100vh - 104px);overflow:hidden}
 .preview-header{padding:16px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .preview-header-title{font-weight:800;font-size:0.9rem}
 .preview-scroll{flex:1;overflow-y:auto;padding:24px}
@@ -284,10 +285,10 @@ body{font-family:'Cabinet Grotesk',sans-serif;background:#f4f3ef;color:var(--ink
 /* MOBILE EXPORT BAR */
 .mobile-export-bar{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--ink);border-top:1px solid rgba(255,255,255,.1);padding:10px 16px;gap:8px;z-index:200;box-shadow:0 -8px 30px rgba(0,0,0,.3)}
 @media(max-width:900px){
-  .app-layout{grid-template-columns:1fr;height:auto;overflow:visible}
-  .left-column{height:auto;overflow:visible}
-  .form-panel{overflow-y:visible}
-  .preview-panel{display:none}
+  .app-layout{grid-template-columns:1fr}
+  .left-column{padding-bottom:80px}
+  .preview-panel{display:none!important}
+  .app-tabs{top:58px}
   .form-row{grid-template-columns:1fr}
   .form-row-3{grid-template-columns:1fr}
   .items-head{display:none}
@@ -303,8 +304,8 @@ body{font-family:'Cabinet Grotesk',sans-serif;background:#f4f3ef;color:var(--ink
 @media print{
   .nav,.app-tabs,.form-panel,.preview-header,.preview-actions,
   .mobile-export-bar,.modal-overlay,.toast{display:none!important}
-  .app-layout{display:block!important;height:auto!important;overflow:visible!important}
-  .preview-panel{display:block!important;border:none!important;box-shadow:none!important;width:100%!important}
+  .app-layout{display:block!important;overflow:visible!important}
+  .preview-panel{display:block!important;border:none!important;box-shadow:none!important;width:100%!important;position:static!important;height:auto!important}
   .preview-scroll{overflow:visible!important;padding:0!important}
   #preview-scale{transform:none!important;width:100%!important}
   body{padding-bottom:0!important}
@@ -342,7 +343,7 @@ body{font-family:'Cabinet Grotesk',sans-serif;background:#f4f3ef;color:var(--ink
 <div class="left-column">
 
   <!-- FORM PANEL -->
-  <div class="form-panel" id="editor-panel">
+  <div class="form-panel active" id="editor-panel">
 
     <!-- TEMPLATE PICKER -->
     <div class="form-section">
@@ -496,7 +497,7 @@ body{font-family:'Cabinet Grotesk',sans-serif;background:#f4f3ef;color:var(--ink
   </div><!-- /form panel -->
 
   <!-- SETTINGS PANEL (hidden) -->
-  <div class="form-panel" id="settings-panel" style="display:none">
+  <div class="form-panel" id="settings-panel">
     <div class="form-section">
       <div class="fs-title"><span class="icon">⚙️</span> Preferences</div>
       <div class="fg"><label>Default Currency</label>
@@ -520,7 +521,7 @@ body{font-family:'Cabinet Grotesk',sans-serif;background:#f4f3ef;color:var(--ink
   </div>
 
   <!-- HISTORY PANEL (hidden) -->
-  <div class="form-panel" id="history-panel" style="display:none">
+  <div class="form-panel" id="history-panel">
     <div class="form-section">
       <div class="fs-title"><span class="icon">📁</span> Invoice History</div>
       <div id="history-list"></div>
@@ -766,11 +767,12 @@ function handleLogo(e) {
 function switchTab(tab, el) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   if (el) el.classList.add('active');
-  const panels = { editor: 'editor-panel', settings: 'settings-panel', history: 'history-panel' };
-  Object.entries(panels).forEach(([name, id]) => {
-    const el = document.getElementById(id);
-    if (el) el.style.display = (name === tab) ? 'block' : 'none';
+  ['editor-panel','settings-panel','history-panel'].forEach(id => {
+    const p = document.getElementById(id);
+    if (p) p.classList.remove('active');
   });
+  const active = document.getElementById(tab + '-panel');
+  if (active) active.classList.add('active');
   if (tab === 'history') renderHistory();
   if (tab === 'editor') setTimeout(scalePreview, 50);
 }
