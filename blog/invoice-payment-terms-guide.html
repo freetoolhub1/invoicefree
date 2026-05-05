@@ -1,21 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Blog | InvoiceFree.info</title>
-<meta name="robots" content="index,follow">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Net 7 vs Net 30: Understanding Invoice Payment Terms | InvoiceFree.info</title>
+<meta name="description" content="What does Net 30 mean? When should you use Due on Receipt? This complete guide explains all invoice payment terms and how to choose the right one.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://invoicefree.info/blog/invoice-payment-terms-guide.html">
+<meta property="og:title" content="Net 7 vs Net 30: Understanding Invoice Payment Terms">
+<meta property="og:description" content="What does Net 30 mean? This guide explains all payment terms and how to choose the right one for your clients.">
+<meta property="og:image" content="https://invoicefree.info/og-image.svg">
+<meta property="og:type" content="article">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Net 7 vs Net 30: Understanding Invoice Payment Terms","datePublished":"2025-02-18","author":{"@type":"Organization","name":"InvoiceFree.info"},"publisher":{"@type":"Organization","name":"InvoiceFree.info","url":"https://invoicefree.info"},"description":"A complete guide to invoice payment terms — Net 7, Net 30, Due on Receipt, and more.","url":"https://invoicefree.info/blog/invoice-payment-terms-guide.html"}</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0a0f'/%3E%3Crect x='16' y='10' width='32' height='44' rx='4' fill='%23c9a84c'/%3E%3C/svg%3E">
-<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;700;800;900&display=swap" rel="stylesheet">
-<style>*{margin:0;padding:0;box-sizing:border-box}html{background:#0a0a0f}body{font-family:'Cabinet Grotesk',system-ui,sans-serif;background:#f4f3ef}.nav{background:#0a0a0f;padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:58px}.nav-logo{font-weight:900;font-size:1.2rem;color:#fff;text-decoration:none}.nav-logo span{color:#c9a84c}.back{color:rgba(255,255,255,.45);text-decoration:none;font-size:.85rem}.back:hover{color:#c9a84c}.btn-nav{background:#c9a84c;color:#0a0a0f;font-family:inherit;font-size:.85rem;font-weight:800;padding:8px 16px;border-radius:50px;text-decoration:none}.content{max-width:760px;margin:52px auto;padding:0 24px}</style>
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}html{background:#0a0a0f}
+body{font-family:'Cabinet Grotesk',system-ui,sans-serif;background:#f4f3ef;color:#111}
+.nav{background:#0a0a0f;padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:58px;position:sticky;top:0;z-index:50}
+.nav-logo{font-weight:900;font-size:1.2rem;color:#fff;text-decoration:none;display:flex;align-items:center;gap:8px}.nav-logo span{color:#c9a84c}
+.back{color:rgba(255,255,255,.45);text-decoration:none;font-size:.85rem}.back:hover{color:#c9a84c}
+.btn-nav{background:#c9a84c;color:#0a0a0f;font-family:inherit;font-size:.85rem;font-weight:800;padding:8px 16px;border-radius:50px;text-decoration:none}
+.layout{max-width:1040px;margin:0 auto;padding:52px 40px;display:grid;grid-template-columns:1fr 280px;gap:44px;align-items:start}
+.article{background:#fff;border-radius:16px;padding:44px 48px;box-shadow:0 2px 14px rgba(0,0,0,.06)}
+.a-cat{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#c9a84c;margin-bottom:10px}
+.a-title{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:900;letter-spacing:-.04em;color:#0a0a0f;margin-bottom:12px;line-height:1.2}
+.a-meta{font-size:.78rem;color:#9ca3af;margin-bottom:28px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.a-meta strong{color:#374151}
+.a-divider{height:2px;background:linear-gradient(to right,#c9a84c,transparent);margin-bottom:28px}
+.a-body h2{font-size:1.15rem;font-weight:800;color:#0a0a0f;margin:28px 0 10px;letter-spacing:-.02em}
+.a-body p{font-size:.93rem;color:#374151;line-height:1.8;margin-bottom:14px}
+.a-body ul{padding-left:20px;margin-bottom:14px}
+.a-body li{font-size:.93rem;color:#374151;line-height:1.8;margin-bottom:6px}
+.a-body a{color:#c9a84c;font-weight:600;text-decoration:none}.a-body a:hover{text-decoration:underline}
+.a-body strong{color:#0a0a0f;font-weight:700}
+.term-card{background:#f8f7f4;border:1px solid #e5e4e0;border-radius:10px;padding:16px 20px;margin:14px 0}
+.term-card .term-name{font-weight:900;font-size:1rem;color:#0a0a0f;margin-bottom:4px}
+.term-card .term-def{font-size:.88rem;color:#374151;line-height:1.7}
+.tip{background:#fef9ec;border-left:4px solid #c9a84c;border-radius:0 10px 10px 0;padding:16px 20px;margin:20px 0;font-size:.9rem;color:#374151}
+.tip strong{color:#0a0a0f;display:block;margin-bottom:4px}
+.backlink-box{background:linear-gradient(135deg,rgba(201,168,76,.08),rgba(201,168,76,.02));border:1px solid rgba(201,168,76,.2);border-radius:12px;padding:18px 22px;margin:20px 0;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.backlink-box p{font-size:.88rem;color:#374151;line-height:1.6}
+.backlink-box a{color:#c9a84c;font-weight:700}
+.cta-box{background:linear-gradient(135deg,#0a0a0f,#1c1c2e);border-radius:14px;padding:28px;margin-top:32px;text-align:center}
+.cta-box h3{font-size:1.1rem;font-weight:900;color:#fff;margin-bottom:8px}
+.cta-box p{font-size:.85rem;color:rgba(255,255,255,.45);margin-bottom:16px}
+.cta-box a{display:inline-block;background:linear-gradient(135deg,#c9a84c,#e8c97a);color:#0a0a0f;font-weight:800;font-size:.9rem;padding:12px 28px;border-radius:50px;text-decoration:none}
+.sidebar{display:flex;flex-direction:column;gap:20px;position:sticky;top:76px}
+.s-card{background:#fff;border-radius:14px;padding:20px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.s-card h3{font-size:.88rem;font-weight:800;color:#0a0a0f;margin-bottom:12px}
+.s-link{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid #f3f4f6;text-decoration:none;color:#374151;font-size:.82rem;transition:color .2s}
+.s-link:last-child{border:none}.s-link:hover{color:#c9a84c}
+footer{background:#0a0a0f;padding:36px 40px 20px;margin-top:60px}
+.fi{max-width:1040px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.f-logo{font-weight:900;font-size:1.1rem;color:#fff}.f-logo span{color:#c9a84c}
+.f-copy{font-size:.74rem;color:rgba(255,255,255,.18);width:100%;margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.06)}
+@media(max-width:800px){.layout{grid-template-columns:1fr;padding:28px 20px}.sidebar{position:static}.article{padding:28px 24px}.nav{padding:0 20px}}
+</style>
 <script src="../lang.js" defer></script>
 </head>
 <body>
-<nav class="nav"><a href="../index.html" class="nav-logo">Invoice<span>Free</span></a><a href="../blog.html" class="back">&#8592; All Articles</a><a href="../invoice-app.html" class="btn-nav">Create Invoice</a></nav>
-<div class="content">
-<p style="font-size:.8rem;color:#9ca3af;margin-bottom:12px"><a href="../blog.html" style="color:#c9a84c">&#8592; Blog</a></p>
-<h1 style="font-size:2rem;font-weight:900;letter-spacing:-.04em;color:#0a0a0f;margin-bottom:28px">Article coming soon</h1>
-<p style="font-size:1rem;color:#6b7280;line-height:1.8;margin-bottom:24px">This article is being written. Check back soon or <a href="../invoice-app.html" style="color:#c9a84c;font-weight:700">create your first invoice</a> right now — free, no signup required.</p>
-<p style="font-size:.9rem;color:#6b7280;line-height:1.8">Also check out <a href="https://www.freetoolhub.info/invoice-generator" target="_blank" rel="dofollow" style="color:#c9a84c;font-weight:700">FreeToolHub.info</a> for 58+ free online tools.</p>
+<nav class="nav">
+  <a href="../index.html" class="nav-logo"><svg width="22" height="22" viewBox="0 0 32 32" fill="none"><rect x="8" y="6" width="16" height="20" rx="3" fill="#c9a84c"/><rect x="11" y="18" width="10" height="2.5" rx="1.25" fill="#0a0a0f" opacity=".85"/></svg>Invoice<span>Free</span></a>
+  <a href="../blog.html" class="back">&#8592; All Articles</a>
+  <a href="../invoice-app.html" class="btn-nav">Create Invoice Free</a>
+</nav>
+<div class="layout">
+  <article class="article">
+    <div class="a-cat">Tips</div>
+    <h1 class="a-title">Net 7 vs Net 30: Understanding Invoice Payment Terms</h1>
+    <div class="a-meta">
+      <span>By <strong>InvoiceFree.info</strong></span>
+      <span>&#183;</span><span>February 18, 2025</span>
+      <span>&#183;</span><span>&#128338; 4 min read</span>
+    </div>
+    <div class="a-divider"></div>
+    <div class="a-body">
+      <p>Payment terms tell your client exactly when they need to pay. Choosing the right terms is one of the most impactful decisions you can make for your cash flow. This guide explains every common payment term, when to use each, and which ones freelancers should default to.</p>
+
+      <h2>What Does "Net" Mean on an Invoice?</h2>
+      <p>"Net" simply means the <strong>total amount due</strong>. "Net 30" means the full invoice amount is due within 30 days of the invoice date. "Net 7" means due within 7 days. The number is always the number of calendar days from the invoice date.</p>
+
+      <h2>Complete Guide to Every Payment Term</h2>
+
+      <div class="term-card">
+        <div class="term-name">Due on Receipt</div>
+        <div class="term-def">Payment is due immediately when the client receives the invoice. Best for: small projects, new clients, digital downloads, or any work where you need payment upfront. It sets the expectation that your work is valuable and payment is not optional.</div>
+      </div>
+
+      <div class="term-card">
+        <div class="term-name">Net 7</div>
+        <div class="term-def">Payment due within 7 calendar days. Ideal for most freelance work — fast enough to maintain cash flow, and still gives clients time to process payment through their accounts payable. This is the recommended default for freelancers.</div>
+      </div>
+
+      <div class="term-card">
+        <div class="term-name">Net 14</div>
+        <div class="term-def">Payment due within 14 days. A good compromise for clients who need a little more time — such as small businesses with twice-monthly payment cycles. Still much faster than Net 30.</div>
+      </div>
+
+      <div class="term-card">
+        <div class="term-name">Net 30</div>
+        <div class="term-def">Payment due within 30 days. Standard in corporate environments. Acceptable for large, established companies — but avoid it with small businesses or new clients where cash flow matters more. Net 30 means waiting over a month for money you've already earned.</div>
+      </div>
+
+      <div class="term-card">
+        <div class="term-name">Net 60</div>
+        <div class="term-def">Payment due within 60 days. Common in large enterprise contracts. As a freelancer, only accept Net 60 if the project is large, the client is a well-known company, and you can afford to wait. Always charge more to compensate for the cash flow delay.</div>
+      </div>
+
+      <div class="term-card">
+        <div class="term-name">2/10 Net 30</div>
+        <div class="term-def">The client gets a 2% discount if they pay within 10 days; otherwise the full amount is due in 30 days. A smart strategy to incentivise early payment from corporate clients who have the budget but slow internal processes.</div>
+      </div>
+
+      <h2>Which Payment Terms Should Freelancers Use?</h2>
+      <p>The answer depends on your client type and project size:</p>
+      <ul>
+        <li><strong>New clients, small projects:</strong> Due on Receipt or Net 7</li>
+        <li><strong>Ongoing clients you trust:</strong> Net 7 or Net 14</li>
+        <li><strong>Small-to-medium businesses:</strong> Net 14</li>
+        <li><strong>Large corporations:</strong> Net 30 (negotiate from Net 14 if possible)</li>
+        <li><strong>Enterprise accounts:</strong> Net 30 or Net 60 — always build this into your pricing</li>
+      </ul>
+
+      <div class="tip">
+        <strong>Freelancer default: always start with Net 7</strong>
+        Begin every client relationship with Net 7. Many clients will accept it without question. If a client pushes back, you can move to Net 14. Starting at Net 30 gives you no room to negotiate faster terms.
+      </div>
+
+      <h2>How to Add a Late Payment Clause</h2>
+      <p>State clearly on your invoice: <em>"Invoices unpaid after the due date are subject to a 1.5% monthly interest charge."</em> This is legally enforceable in most countries and significantly increases on-time payment rates. Even if you never enforce it, the clause changes client behaviour.</p>
+
+      <h2>Setting Payment Terms in InvoiceFree.info</h2>
+      <p>When creating an invoice with <a href="../invoice-app.html">InvoiceFree.info</a>, you can select your payment terms from the dropdown: Due on Receipt, Net 7, Net 15, Net 30, or Net 60. The app automatically sets the due date based on your selection, and prints the terms clearly on your PDF invoice so there's no ambiguity for your client.</p>
+
+      <div class="backlink-box">
+        <div style="font-size:1.8rem">&#128279;</div>
+        <p>More free business tools at <a href="https://www.freetoolhub.info" target="_blank" rel="dofollow">FreeToolHub.info</a> — including an <a href="https://www.freetoolhub.info/invoice-generator" target="_blank" rel="dofollow">invoice generator</a>, tax calculators, and 58+ tools for freelancers.</p>
+      </div>
+      <div class="cta-box">
+        <h3>Create your invoice with the right payment terms</h3>
+        <p>Free PDF export. Auto due-date calculation. No signup required.</p>
+        <a href="../invoice-app.html">&#10022; Create Invoice Free Now</a>
+      </div>
+    </div>
+  </article>
+  <div class="sidebar">
+    <div class="s-card" style="background:linear-gradient(135deg,#0a0a0f,#1c1c2e);color:#fff">
+      <h3 style="color:#fff">Create Invoice Now</h3>
+      <p style="font-size:.78rem;color:rgba(255,255,255,.45);margin-bottom:12px">Professional templates. PDF export. Free forever.</p>
+      <a href="../invoice-app.html" style="display:block;background:linear-gradient(135deg,#c9a84c,#e8c97a);color:#0a0a0f;font-weight:800;font-size:.84rem;padding:9px 16px;border-radius:50px;text-decoration:none;text-align:center">Start Free &#8594;</a>
+    </div>
+    <div class="s-card">
+      <h3>More Articles</h3>
+      <a href="get-paid-faster.html" class="s-link"><span>&#9889;</span>Get Paid Faster</a>
+      <a href="invoicing-mistakes-freelancers.html" class="s-link"><span>&#10060;</span>10 Invoicing Mistakes</a>
+      <a href="international-invoicing-guide.html" class="s-link"><span>&#127758;</span>International Invoicing</a>
+      <a href="create-invoice-5-minutes.html" class="s-link"><span>&#128338;</span>Invoice in 5 Minutes</a>
+    </div>
+    <div class="s-card">
+      <h3>&#128279; Free Tools</h3>
+      <a href="https://www.freetoolhub.info/invoice-generator" class="s-link" target="_blank" rel="dofollow"><span>&#128196;</span>Invoice Generator</a>
+      <a href="https://www.freetoolhub.info" class="s-link" target="_blank" rel="dofollow"><span>&#128295;</span>58+ Tools at FreeToolHub</a>
+    </div>
+  </div>
 </div>
+<footer>
+  <div class="fi">
+    <div class="f-logo">Invoice<span>Free</span>.info</div>
+    <div class="f-copy">&copy; 2025 InvoiceFree.info &mdash; <a href="https://www.freetoolhub.info" style="color:#c9a84c" target="_blank" rel="dofollow">FreeToolHub.info</a> &mdash; 58+ Free Online Tools</div>
+  </div>
+</footer>
 </body>
 </html>
