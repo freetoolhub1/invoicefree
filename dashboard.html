@@ -10,12 +10,12 @@
 <meta property="og:url" content="https://invoicefree.info/dashboard.html">
 <meta property="og:title" content="Dashboard">
 <meta property="og:description" content="Manage your invoices, track payments, and upgrade your plan.">
-<meta property="og:image" content="https://invoicefree.info/og-image.png">
+<meta property="og:image" content="https://invoicefree.info/og-image.svg">
 <meta property="og:site_name" content="InvoiceFree.info">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Dashboard">
 <meta name="twitter:description" content="Manage your invoices, track payments, and upgrade your plan.">
-<meta name="twitter:image" content="https://invoicefree.info/og-image.png">
+<meta name="twitter:image" content="https://invoicefree.info/og-image.svg">
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
@@ -67,6 +67,7 @@ body{font-family:var(--ff);background:#f4f3ef;min-height:100vh}
 .empty-state{text-align:center;padding:48px;color:var(--slate)}
 .empty-state a{color:var(--gold);text-decoration:none;font-weight:700}
 @media(max-width:800px){.layout{grid-template-columns:1fr}.sidebar{display:none}.stats-row{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){#tips-row{grid-template-columns:1fr!important}}
 
 @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.hero-eyebrow,.hero-h1,.hero-sub,.hero-btns,.hero-preview,.stats-bar{animation:none;opacity:1;transform:none}}
 </style>
@@ -103,11 +104,35 @@ body{font-family:var(--ff);background:#f4f3ef;min-height:100vh}
       <div class="stat-card"><div class="sc-label">Pending</div><div class="sc-value" id="stat-pending">0</div><div class="sc-sub">Awaiting payment</div></div>
       <div class="stat-card"><div class="sc-label">Your Plan</div><div class="sc-value" id="stat-plan">FREE</div><div class="sc-sub"><a href="pricing.html" style="color:var(--gold);text-decoration:none">Upgrade →</a></div></div>
     </div>
-    <div class="section-title">Recent Invoices</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <div class="section-title" style="margin-bottom:0">Recent Invoices</div>
+      <a href="invoice-app.html" style="display:inline-flex;align-items:center;gap:6px;background:var(--gold);color:var(--ink);font-family:var(--ff);font-weight:800;font-size:.82rem;padding:8px 18px;border-radius:50px;text-decoration:none">+ New Invoice</a>
+    </div>
     <table class="data-table">
       <thead><tr><th>Invoice #</th><th>Client</th><th>Amount</th><th>Date</th><th>Status</th><th>Action</th></tr></thead>
       <tbody id="invoices-tbody"></tbody>
     </table>
+
+    <div style="margin-top:28px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px" id="tips-row">
+      <a href="blog/get-paid-faster.html" style="background:white;border-radius:14px;padding:20px;text-decoration:none;border:1px solid rgba(0,0,0,.05);box-shadow:0 1px 4px rgba(0,0,0,.06);transition:box-shadow .2s;display:block" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,.1)'" onmouseout="this.style.boxShadow='0 1px 4px rgba(0,0,0,.06)'">
+        <div style="font-size:1.4rem;margin-bottom:10px">⚡</div>
+        <div style="font-size:.85rem;font-weight:800;color:#0a0a0f;margin-bottom:4px">Get Paid Faster</div>
+        <div style="font-size:.78rem;color:#9ca3af;line-height:1.5">10 proven strategies to collect payments without awkward follow-ups.</div>
+        <div style="font-size:.75rem;color:#c9a84c;font-weight:700;margin-top:10px">Read article →</div>
+      </a>
+      <a href="blog/invoice-payment-terms-guide.html" style="background:white;border-radius:14px;padding:20px;text-decoration:none;border:1px solid rgba(0,0,0,.05);box-shadow:0 1px 4px rgba(0,0,0,.06);transition:box-shadow .2s;display:block" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,.1)'" onmouseout="this.style.boxShadow='0 1px 4px rgba(0,0,0,.06)'">
+        <div style="font-size:1.4rem;margin-bottom:10px">📋</div>
+        <div style="font-size:.85rem;font-weight:800;color:#0a0a0f;margin-bottom:4px">Payment Terms Guide</div>
+        <div style="font-size:.78rem;color:#9ca3af;line-height:1.5">Net 30 vs Net 15 vs due on receipt — which terms protect your cash flow?</div>
+        <div style="font-size:.75rem;color:#c9a84c;font-weight:700;margin-top:10px">Read article →</div>
+      </a>
+      <a href="blog/invoicing-mistakes-freelancers.html" style="background:white;border-radius:14px;padding:20px;text-decoration:none;border:1px solid rgba(0,0,0,.05);box-shadow:0 1px 4px rgba(0,0,0,.06);transition:box-shadow .2s;display:block" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,.1)'" onmouseout="this.style.boxShadow='0 1px 4px rgba(0,0,0,.06)'">
+        <div style="font-size:1.4rem;margin-bottom:10px">🚫</div>
+        <div style="font-size:.85rem;font-weight:800;color:#0a0a0f;margin-bottom:4px">Invoicing Mistakes</div>
+        <div style="font-size:.78rem;color:#9ca3af;line-height:1.5">7 common invoicing mistakes freelancers make — and how to avoid them.</div>
+        <div style="font-size:.75rem;color:#c9a84c;font-weight:700;margin-top:10px">Read article →</div>
+      </a>
+    </div>
   </main>
 </div>
 <script>

@@ -484,7 +484,28 @@ body{font-family:'Cabinet Grotesk',system-ui,sans-serif;background:#0a0a0f;color
   .stat-item{min-width:50%;border-bottom:1px solid rgba(255,255,255,.06)}
   .compare-table{display:none}
   .hero-h1{font-size:2.4rem}
+  .blog-cards-grid{grid-template-columns:1fr!important}
 }
+
+/* ── BLOG PREVIEW ── */
+.blog-cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:48px}
+.bpc{background:#111118;border:1px solid rgba(255,255,255,.07);border-radius:18px;overflow:hidden;transition:transform .3s,border-color .3s;text-decoration:none;display:flex;flex-direction:column}
+.bpc:hover{transform:translateY(-6px);border-color:rgba(201,168,76,.3)}
+.bpc-thumb{height:130px;display:flex;align-items:center;justify-content:center;font-size:3rem;position:relative;overflow:hidden}
+.bpc-body{padding:22px 22px 20px;flex:1;display:flex;flex-direction:column}
+.bpc-cat{display:inline-block;font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:4px;margin-bottom:10px}
+.bpc-cat.tips{background:rgba(201,168,76,.15);color:#e8c97a}
+.bpc-cat.guide{background:rgba(29,233,182,.12);color:#1de9b6}
+.bpc-cat.compare{background:rgba(99,102,241,.15);color:#a5b4fc}
+.bpc-title{font-weight:800;font-size:.97rem;letter-spacing:-.02em;color:#fff;line-height:1.35;margin-bottom:8px;transition:color .2s}
+.bpc:hover .bpc-title{color:#c9a84c}
+.bpc-excerpt{font-size:.82rem;color:rgba(255,255,255,.38);line-height:1.65;flex:1}
+.bpc-footer{display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.06)}
+.bpc-read{font-size:.8rem;font-weight:700;color:#c9a84c}
+.bpc-date{font-size:.72rem;color:rgba(255,255,255,.25)}
+.blog-cta-row{text-align:center;margin-top:32px}
+.btn-blog-all{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:50px;border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.6);text-decoration:none;font-weight:700;font-size:.88rem;transition:all .25s}
+.btn-blog-all:hover{border-color:rgba(201,168,76,.4);color:#c9a84c}
 </style>
 </head>
 <body>
@@ -787,6 +808,56 @@ body{font-family:'Cabinet Grotesk',system-ui,sans-serif;background:#0a0a0f;color
       <div class="tcard" role="listitem" itemscope itemtype="https://schema.org/Review"><div class="tcard-stars" aria-label="5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="tcard-text" itemprop="reviewBody">"Sent my first invoice to a Fortune 500 client using InvoiceFree and they complimented the design. Never happened before."</p><div class="tcard-author"><div class="tcard-avatar"><img src="https://api.dicebear.com/7.x/personas/svg?seed=MariaLuz&backgroundColor=d1d4f9&radius=50" alt="Maria Luz" loading="lazy" width="42" height="42"></div><div><div class="tcard-name" itemprop="author">Maria Luz</div><div class="tcard-role">Copywriter, Madrid</div></div></div></div>
       <div class="tcard" role="listitem" itemscope itemtype="https://schema.org/Review"><div class="tcard-stars" aria-label="5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="tcard-text" itemprop="reviewBody">"The shareable link feature is brilliant. Clients view their invoice on mobile without downloading anything. So professional!"</p><div class="tcard-author"><div class="tcard-avatar"><img src="https://api.dicebear.com/7.x/personas/svg?seed=DavidChen&backgroundColor=ffd5dc&radius=50" alt="David Chen" loading="lazy" width="42" height="42"></div><div><div class="tcard-name" itemprop="author">David Chen</div><div class="tcard-role">UX Consultant, Singapore</div></div></div></div>
       <div class="tcard" role="listitem" itemscope itemtype="https://schema.org/Review"><div class="tcard-stars" aria-label="5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="tcard-text" itemprop="reviewBody">"Free plan is genuinely useful, not a bait-and-switch. I upgraded to Pro because I wanted to, not because I was forced."</p><div class="tcard-author"><div class="tcard-avatar"><img src="https://api.dicebear.com/7.x/personas/svg?seed=RiyaPatel&backgroundColor=b6e3f4&radius=50" alt="Riya Patel" loading="lazy" width="42" height="42"></div><div><div class="tcard-name" itemprop="author">Riya Patel</div><div class="tcard-role">Motion Designer, Mumbai</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FROM THE BLOG -->
+<section class="section dark" aria-labelledby="blog-heading">
+  <div class="container">
+    <span class="section-tag">From the Blog</span>
+    <h2 class="section-h2" id="blog-heading">Invoicing <em>tips &amp; guides</em></h2>
+    <p class="section-sub">Practical advice to help freelancers get paid faster and look more professional.</p>
+    <div class="blog-cards-grid">
+      <a href="blog/get-paid-faster.html" class="bpc">
+        <div class="bpc-thumb" style="background:linear-gradient(135deg,#003d2e,#005a44)">&#9889;</div>
+        <div class="bpc-body">
+          <span class="bpc-cat tips">Tips</span>
+          <div class="bpc-title">10 Proven Ways to Get Paid Faster as a Freelancer</div>
+          <div class="bpc-excerpt">Stop chasing late payments. These strategies help you collect money faster without awkward conversations.</div>
+          <div class="bpc-footer">
+            <span class="bpc-read">Read article &rarr;</span>
+            <span class="bpc-date">May 2025</span>
+          </div>
+        </div>
+      </a>
+      <a href="blog/invoice-payment-terms-guide.html" class="bpc">
+        <div class="bpc-thumb" style="background:linear-gradient(135deg,#1e3a5f,#0a2342)">&#128203;</div>
+        <div class="bpc-body">
+          <span class="bpc-cat guide">Guide</span>
+          <div class="bpc-title">Invoice Payment Terms: The Complete Guide (Net 30, Net 15 &amp; More)</div>
+          <div class="bpc-excerpt">Net 30 vs Net 15 vs due on receipt — choose the right payment terms to protect your cash flow.</div>
+          <div class="bpc-footer">
+            <span class="bpc-read">Read article &rarr;</span>
+            <span class="bpc-date">Apr 2025</span>
+          </div>
+        </div>
+      </a>
+      <a href="blog/free-vs-paid-invoice-software.html" class="bpc">
+        <div class="bpc-thumb" style="background:linear-gradient(135deg,#3b0764,#6b21a8)">&#128202;</div>
+        <div class="bpc-body">
+          <span class="bpc-cat compare">Compare</span>
+          <div class="bpc-title">Free vs Paid Invoice Software: Is It Worth Paying?</div>
+          <div class="bpc-excerpt">We compare InvoiceFree, FreshBooks, QuickBooks, and Wave to help you decide what's right for your business.</div>
+          <div class="bpc-footer">
+            <span class="bpc-read">Read article &rarr;</span>
+            <span class="bpc-date">Mar 2025</span>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="blog-cta-row">
+      <a href="blog.html" class="btn-blog-all">View all articles &rarr;</a>
     </div>
   </div>
 </section>
